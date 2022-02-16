@@ -17,7 +17,7 @@ local.properties
 
 #myconfig
 context-datasource.xml
-porn.properties
+pom.properties
 
 # External tool builders
 .externalToolBuilders/
