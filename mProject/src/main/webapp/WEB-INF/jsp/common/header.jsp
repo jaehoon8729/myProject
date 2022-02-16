@@ -9,6 +9,6 @@
 <body>
 	<a href="http://localhost:8080/board/board.do">게시판</a>
 	<a href="http://localhost:8080/login/login.do">로그인</a>
-	<a href="http://localhost:8080/board/board.do">회원가입</a>
+	<a href="http://localhost:8080/login/joinForm.do">회원가입</a>
 </body>
 </html>

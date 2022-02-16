@@ -1,37 +1,81 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Login Page</title>
-    <script  type="text/javascript">
-    var user_id = "<%=(String)session.getAttribute("user_id")%>";
-    function logout(){
-        window.location.href = "logout.php";
+    <%
+        // ÀÎÄÚµù Ã³¸®
+        request.setCharacterEncoding("euc-kr"); 
+    %>
+    <title>·Î±×ÀÎ È­¸é</title>
+    
+    <!-- css ÆÄÀÏ ºĞ¸® -->
+    <link href='/css/join_style.css' rel='stylesheet' style='text/css'/>
+    
+    <script type="text/javascript">
+    
+        function checkValue()
+        {
+            inputForm = eval("document.loginInfo");
+            if(!inputForm.id.value)
+            {
+                alert("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä");    
+                inputForm.id.focus();
+                return false;
+            }
+            if(!inputForm.password.value)
+            {
+                alert("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä");    
+                inputForm.password.focus();
+                return false;
+            }
         }
-
+    
+        // È¸¿ø°¡ÀÔ ¹öÆ° Å¬¸¯½Ã È¸¿ø°¡ÀÔ È­¸éÀ¸·Î ÀÌµ¿
+        function goJoinForm() {
+            location.href="JoinForm.jsp";
+        }    
     </script>
+ 
 </head>
-<body style="background:gray">
-<script>
-if (user_id == null){</script>
-<div style="background:white;margin:-12px -0.5% 0px -20px; text-align:center;height:80px; border: 1px solid">
-<h2>ë¡œê·¸ì¸ í˜ì´ì§€</h2></div>
- <div style="position:absolute; top:50%; left:50%; width:19%; height:80px; margin:-80px 0px 0px -200px; border:1px solid;">
-  <form name="login" method="post" action="./login_check.jsp">
-            ì•„ì´ë”” : <input type="text" name="user_id"/><br />
-            íŒ¨ìŠ¤ì›Œë“œ : <input type="password" name="user_pw" /><br />
-            <input type="submit" value="ë¡œê·¸ì¸">
-  </form>
-     <br>
-     <a href="../main.html">ë§¨ ì²˜ìŒ í˜ì´ì§€ë¡œ</a>&nbsp;&nbsp;&nbsp;&nbsp;
-     <a href="./new_join.html">íšŒì›ê°€ì…</a>
- </div><br>
- <script>} else {
-	 alert("ì´ë¯¸ ë¡œê·¸ì¸ ëœ ìƒíƒœì…ë‹ˆë‹¤.");
- 	document.location.href="./board_list.jsp";
- }</script>
- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
- <script src="js/bootstrap.js"></script>
+<body>
+<jsp:include page="/WEB-INF/jsp/common/header.jsp"></jsp:include>
+    <div id="wrap">
+        <form name="loginInfo" method="post" action="../pro/LoginPro.jsp" onsubmit="return checkValue()">
+        
+            <br><br><br><br><font size="6" color="gray">·Î±×ÀÎ</font></b>
+            <br><br><br><br>
+            
+            <table>
+                <tr>
+                    <td bgcolor="skyblue">¾ÆÀÌµğ</td>
+                    <td><input type="text" name="id" maxlength="50"></td>
+                </tr>
+                <tr>
+                    <td bgcolor="skyblue">ºñ¹Ğ¹øÈ£</td>
+                    <td><input type="password" name="password" maxlength="50"></td>
+                </tr>
+            </table>
+            <br>
+            <input type="submit" value="·Î±×ÀÎ"/>
+            <input type="button" value="È¸¿ø°¡ÀÔ" onclick="location.href="/login/joinForm.do" />
+        </form>
+        
+        <% 
+            // ¾ÆÀÌµğ, ºñ¹Ğ¹øÈ£°¡ Æ²¸±°æ¿ì È­¸é¿¡ ¸Ş½ÃÁö Ç¥½Ã
+            // LoginPro.jsp¿¡¼­ ·Î±×ÀÎ Ã³¸® °á°ú¿¡ µû¸¥ ¸Ş½ÃÁö¸¦ º¸³½´Ù.
+            String msg=request.getParameter("msg");
+            
+            if(msg!=null && msg.equals("0")) 
+            {
+                out.println("<br>");
+                out.println("<font color='red' size='5'>ºñ¹Ğ¹øÈ£¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä.</font>");
+            }
+            else if(msg!=null && msg.equals("-1"))
+            {    
+                out.println("<br>");
+                out.println("<font color='red' size='5'>¾ÆÀÌµğ¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä.</font>");
+            }
+        %>    
+    </div>    
 </body>
 </html>
