@@ -15,6 +15,10 @@ local.properties
 .loadpath
 .recommenders
 
+#myconfig
+context-datasource.xml
+porn.properties
+
 # External tool builders
 .externalToolBuilders/
 
