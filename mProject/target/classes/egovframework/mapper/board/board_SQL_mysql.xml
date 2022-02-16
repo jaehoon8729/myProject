@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	
+	<resultMap id="board" type="egovframework.example.board.vo.boardVo">
+		<result property="board_id" column="board_id"/>
+		<result property="user_id" column="user_id"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="file_name" column="file_name"/>
+		<result property="reg_dtm" column="reg_dtm"/>
+
+	</resultMap>
+<!--  
+	<insert id="insertxWncAdm">
+			
+	</insert>
+	
+	<update id="updatexWncAdm" parameterType="egovframework.com.wnc.WncAdm.service.WncMemberVO">
+			
+	</update>
+-->
+	<!-- select board -->
+	<select id="find_board_list" resultType="egovframework.example.board.vo.boardVo">
+			SELECT
+				board_id
+				, user_id
+				, title
+				, content
+				, file_name
+				, reg_dtm
+			FROM
+				board
+	</select>
+	<!-- select content 게시글view-->
+	<select id="find_content" resultType="egovframework.example.board.vo.boardVo">
+			SELECT
+				board_id
+				, user_id
+				, title
+				, content
+				, file_name
+				, reg_dtm
+			FROM
+				board
+			WHERE
+				board_id = #{board_id}
+	</select>
+</mapper>

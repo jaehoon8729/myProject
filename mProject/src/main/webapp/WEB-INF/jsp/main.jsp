@@ -8,8 +8,6 @@
 <title>메인</title>
 </head>
 <body>
-<a href="javascript:location.href='board/board.do'">게시판</a>
-<a href="javascript:location.href='board/board.do'">로그인</a>
-<a href="javascript:location.href='board/board.do'">회원가입</a>
+<jsp:include page="/WEB-INF/jsp/common/header.jsp"></jsp:include>
 </body>
 </html>

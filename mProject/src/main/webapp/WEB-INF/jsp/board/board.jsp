@@ -16,6 +16,7 @@ a{
 </style>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/jsp/common/header.jsp"></jsp:include>
     <br/>
     <h1 class="text-center">Board List</h1>
     <br/>
@@ -38,12 +39,12 @@ a{
             </thead>
  
             <tbody>
-            <c:forEach items="${list }" var="result">
+            <c:forEach items="${boardList }" var="result">
                 <tr>
-                    <td>${result.testId}</td>
-                    <td><a href="testDetail.do?testId=${result.testId}">${result.testTitle}</a></td>
-                    <td>${result.testName}</td>
-                    <td>${result.testDate}</td>
+                    <td>${result.board_id}</td>
+                    <td><a href="/board/view.do?board_id=${result.board_id}">${result.title}</a></td>
+                    <td>${result.user_id}</td>
+                    <td>${result.reg_dtm}</td>
                 </tr>
             </c:forEach>
             </tbody>

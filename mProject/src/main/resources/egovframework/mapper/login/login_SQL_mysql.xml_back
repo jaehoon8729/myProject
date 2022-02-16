@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WncAdm">
+	
+	<resultMap id="wncAdm" type="egovframework.com.wnc.WncAdm.service.WncAdmVO">
+		<id property="no" column="no"/>
+		<result property="rownum" column="rownum"/>
+		<result property="member_kind" column="member_kind"/>
+		<result property="id" column="id"/>
+		<result property="password" column="password"/>
+		<result property="name_kor" column="name_kor"/>
+		<result property="name_eng" column="name_eng"/>
+		<result property="birthday" column="birthday"/>
+		<result property="gender" column="gender"/>
+		<result property="email" column="email"/>
+		<result property="hand_phone" column="hand_phone"/>
+		<result property="a_status" column="a_status"/>
+		<result property="a_agency" column="a_agency"/>
+		<result property="a_agency_address" column="a_agency_address"/>
+		<result property="a_agency_emergency" column="a_agency_emergency"/>
+		<result property="a_agency_number" column="a_agency_number"/>
+		<result property="a_agency_img" column="a_agency_img"/>
+		<result property="tel" column="tel"/>
+		<result property="a_bank" column="a_bank"/>
+		<result property="a_bank_account" column="a_bank_account"/>
+		<result property="a_bank_name" column="a_bank_name"/>
+		<result property="out_date" column="out_date"/>
+		<result property="out_etc" column="out_etc"/>
+		<result property="m_depart" column="m_depart"/>
+		<result property="before_kind" column="before_kind"/>
+		<result property="reg_date" column="reg_date"/>
+	</resultMap>
+	
+	<resultMap id="wncMember" type="egovframework.com.wnc.WncAdm.service.WncMemberVO">
+		<id property="no" column="no"/>
+		<result property="rownum" column="rownum"/>
+		<result property="member_kind" column="member_kind"/>
+		<result property="id" column="id"/>
+		<result property="password" column="password"/>
+		<result property="name_kor" column="name_kor"/>
+		<result property="name_eng" column="name_eng"/>
+		<result property="rank" column="rank"/>
+		<result property="birthday" column="birthday"/>
+		<result property="gender" column="gender"/>
+		<result property="email" column="email"/>
+		<result property="hand_phone" column="hand_phone"/>
+		<result property="company_contact" column="company_contact"/>
+		<result property="a_status" column="a_status"/>
+		<result property="a_agency" column="a_agency"/>
+		<result property="a_agency_address" column="a_agency_address"/>
+		<result property="a_agency_address2" column="a_agency_address2"/>
+		<result property="a_agency_emergency" column="a_agency_emergency"/>
+		<result property="a_agency_contact" column="a_agency_contact"/>
+		<result property="a_agency_number" column="a_agency_number"/>
+		<result property="a_agency_img" column="a_agency_img"/>
+		<result property="tel" column="tel"/>
+		<result property="a_bank" column="a_bank"/>
+		<result property="a_bank_account" column="a_bank_account"/>
+		<result property="a_bank_name" column="a_bank_name"/>
+		<result property="a_bank_img" column="a_bank_img"/>
+		<result property="before_kind" column="before_kind"/>
+		<result property="reg_date" column="reg_date"/>
+		<result property="out_date" column="out_date"/>
+		<result property="out_etc" column="out_etc"/>
+		<result property="m_depart" column="m_depart"/>
+		
+		<collection property="local3" javaType="list" ofType="java.lang.String" notNullColumn="local3">
+			<result column="local3"/>
+		</collection>
+	</resultMap>
+	
+<!-- 1. Insert -->
+	<insert id="insertxWncAdm">
+			<selectKey resultType="int" keyProperty="no" order="BEFORE">
+				SELECT IFNULL(MAX(no), 0)+1 FROM t_member        
+			</selectKey>
+
+			INSERT INTO t_member
+				( no
+				  , member_kind
+				  , id
+				  , password
+				  , name_kor
+				  , name_eng
+				  , birthday
+				  , gender
+				  , email
+				  , hand_phone
+				  , company_contact
+				  , a_status
+				  , a_agency
+				  , a_agency_address
+				  , a_agency_address2
+				  , a_agency_emergency
+				  , a_agency_contact
+				  , a_agency_number
+				  , a_agency_img
+				  , tel
+				  , a_bank
+				  , a_bank_account
+				  , a_bank_name
+				  , a_bank_img
+				  , m_depart
+				  , before_kind
+				  , reg_date )
+			VALUES ( #{no}
+				  , #{member_kind}
+				  , #{id}
+				  , #{password}
+				  , #{name_kor}
+				  , #{name_eng}
+				  , #{birthday}
+				  , #{gender}
+				  , #{email}
+				  , #{hand_phone}	
+				  , #{company_contact}			  
+				  , #{a_status}
+				  , #{a_agency}
+				  , #{a_agency_address}
+				  , #{a_agency_address2}
+				  , #{a_agency_emergency}
+				  , #{a_agency_contact}
+				  , #{a_agency_number}
+				  , #{a_agency_img}
+				  , #{tel}
+				  , #{a_bank}
+				  , #{a_bank_account}
+				  , #{a_bank_name}
+				  , #{a_bank_img}
+				  , #{m_depart} 
+				  , #{member_kind}
+				  , now() )
+
+	</insert>
+	
+<!-- 2. Update -->
+	<update id="updatexWncAdm" parameterType="egovframework.com.wnc.WncAdm.service.WncMemberVO">
+			UPDATE t_member SET 
+			<if test="member_kind == '일반'">
+				<if test="password != null and password != ''">
+					password = #{password},
+				</if>
+				<if test="rank != null and rank != ''">
+					`rank` = #{rank},
+				</if>
+				out_date = now()
+			</if>
+			<if test="member_kind == '관계사'">
+				<if test="password != null and password != ''">
+					password = #{password},
+				</if>
+				name_kor = #{name_kor},
+				email = #{email},
+				hand_phone = #{hand_phone},
+				company_contact = #{company_contact},
+				a_status = #{a_status},
+				a_agency = #{a_agency},
+				a_agency_address = #{a_agency_address},
+				a_agency_address2 = #{a_agency_address2},
+				a_agency_emergency = #{a_agency_emergency},
+				a_agency_contact = #{a_agency_contact},
+				a_agency_number = #{a_agency_number},
+				<if test="a_agency_img != null and a_agency_img != ''">
+					a_agency_img = #{a_agency_img},
+				</if>
+				tel = #{tel},
+				a_bank = #{a_bank},
+				a_bank_account = #{a_bank_account},
+				a_bank_name = #{a_bank_name},
+				<if test="a_bank_img != null and a_bank_img != ''">
+					a_bank_img = #{a_bank_img},
+				</if>
+				out_date = now()
+			</if>
+			<if test="member_kind == '직원'">
+				<if test="password != null and password != ''">
+					password = #{password},
+				</if>
+				name_kor = #{name_kor},
+				m_depart = #{m_depart},
+				hand_phone = #{hand_phone},
+				out_date = now()
+			</if>
+			WHERE no = #{no}
+	</update>
+	
+<sql id="includeList" >
+			<!-- <if test="searchNotice == 1">AND -->
+			<!--
+			<if test="searchNotice != null and searchNotice != ''">AND
+				noticeYn = #{searchNotice}
+			</if>
+			<if test="searchUseYn == 9">AND
+				publishYn = 'Y'
+			</if>
+			-->			
+			<if test="searchCondition == 0">AND
+				(
+					name_kor LIKE CONCAT('%',#{searchKeyword},'%') OR 
+					id LIKE CONCAT('%',#{searchKeyword},'%') OR 
+					hand_phone LIKE CONCAT('%',#{searchKeyword},'%')
+				)
+			</if>
+			<if test="searchCondition == 1">AND
+				name_kor LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchCondition == 2">AND
+				id LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchCondition == 3">AND
+				hand_phone LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchCategory != null and searchCategory != ''">
+				AND
+				member_kind = #{searchCategory}
+			</if>
+</sql>
+
+
+<!-- 3. List -->
+	<select id="listWncAdm" parameterType="egovframework.com.wnc.WncAdm.service.WncAdmDefaultVO" resultMap="wncMember">
+			SELECT
+					@ROWNUM := @ROWNUM + 1 AS no
+							, id
+							, member_kind
+							, password
+							, name_kor
+							, name_eng
+							, birthday
+							, gender
+							, email
+							, hand_phone
+							, a_status
+							, a_agency
+							, a_agency_address
+							, a_agency_emergency
+							, a_agency_number
+							, a_agency_img
+							, tel
+							, a_bank
+							, a_bank_account
+							, a_bank_name
+							, out_date
+							, out_etc
+							, m_depart
+							, before_kind
+							, reg_date
+							, NULL local3
+					FROM t_member, (SELECT @ROWNUM := 0) R
+			WHERE 1=1  
+			<include refid="includeList" />
+				ORDER BY no DESC
+				limit #{firstIndex}, #{recordCountPerPage}	
+	</select>
+	
+	<select id="listWncAdm1" parameterType="egovframework.com.wnc.WncAdm.service.WncAdmDefaultVO" resultMap="wncMember">
+			SELECT @ROWNUM := @ROWNUM + 1 AS rownum, A.*
+			FROM	(
+					SELECT
+							 no
+									, id
+									, member_kind
+									, password
+									, name_kor
+									, name_eng
+									, birthday
+									, gender
+									, email
+									, hand_phone
+									, a_status
+									, a_agency
+									, a_agency_address
+									, a_agency_emergency
+									, a_agency_number
+									, a_agency_img
+									, tel
+									, a_bank
+									, a_bank_account
+									, a_bank_name
+									, out_date
+									, out_etc
+									, m_depart
+									, before_kind
+									, reg_date
+									, NULL local3
+							FROM t_member, (SELECT @ROWNUM := 0) R
+					WHERE member_kind = '직원'
+			<include refid="includeList" />
+				ORDER BY no ASC) A
+			ORDER BY rownum DESC
+			limit #{firstIndex}, #{recordCountPerPage}	
+	</select>
+	
+	<select id="listWncAdm2" parameterType="egovframework.com.wnc.WncAdm.service.WncAdmDefaultVO" resultMap="wncMember">
+			SELECT @ROWNUM := @ROWNUM + 1 AS rownum, A.*
+			FROM	(
+					SELECT
+							no
+									, id
+									, member_kind
+									, password
+									, name_kor
+									, name_eng
+									, birthday
+									, gender
+									, email
+									, hand_phone
+									, a_status
+									, a_agency
+									, a_agency_address
+									, a_agency_emergency
+									, a_agency_number
+									, a_agency_img
+									, tel
+									, a_bank
+									, a_bank_account
+									, a_bank_name
+									, out_date
+									, out_etc
+									, m_depart
+									, before_kind
+									, reg_date
+									, NULL local3
+							FROM t_member, (SELECT @ROWNUM := 0) R
+					WHERE member_kind = '일반'
+			<include refid="includeList" />
+				ORDER BY no ASC) A
+			ORDER BY rownum DESC
+			limit #{firstIndex}, #{recordCountPerPage}	
+	</select>
+	
+	<select id="listWncAdm3" parameterType="egovframework.com.wnc.WncAdm.service.WncAdmDefaultVO" resultMap="wncMember">
+			SELECT @ROWNUM := @ROWNUM + 1 AS rownum, A.*
+			FROM	(
+					SELECT
+							no
+									, id
+									, member_kind
+									, password
+									, name_kor
+									, name_eng
+									, birthday
+									, gender
+									, email
+									, hand_phone
+									, a_status
+									, a_agency
+									, a_agency_address
+									, a_agency_emergency
+									, a_agency_number
+									, a_agency_img
+									, tel
+									, a_bank
+									, a_bank_account
+									, a_bank_name
+									, out_date
+									, out_etc
+									, m_depart
+									, before_kind
+									, reg_date
+									, NULL local3
+							FROM t_member, (SELECT @ROWNUM := 0) R
+					WHERE member_kind = '관계사'
+			<include refid="includeList" />
+				ORDER BY no ASC) A
+			ORDER BY rownum DESC
+			limit #{firstIndex}, #{recordCountPerPage}	
+	</select>
+	
+	<select id="listWncAdm4" parameterType="egovframework.com.wnc.WncAdm.service.WncAdmDefaultVO" resultMap="wncMember">
+			SELECT @ROWNUM := @ROWNUM + 1 AS rownum, A.*
+			FROM	(
+					SELECT
+							no
+									, id
+									, member_kind
+									, password
+									, name_kor
+									, name_eng
+									, birthday
+									, gender
+									, email
+									, hand_phone
+									, a_status
+									, a_agency
+									, a_agency_address
+									, a_agency_emergency
+									, a_agency_number
+									, a_agency_img
+									, tel
+									, a_bank
+									, a_bank_account
+									, a_bank_name
+									, out_date
+									, out_etc
+									, m_depart
+									, before_kind
+									, reg_date
+									, NULL local3
+							FROM t_member, (SELECT @ROWNUM := 0) R
+					WHERE member_kind = '탈퇴'
+			<include refid="includeList" />
+				ORDER BY no ASC) A
+			ORDER BY rownum DESC
+			limit #{firstIndex}, #{recordCountPerPage}	
+	</select>
+
+<!-- 4. Select -->
+	<select id="detailWncAdm" parameterType="egovframework.com.wnc.WncAdm.service.WncAdmDefaultVO" resultMap="wncMember">
+			SELECT
+				A.no
+				, member_kind
+				, id
+				, password
+				, name_kor
+				, name_eng
+				, `rank`
+				, birthday
+				, gender
+				, email
+				, hand_phone
+				, company_contact
+				, a_status
+				, a_agency
+				, a_agency_address
+				, a_agency_address2
+				, a_agency_emergency
+				, a_agency_contact
+				, a_agency_number
+				, a_agency_img
+				, tel
+				, a_bank
+				, a_bank_account
+				, a_bank_name
+				, a_bank_img
+				, out_date
+				, out_etc
+				, m_depart
+				, before_kind
+				, reg_date
+				, m_depart
+				, local3
+			FROM t_member A
+				LEFT JOIN t_member_salesarea B ON(A.no = B.member_no)
+				WHERE A.no = #{no}
+
+	</select>
+
+<!-- 이전글 & 다음글 -->
+<select id="detailWncAdmPrevNext" resultType="egovframework.com.wnc.WncAdm.service.WncAdmVO">
+SELECT no num1, subject,
+(SELECT no num1 FROM t_member s1
+	WHERE s1.no &lt; s.no
+	<include refid="includeList" />
+	ORDER BY num1 DESC LIMIT 1) AS prevIdx,
+(SELECT no num1 FROM t_member s2
+	WHERE s2.no &gt; s.no
+	<include refid="includeList" />
+	ORDER BY num1 ASC LIMIT 1) AS nextIdx
+FROM t_member s
+    WHERE no = #{num1}; 
+</select>
+
+<!-- 5. Delete -->
+<update id="deletexWncAdm">
+	UPDATE t_member SET
+	out_date = now(),
+	member_kind = '탈퇴'
+	WHERE no = #{no}
+</update>
+
+<select id="chkexistWncAdm" parameterType="egovframework.com.wnc.WncAdm.service.WncAdmDefaultVO" resultMap="wncMember">
+	SELECT no FROM t_member WHERE id = #{id}
+</select>
+
+	<select id="totCntWncAdm" parameterType="egovframework.com.wnc.WncAdm.service.WncAdmDefaultVO" resultType="int">
+			SELECT COUNT(*) totcnt
+			FROM t_member
+			WHERE 1=1
+			<include refid="includeList" />
+	</select>
+	
+	<insert id="insertMemberSalesArea">
+		INSERT INTO t_member_salesarea(member_no, local3)
+		VALUES
+		<foreach collection="local3" item="item" separator=",">
+			(
+				${no}, #{item}
+			)
+		</foreach>
+	</insert>
+	
+	<update id="deleteMemberFile">
+		UPDATE t_member SET 
+		<if test="a_agency_img != null and a_agency_img != ''">
+			a_agency_img = NULL
+		</if>
+		<if test="a_bank_img != null and a_bank_img != ''">
+			a_bank_img = NULL
+		</if>
+		WHERE no = #{no}
+	</update>
+	
+	<delete id="deleteMemberSalesArea">
+		DELETE FROM t_member_salesarea
+		WHERE member_no = #{no}
+	</delete>
+	
+	<select id="listAllWncAdm" resultMap="wncMember">
+		SELECT @ROWNUM := @ROWNUM + 1 AS rownum, A.*
+			FROM	(
+					SELECT
+							no
+									, id
+									, member_kind
+									, password
+									, name_kor
+									, name_eng
+									, birthday
+									, gender
+									, email
+									, hand_phone
+									, a_status
+									, a_agency
+									, a_agency_address
+									, a_agency_emergency
+									, a_agency_number
+									, a_agency_img
+									, tel
+									, a_bank
+									, a_bank_account
+									, a_bank_name
+									, out_date
+									, out_etc
+									, m_depart
+									, before_kind
+									, reg_date
+									, NULL local3
+							FROM t_member, (SELECT @ROWNUM := 0) R
+					WHERE 1=1
+			<include refid="includeList" />
+				ORDER BY no ASC) A
+			ORDER BY rownum DESC
+	</select>
+
+</mapper>
