@@ -22,7 +22,9 @@
     src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
     integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+    <!-- SmartEditor를 사용하기 위해서 다음 js파일을 추가 (경로 확인) -->
+<script type="text/javascript" src="/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/jsp/common/header.jsp"></jsp:include>
@@ -47,15 +49,16 @@
                     </tr>
                     <tr>
                         <th>내용</th>
-                        <td><input name="testContent" class="form-control"
-                                style="height: 200px;" value=${vo.content } readonly/></td>
+                        <td>
+                        	<textarea id="content" name="content" rows="10" cols="100" style="width: 100%;" readonly>${vo.content }</textarea>
+                        </td>
  
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align: right;">
-                            <button id="btn_previous" type="button" class="btn_previous">이전</button>
-                            <button id="btn_modify" type="button" class="btn_register">수정</button>
-                            <button id="btn_delete" type="button" class="btn_delete">삭제</button>
+                            <button id="btn_previous" type="button" class="btn_previous" onclick="location.href='http://localhost:8080/board/board.do'">이전</button>
+                            <!--<button id="btn_modify" type="button" class="btn_register">수정</button>
+                            <button id="btn_delete" type="button" class="btn_delete">삭제</button>-->
                         </td>
                     </tr>
                 </tbody>
@@ -63,4 +66,21 @@
         </form>
     </div>
 </body>
+<script id="smartEditor" type="text/javascript"> 
+	var oEditors = [];
+	nhn.husky.EZCreator.createInIFrame({
+	    oAppRef: oEditors,
+	    elPlaceHolder: "content",  //textarea ID 입력
+	    sSkinURI: "/SmartEditor2Skin.html",  //martEditor2Skin.html 경로 입력
+	    fCreator: "createSEditor2",
+	    htParams : { 
+	    	// 툴바 사용 여부 (true:사용/ false:사용하지 않음) 
+	        bUseToolbar : false, 
+		// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음) 
+		bUseVerticalResizer : false, 
+		// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음) 
+		bUseModeChanger : false 
+	    }
+	});
+</script>
 </html>

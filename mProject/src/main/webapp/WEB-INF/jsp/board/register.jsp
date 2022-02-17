@@ -34,7 +34,7 @@
 		form.type = 'hidden';
 		form.name = 'form';
 		form.method = 'post';
-		form.action = '/board/boardPost.do';
+		form.action = 'board/boardPost.do';
 		
 		var input = document.createElement("input");
 		input.type = 'hidden';
@@ -70,7 +70,7 @@
 <br/>
 <br/>
 <div class="container">
-        <form name="form" method="post" action="boardPost.do">
+        <form name="form">
         <input type="hidden" name="user_id" value="${userVo.user_id }">
             <table class="table table-bordered">
                 <tbody>
