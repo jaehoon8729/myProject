@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+	
+	<resultMap id="board" type="egovframework.example.login.vo.userVo">
+		<result property="user_id" column="user_id"/>
+		<result property="user_pswd" column="user_pswd"/>
+		<result property="admin_yn" column="admin_yn"/>
+		<result property="user_name" column="user_name"/>
+		
+	</resultMap>
+	<!-- insert user -->
+	<insert id="insertMember">
+		INSERT INTO 
+		USER(
+			user_id
+			, user_pswd
+			, admin_yn
+			, user_name
+		)VALUES(
+			#{user_id}
+			, #{user_pswd}
+			, 'n'
+			, #{user_name}
+		 );
+	</insert>
+	
+	 <!-- login -->
+	 <select id="userLogin" resultType="egovframework.example.login.vo.userVo">
+	 	SELECT
+	 		user_id
+	 		, user_pswd
+	 		, admin_yn
+	 		, user_name
+	 	FROM
+	 		user
+	 	WHERE
+			user_id = #{user_id} 
+		AND 
+			user_pswd = #{user_pswd}
+
+	 </select>
+
+</mapper>
