@@ -37,8 +37,6 @@
 	 		user
 	 	WHERE
 			user_id = #{user_id} 
-		AND 
-			user_pswd = #{user_pswd}
 
 	 </select>
 

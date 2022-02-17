@@ -16,7 +16,7 @@ public class userDAO extends EgovComAbstractDAO {
 	private SqlSession session;
 	
     public userVo userLogin(userVo vo) throws Exception{
-    	return session.selectOne("userLogin",vo);
+    	return selectOne("userLogin",vo);
     }
     
     public void insertMember(userVo vo) throws Exception{

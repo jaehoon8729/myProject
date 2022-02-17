@@ -42,15 +42,16 @@ public class loginController {
 	@RequestMapping(value="/login/loginPost.do", method = RequestMethod.POST)
 	public String loginPost(userVo vo, Model model, HttpSession session) throws Exception {
 
+		
 	    // DB 비밀번호와 로그인 비밀번호가 틀릴경우 loginFail 모델은 내려준다.
-		if (!pwdEncoder.matches(vo.getUser_id(), userservice.userLogin(vo).getUser_id())) {
+		if (!pwdEncoder.matches(userservice.userLogin(vo).getUser_pswd(), vo.getUser_pswd())) {
 			model.addAttribute("loginFail", true);
-		
+			System.out.println("정보가 다릅니다람쥐");
 		}
-		
+		System.out.println("정보가 마자용");
 		vo = userservice.userLogin(vo);
 		session.setAttribute("userVo", vo);
-		System.out.println(vo.getUser_name());
+
 		return "main";
 	}
 	
@@ -77,8 +78,6 @@ public class loginController {
 	public String joinPost(userVo vo, Model model) throws Exception {
 		String pwd = vo.getUser_pswd();
 		vo.setUser_pswd(pwdEncoder.encode(pwd));
-		System.out.println(vo.getUser_id()+"ttttttttttttttttttttttt");
-		System.out.println(vo.getUser_pswd()+"ttttttttttttttttttttttt");
 		
 		userservice.insertMember(vo);
 		return "login/joinForm";
