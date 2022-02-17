@@ -25,4 +25,8 @@ public class boardServiceImpl extends EgovAbstractServiceImpl implements boardSe
 		
 		return boardDao.selectContent(vo);
 	}
+	
+	public void insertBoardContent(boardVo vo) throws Exception {
+		boardDao.insertContent(vo);
+	}
 }

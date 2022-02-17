@@ -10,13 +10,14 @@
     
         function checkValue()
         {
-            inputForm = eval("document.loginInfo");
+            var inputForm = eval("document.loginInfo");
             if(!inputForm.user_id.value)
             {
                 alert("아이디를 입력하세요");    
                 inputForm.id.focus();
                 return false;
-            }else if(!inputForm.user_pswd.value)
+            }
+            if(!inputForm.user_pswd.value)
             {
                 alert("비밀번호를 입력하세요");    
                 inputForm.password.focus();
@@ -46,7 +47,7 @@
             </table>
             <br>
             <input type="submit" value="로그인"/>
-            <input type="button" value="회원가입" onclick="location.href="/login/joinForm.do" />
+            <input type="button" value="회원가입" onclick="location.href='joinForm.do'" />
         </form>
     </div>    
 </body>

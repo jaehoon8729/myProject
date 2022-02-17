@@ -1,5 +1,9 @@
 package egovframework.example.board.controller;
 
+import java.security.Provider.Service;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +29,17 @@ public class boardController {
 		return "board/board";
 	}
 	
+	@RequestMapping(value="/board/boardPost.do")
+	public String boardPost(boardVo vo, Model model) throws Exception {
+		
+		System.out.println(vo.getUser_id());
+		System.out.println(vo.getTitle());
+		System.out.println(vo.getContent());
+		boardservice.insertBoardContent(vo);
+		
+		return "redirect:board/board";
+	}
+	
 	
 	@RequestMapping(value="/board/view.do")
 	public String view(@ModelAttribute boardVo vo, Model model) throws Exception {
@@ -40,7 +55,8 @@ public class boardController {
 	}
 	
 	@RequestMapping(value="/board/register.do")
-	public String write() {
+	public String write(boardVo vo,Model model, HttpSession session) {
+		
 		return "board/register";
 	}
 }

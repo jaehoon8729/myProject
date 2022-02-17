@@ -12,8 +12,6 @@ import egovframework.example.login.vo.userVo;
 @Repository("userDAO")
 public class userDAO extends EgovComAbstractDAO {
 	
-	@Autowired
-	private SqlSession session;
 	
     public userVo userLogin(userVo vo) throws Exception{
     	return selectOne("userLogin",vo);

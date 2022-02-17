@@ -12,11 +12,19 @@
 		<result property="reg_dtm" column="reg_dtm"/>
 
 	</resultMap>
-<!--  
-	<insert id="insertxWncAdm">
-			
+  
+	<insert id="insert_board" >
+			INSERT INTO board(
+				user_id
+				, title
+				, content
+			)VALUES(
+				#{user_id}
+				, #{title}
+				, #{content}
+			)
 	</insert>
-	
+<!--
 	<update id="updatexWncAdm" parameterType="egovframework.com.wnc.WncAdm.service.WncMemberVO">
 			
 	</update>

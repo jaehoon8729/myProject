@@ -10,4 +10,5 @@ public interface boardService {
 	
 	public boardVo selectBoardContent(boardVo vo) throws Exception;
 
+	public void insertBoardContent(boardVo vo) throws Exception;
 }

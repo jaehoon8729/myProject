@@ -30,4 +30,8 @@ public class boardDAO extends EgovComAbstractDAO {
     public boardVo selectContent(boardVo vo) throws Exception{
     	return selectOne("find_content",vo);
     }
+    
+    public void insertContent(boardVo vo) throws Exception{
+    	insert("insert_board",vo);
+    }
 }
