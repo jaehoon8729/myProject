@@ -7,7 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Board List</title>
 <!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+    crossorigin="anonymous">
+
 <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 <style type="text/css">
 a{
@@ -21,6 +26,7 @@ a{
     <h1 class="text-center">Board List</h1>
     <br/>
     <br/>
+    
     <div class="container">
         <table class="table table-hover table-striped text-center" style="border:1px solid;">
             <colgroup>
@@ -50,18 +56,53 @@ a{
             </tbody>
         </table>
         <hr/>
-        <div>
-            <ul class="pagination justify-content-center">
-                <li><a href="#" style="margin-right:5px;" class="text-secondary">◀</a></li>
-                <li><a href="#" style="margin-right:5px;" class="text-secondary">1</a></li>
-                <li><a href="#" style="margin-right:5px;" class="text-secondary">2</a></li>
-                <li><a href="#" style="margin-right:5px;" class="text-secondary">3</a></li>
-                <li><a href="#" style="margin-right:5px;" class="text-secondary">4</a></li>
-                <li><a href="#" style="margin-right:5px;" class="text-secondary">5</a></li>
-                <li><a href="#" style="margin-right:5px;" class="text-secondary">▶</a></li>
+        <!-- pagination start -->
+        <div id="paginationBox" class="pagination1">
+            <ul class="pagination" style="justify-content: center;">
+ 
+                <c:if test="${pagination.prev}">
+                    <li class="page-item"><a class="page-link" href="#"
+                        onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${pagination.listSize}'
+                    ,'${search.searchType}', '${search.keyword}')">이전</a></li>
+                </c:if>
+ 
+                <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="testId">
+                    <li class="page-item <c:out value="${pagination.page == testId ? 'active' : ''}"/> ">
+                    <a class="page-link" href="#"
+                        onClick="fn_pagination('${testId}', '${pagination.range}', '${pagination.rangeSize}', '${pagination.listSize}'
+                     ,'${search.searchType}', '${search.keyword}')">
+                            ${testId} </a></li>
+                </c:forEach>
+ 
+                <c:if test="${pagination.next}">
+                    <li class="page-item"><a class="page-link" href="#"
+                        onClick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}', '${pagination.listSize}'
+                    ,'${search.searchType}', '${search.keyword}')">다음</a></li>
+                </c:if>
             </ul>
         </div>
+        <!-- pagination end -->
         <a class="btn btn-outline-info" style="float:right" href="register.do">글쓰기</a>
+         <!-- search start -->
+        <div class="form-group row">
+ 
+            <div class="w100" style="padding-right: 10px">
+                <select class="form-control form-control-sm" name="searchType" id="searchType">
+                    <option value="testTitle">제목</option>
+                    <option value="testContent">내용</option>
+                </select>
+            </div>
+ 
+            <div class="w300" style="padding-right: 10px">
+                <input type="text" class="form-control form-control-sm" name="keyword" id="keyword">
+            </div>
+ 
+            <div>
+                <button class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch">검색</button>
+            </div>
+ 
+        </div>
+        <!-- search end -->
     </div>
     <br>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
@@ -69,4 +110,62 @@ a{
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 </body>
+    <script type="text/javascript">
+    //이전 버튼 이벤트
+    //5개의 인자값을 가지고 이동 testList.do
+    //무조건 이전페이지 범위의 가장 앞 페이지로 이동
+    function fn_prev(page, range, rangeSize, listSize, searchType, keyword) {
+            
+        var page = ((range - 2) * rangeSize) + 1;
+        var range = range - 1;
+            
+        var url = "/board/board.do";
+        url += "?page=" + page;
+        url += "&range=" + range;
+        url += "&listSize=" + listSize;
+        url += "&searchType=" + searchType;
+        url += "&keyword=" + keyword;
+        location.href = url;
+        }
+ 
+ 
+    //페이지 번호 클릭
+    function fn_pagination(page, range, rangeSize, listSize, searchType, keyword) {
+ 
+        var url = "/board/board.do";
+            url += "?page=" + page;
+            url += "&range=" + range;
+            url += "&listSize=" + listSize;
+            url += "&searchType=" + searchType;
+            url += "&keyword=" + keyword; 
+ 
+            location.href = url;    
+        }
+ 
+    //다음 버튼 이벤트
+    //다음 페이지 범위의 가장 앞 페이지로 이동
+    function fn_next(page, range, rangeSize, listSize, searchType, keyword) {
+        var page = parseInt((range * rangeSize)) + 1;
+        var range = parseInt(range) + 1;            
+        var url = "/board/board.do";
+            url += "?page=" + page;
+            url += "&range=" + range;
+            url += "&listSize=" + listSize;
+            url += "&searchType=" + searchType;
+            url += "&keyword=" + keyword;
+            location.href = url;
+        }
+        
+    // 검색
+    $(document).on('click', '#btnSearch', function(e){
+        e.preventDefault();
+        var url = "/board/board.do";
+        url += "?searchType=" + $('#searchType').val();
+        url += "&keyword=" + $('#keyword').val();
+        location.href = url;
+        console.log(url);
+ 
+    });    
+ 
+    </script>
 </html>

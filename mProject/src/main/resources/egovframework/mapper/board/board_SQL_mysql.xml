@@ -10,9 +10,14 @@
 		<result property="content" column="content"/>
 		<result property="file_name" column="file_name"/>
 		<result property="reg_dtm" column="reg_dtm"/>
-
+		
 	</resultMap>
-  
+	<resultMap id="search" type="egovframework.example.ivory.vo.Search">
+		<result property="searchType" column="searchType"/>
+		<result property="keyword" column="keyword"/>
+	</resultMap>
+	
+  <!-- 글작성 -->
 	<insert id="insert_board" >
 			INSERT INTO board(
 				user_id
@@ -29,18 +34,28 @@
 			
 	</update>
 -->
-	<!-- select board -->
-	<select id="find_board_list" resultType="egovframework.example.board.vo.boardVo">
-			SELECT
-				board_id
+	
+	<!-- 게시글 목록 조회 -->
+    <select id="find_board_list" resultType="egovframework.example.board.vo.boardVo">
+        SELECT board_id
 				, user_id
 				, title
 				, content
 				, file_name
-				, reg_dtm
-			FROM
-				board
-	</select>
+				, reg_dtm 
+		FROM board
+        <where>
+            <if test="searchType=='title' and keyword != null and keyword !=''">
+                AND title like CONCAT('%',#{keyword},'%')
+            </if>
+            <if test="searchType=='content' and keyword != null and keyword !=''">
+                AND content like CONCAT('%',#{keyword},'%')
+            </if>
+        </where>
+        ORDER BY user_id DESC
+        LIMIT #{startList}, #{listSize}
+    </select>
+
 	<!-- select content 게시글view-->
 	<select id="find_content" resultType="egovframework.example.board.vo.boardVo">
 			SELECT
@@ -55,4 +70,20 @@
 			WHERE
 				board_id = #{board_id}
 	</select>
+	
+	<!-- 게시글 갯수 -->
+	<select id="getBoardListCnt" resultType="Integer">
+        SELECT count(*) as listCnt
+        FROM board
+        <where>
+            <if test="keyword != null and keyword != ''">
+                <if test="searchType=='title'">
+                    AND title like CONCAT('%',#{keyword},'%')
+                </if>
+                <if test="searchType=='content'">
+                    AND content like CONCAT('%',#{keyword},'%')
+                </if>
+            </if>
+        </where>
+    </select>
 </mapper>

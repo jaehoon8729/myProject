@@ -6,7 +6,7 @@
 	<resultMap id="board" type="egovframework.example.login.vo.userVo">
 		<result property="user_id" column="user_id"/>
 		<result property="user_pswd" column="user_pswd"/>
-		<result property="admin_yn" column="admin_yn"/>
+		<result property="state" column="state"/>
 		<result property="user_name" column="user_name"/>
 		
 	</resultMap>
@@ -16,7 +16,7 @@
 		USER(
 			user_id
 			, user_pswd
-			, admin_yn
+			, state
 			, user_name
 		)VALUES(
 			#{user_id}
@@ -31,7 +31,7 @@
 	 	SELECT
 	 		user_id
 	 		, user_pswd
-	 		, admin_yn
+	 		, state
 	 		, user_name
 	 	FROM
 	 		user

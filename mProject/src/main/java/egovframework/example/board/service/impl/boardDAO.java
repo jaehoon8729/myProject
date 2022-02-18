@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import egovframework.example.board.vo.boardVo;
 import egovframework.example.cmmn.service.impl.EgovComAbstractDAO;
+import egovframework.example.ivory.vo.Search;
 
 /**
  * @Class Name : WncAdmDAO.java
@@ -23,8 +24,8 @@ import egovframework.example.cmmn.service.impl.EgovComAbstractDAO;
 @Repository("boardDAO")
 public class boardDAO extends EgovComAbstractDAO {
     
-    public List<boardVo> selectBoardList() throws Exception{
-    	return selectList("find_board_list");
+    public List<boardVo> selectBoardList(Search search) throws Exception{
+    	return selectList("find_board_list",search);
     }
     
     public boardVo selectContent(boardVo vo) throws Exception{
@@ -33,5 +34,8 @@ public class boardDAO extends EgovComAbstractDAO {
     
     public void insertContent(boardVo vo) throws Exception{
     	insert("insert_board",vo);
+    }
+    public int getBoardListCnt(Search search) throws Exception{
+    	return selectOne("getBoardListCnt", search);
     }
 }

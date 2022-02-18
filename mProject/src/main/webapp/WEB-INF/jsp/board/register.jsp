@@ -37,15 +37,18 @@
 		
 		if('<c:out value="${userVo.user_id}"/>' == ""){		//로그인여부 확인
 			alert("로그인을 해주세요!");
-
 			location.href="/login/login.do";
+			return false;
 		}else if(tagRemove.length >= 40000){		//글자수가 40000byte제한
 			alert("최대 40000 byte까지 입력 가능합니다.");	//DB엔 text형으로 컬럼을 만들어 65535 문자까지 가능
-		}else{										//조건만족시 Post
+			return false;
+		}
+		else{										//조건만족시 Post
 			var form = document.createElement('form');
 			form.type = 'hidden';
 			form.name = 'form';
 			form.method = 'post';
+			form.enctype = 'multipart/form-data';
 			form.action = 'boardPost.do';
 			
 			var input = document.createElement("input");
@@ -66,6 +69,13 @@
 			input.value = oEditors.getById["content"].getIR();
 			form.append(input);
 			
+			var input = document.createElement("input");
+			input.type = 'hidden';
+			input.name = 'file';
+			input.value = document.getElementById("uploadfile").files[0];
+			alert(document.getElementById("uploadfile").files[0]);
+			form.append(input);
+			
 			document.body.appendChild(form);
 			form.submit();
 			document.body.removeChild(form);
@@ -83,8 +93,8 @@
 <br/>
 <br/>
 <div class="container">
-        <form name="form">
-        <input type="hidden" name="user_id" value="${userVo.user_id }">
+        <form name="form" >
+        	<input type="hidden" name="user_id" value="<c:out value="${userVo.user_id}"/>">
             <table class="table table-bordered">
                 <tbody>
                     <tr>
@@ -95,11 +105,12 @@
                         <th>내용</th>
                         <td>
                         	<textarea id="content" name="content" rows="10" cols="100" style="width: 100%;"></textarea>
+                        	<input id="uploadfile" type="file" name="file" placeholder="파일 선택" /><br/>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <button id="" type="button" class="btn_register" onclick="javascript:postText()">작성</button>
+                            <button id="" type="button" class="btn_register" onclick="javascript:postText()" >작성</button>
                             <button id="btn_previous" type="button" onclick="javascript:location.href='board.do'">뒤로가기</button>
                     </tr>
                 </tbody>

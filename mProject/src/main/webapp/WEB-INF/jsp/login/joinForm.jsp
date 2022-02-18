@@ -1,38 +1,37 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
-    <title>È¸¿ø°¡ÀÔ È­¸é</title>
+    <title>íšŒì›ê°€ìž… í™”ë©´</title>
     <link href='/css/join_style.css' rel='stylesheet' style='text/css'/>
     
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/common/header.jsp"></jsp:include>
-    <!-- div ¿ÞÂÊ, ¿À¸¥ÂÊ ¹Ù±ù¿©¹éÀ» auto·Î ÁÖ¸é Áß¾ÓÁ¤·ÄµÈ´Ù.  -->
+    <!-- div ì™¼ìª½, ì˜¤ë¥¸ìª½ ë°”ê¹¥ì—¬ë°±ì„ autoë¡œ ì£¼ë©´ ì¤‘ì•™ì •ë ¬ëœë‹¤.  -->
     <div id="wrap">
-        <br><br><br><br><font size="6" color="gray">È¸¿ø°¡ÀÔ</font></b>
+        <br><br><br><br><font size="6" color="gray">íšŒì›ê°€ìž…</font></b>
             <br><br><br><br>
         
         
         <form method="post" action="/login/joinFormPost.do" >
             <table>
                 <tr>
-                    <td id="title">¾ÆÀÌµð</td>
+                    <td id="title">ì•„ì´ë””</td>
                     <td>
                         <input type="text" name="user_id" maxlength="50">
-                        <input type="button" value="Áßº¹È®ÀÎ" >    
+                        <input type="button" value="ì¤‘ë³µí™•ì¸" >    
                     </td>
                 </tr>
                         
                 <tr>
-                    <td id="title">ºñ¹Ð¹øÈ£</td>
+                    <td id="title">ë¹„ë°€ë²ˆí˜¸</td>
                     <td>
                         <input type="password" name="user_pswd" maxlength="50">
                     </td>
                 </tr>
                     
                 <tr>
-                    <td id="title">ÀÌ¸§</td>
+                    <td id="title">ì´ë¦„</td>
                     <td>
                         <input type="text" name="user_name" maxlength="50">
                     </td>
@@ -40,8 +39,8 @@
 
             </table>
             <br>
-            <input type="submit" value="°¡ÀÔ"/>  
-            <input type="button" value="Ãë¼Ò" onclick="goLoginForm()">
+            <input type="submit" value="ê°€ìž…"/>  
+            <input type="button" value="ì·¨ì†Œ" onclick="goLoginForm()">
         </form>
     </div>
 </body>

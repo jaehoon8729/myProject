@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import egovframework.example.board.service.boardService;
 import egovframework.example.board.vo.boardVo;
+import egovframework.example.ivory.vo.Search;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 
@@ -17,8 +18,8 @@ public class boardServiceImpl extends EgovAbstractServiceImpl implements boardSe
 	@Autowired
 	private boardDAO boardDao;
 	
-	public List<boardVo> selectBoardList() throws Exception {
-    	return boardDao.selectBoardList();
+	public List<boardVo> selectBoardList(Search search) throws Exception {
+    	return boardDao.selectBoardList(search);
     }
 
 	public boardVo selectBoardContent(boardVo vo) throws Exception {
@@ -28,5 +29,9 @@ public class boardServiceImpl extends EgovAbstractServiceImpl implements boardSe
 	
 	public void insertBoardContent(boardVo vo) throws Exception {
 		boardDao.insertContent(vo);
+	}
+
+	public int getBoardListCnt(Search search) throws Exception {
+		return boardDao.getBoardListCnt(search);
 	}
 }

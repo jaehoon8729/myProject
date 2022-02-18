@@ -3,7 +3,7 @@ package egovframework.example.login.vo;
 public class userVo {
 	private String user_id;
 	private String user_pswd;
-	private String admin_yn;
+	private String state;
 	private String user_name;
 	
 	
@@ -20,10 +20,10 @@ public class userVo {
 		this.user_pswd = user_pswd;
 	}
 	public String getAdmin_yn() {
-		return admin_yn;
+		return state;
 	}
 	public void setAdmin_yn(String admin_yn) {
-		this.admin_yn = admin_yn;
+		this.state = admin_yn;
 	}
 	public String getUser_name() {
 		return user_name;
