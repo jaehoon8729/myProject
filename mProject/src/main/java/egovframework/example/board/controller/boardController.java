@@ -40,7 +40,7 @@ public class boardController {
 		model.addAttribute("search", search);
         search.setSearchType(searchType);
         search.setKeyword(keyword);
-        System.out.println(keyword);
+
       //전체 개시글 개수
         int listCnt = boardservice.getBoardListCnt(search);
         

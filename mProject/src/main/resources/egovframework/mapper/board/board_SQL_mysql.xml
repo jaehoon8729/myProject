@@ -10,11 +10,25 @@
 		<result property="content" column="content"/>
 		<result property="file_name" column="file_name"/>
 		<result property="reg_dtm" column="reg_dtm"/>
-		
 	</resultMap>
+	
 	<resultMap id="search" type="egovframework.example.ivory.vo.Search">
 		<result property="searchType" column="searchType"/>
 		<result property="keyword" column="keyword"/>
+	</resultMap>
+	
+	<resultMap id="paging" type="egovframework.example.ivory.vo.pagination">
+		<result property="listSize" column="listSize"/>
+		<result property="rangeSize" column="rangeSize"/>
+		<result property="page" column="page"/>
+		<result property="range" column="range"/>
+		<result property="listCnt" column="listCnt"/>
+		<result property="pageCnt" column="pageCnt"/>
+		<result property="startPage" column="startPage"/>
+		<result property="startList" column="startList"/>
+		<result property="endPage" column="endPage"/>
+		<result property="prev" column="prev"/>
+		<result property="next" column="next"/>
 	</resultMap>
 	
   <!-- 글작성 -->
@@ -52,7 +66,7 @@
                 AND content like CONCAT('%',#{keyword},'%')
             </if>
         </where>
-        ORDER BY user_id DESC
+        ORDER BY board_id DESC
         LIMIT #{startList}, #{listSize}
     </select>
 

@@ -1,7 +1,7 @@
 package egovframework.example.ivory.vo;
 
 public class pagination {
-private int listSize = 10; //초기값으로 한 페이지당 보여질 게시글 개수
+	private int listSize = 10; //초기값으로 한 페이지당 보여질 게시글 개수
     
     private int rangeSize = 5; //초기값으로 페이지 범위에 보여질 페이지 개수
     
