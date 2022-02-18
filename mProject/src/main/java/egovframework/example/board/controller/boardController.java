@@ -2,6 +2,7 @@ package egovframework.example.board.controller;
 
 import java.security.Provider.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,13 @@ public class boardController {
 	@RequestMapping(value="/board/boardPost.do")
 	public String boardPost(boardVo vo, Model model) throws Exception {
 		
-		System.out.println(vo.getUser_id());
-		System.out.println(vo.getTitle());
-		System.out.println(vo.getContent());
+//		System.out.println(vo.getUser_id());
+//		System.out.println(vo.getTitle());
+//		System.out.println(vo.getContent());
+		
 		boardservice.insertBoardContent(vo);
 		
-		return "redirect:board/board";
+		return "redirect:board.do";
 	}
 	
 	

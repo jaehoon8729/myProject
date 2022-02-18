@@ -6,6 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Board Write</title>
 <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+<!-- SmartEditor를 사용하기 위해서 다음 js파일을 추가 (경로 확인) -->
+<script type="text/javascript" src="/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
     href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -25,38 +28,48 @@
     crossorigin="anonymous"></script>
 
 
-<!-- SmartEditor를 사용하기 위해서 다음 js파일을 추가 (경로 확인) -->
-<script type="text/javascript" src="/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+
 
 <script type="text/javascript">
-	function postText() {
-		var form = document.createElement('form');
-		form.type = 'hidden';
-		form.name = 'form';
-		form.method = 'post';
-		form.action = 'board/boardPost.do';
+	function postText() {	
+		var checkContentLength = oEditors.getById["content"].getIR();
+		var tagRemove = checkContentLength.replaceAll(/(<([^>]+)>)/ig,"");
 		
-		var input = document.createElement("input");
-		input.type = 'hidden';
-		input.name = 'user_id';
-		input.value = '<c:out value="${userVo.user_id}"/>';
-		form.append(input);
-		
-		var input = document.createElement("input");
-		input.type = 'hidden';
-		input.name = 'title';
-		input.value = document.getElementById("title").value;
-		form.append(input);
-		
-		var input = document.createElement("input");
-		input.type = 'hidden';
-		input.name = 'content';
-		input.value = oEditors.getById["content"].getIR();
-		form.append(input);
-		
-		document.body.appendChild(form);
-		form.submit();
-		document.body.removeChild(form);
+		if('<c:out value="${userVo.user_id}"/>' == ""){		//로그인여부 확인
+			alert("로그인을 해주세요!");
+
+			location.href="/login/login.do";
+		}else if(tagRemove.length >= 40000){		//글자수가 40000byte제한
+			alert("최대 40000 byte까지 입력 가능합니다.");	//DB엔 text형으로 컬럼을 만들어 65535 문자까지 가능
+		}else{										//조건만족시 Post
+			var form = document.createElement('form');
+			form.type = 'hidden';
+			form.name = 'form';
+			form.method = 'post';
+			form.action = 'boardPost.do';
+			
+			var input = document.createElement("input");
+			input.type = 'hidden';
+			input.name = 'user_id';
+			input.value = '<c:out value="${userVo.user_id}"/>';
+			form.append(input);
+			
+			var input = document.createElement("input");
+			input.type = 'hidden';
+			input.name = 'title';
+			input.value = document.getElementById("title").value;
+			form.append(input);
+			
+			var input = document.createElement("input");
+			input.type = 'hidden';
+			input.name = 'content';
+			input.value = oEditors.getById["content"].getIR();
+			form.append(input);
+			
+			document.body.appendChild(form);
+			form.submit();
+			document.body.removeChild(form);
+		}
 	}
 </script> 
 
@@ -97,6 +110,7 @@
 
 <script id="smartEditor" type="text/javascript"> 
 	var oEditors = [];
+window.onload = function() {
 	nhn.husky.EZCreator.createInIFrame({
 	    oAppRef: oEditors,
 	    elPlaceHolder: "content",  //textarea ID 입력
@@ -111,6 +125,8 @@
 		bUseModeChanger : false 
 	    }
 	});
+}
+
 </script>
 
 </html>

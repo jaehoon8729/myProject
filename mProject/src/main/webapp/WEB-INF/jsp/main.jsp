@@ -9,5 +9,11 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/common/header.jsp"></jsp:include>
+
+    <div id="wrap" style="align:center">
+            <br><br><br><br><font size="6" color="gray">메인 화면</font></b>
+            <br><br><br><br>
+            <br>
+    </div>    
 </body>
 </html>

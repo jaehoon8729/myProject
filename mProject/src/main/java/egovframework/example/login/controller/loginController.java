@@ -44,14 +44,15 @@ public class loginController {
 
 	    // DB 비밀번호와 로그인 비밀번호가 틀릴경우 loginFail 모델은 내려준다.
 		if (!pwdEncoder.matches(vo.getUser_pswd(), userservice.userLogin(vo).getUser_pswd())) {
-			model.addAttribute("loginFail", true);
 			System.out.println("정보가 다릅니다");
+			return "redirect:login.do";
 		}else {
 			vo = userservice.userLogin(vo);
 			session.setAttribute("userVo", vo);
+			return "redirect:/main.do";
 		}
 
-		return "main";
+		
 	}
 	
 	//로그아웃
