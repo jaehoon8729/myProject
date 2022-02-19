@@ -88,8 +88,8 @@ a{
  
             <div class="w100" style="padding-right: 10px">
                 <select class="form-control form-control-sm" name="searchType" id="searchType">
-                    <option value="testTitle">제목</option>
-                    <option value="testContent">내용</option>
+                    <option value="title">제목</option>
+                    <option value="content">내용</option>
                 </select>
             </div>
  

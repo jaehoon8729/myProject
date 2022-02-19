@@ -46,7 +46,8 @@ public class boardController {
         
         //검색 후 페이지
         search.pageInfo(page, range, listCnt);
-
+        System.out.println(search.getKeyword());
+        System.out.println(search.getSearchType());
         //페이징
         model.addAttribute("pagination", search);
         
