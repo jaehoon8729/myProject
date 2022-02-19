@@ -32,6 +32,7 @@
 
 <script type="text/javascript">
 	function postText() {	
+		alert("tset");
 		var checkContentLength = oEditors.getById["content"].getIR();
 		var tagRemove = checkContentLength.replaceAll(/(<([^>]+)>)/ig,"");
 		
@@ -42,7 +43,7 @@
 		}else if(tagRemove.length >= 40000){		//글자수가 40000byte제한
 			alert("최대 40000 byte까지 입력 가능합니다.");	//DB엔 text형으로 컬럼을 만들어 65535 문자까지 가능
 			return false;
-		}
+		}/*
 		else{										//조건만족시 Post
 			var form = document.createElement('form');
 			form.type = 'hidden';
@@ -51,35 +52,39 @@
 			form.enctype = 'multipart/form-data';
 			form.action = 'boardPost.do';
 			
+			//세션로그인정보
 			var input = document.createElement("input");
 			input.type = 'hidden';
 			input.name = 'user_id';
 			input.value = '<c:out value="${userVo.user_id}"/>';
 			form.append(input);
 			
+			//제목
 			var input = document.createElement("input");
 			input.type = 'hidden';
 			input.name = 'title';
 			input.value = document.getElementById("title").value;
 			form.append(input);
 			
+			//내용
 			var input = document.createElement("input");
 			input.type = 'hidden';
 			input.name = 'content';
 			input.value = oEditors.getById["content"].getIR();
 			form.append(input);
 			
+			//파일
+			var file = document.getElementById("uploadfile").files[0];
 			var input = document.createElement("input");
 			input.type = 'hidden';
-			input.name = 'file';
-			input.value = document.getElementById("uploadfile").files[0];
-			alert(document.getElementById("uploadfile").files[0]);
+			input.name = 'uploadFile';
+			input.value = file;
 			form.append(input);
 			
 			document.body.appendChild(form);
 			form.submit();
 			document.body.removeChild(form);
-		}
+		}*/
 	}
 </script> 
 
@@ -93,7 +98,7 @@
 <br/>
 <br/>
 <div class="container">
-        <form name="form" >
+        <form name="form" method="post" enctype="multipart/form-data" action="boardPost.do" onsubmit="return postText();">
         	<input type="hidden" name="user_id" value="<c:out value="${userVo.user_id}"/>">
             <table class="table table-bordered">
                 <tbody>
@@ -105,12 +110,12 @@
                         <th>내용</th>
                         <td>
                         	<textarea id="content" name="content" rows="10" cols="100" style="width: 100%;"></textarea>
-                        	<input id="uploadfile" type="file" name="file" placeholder="파일 선택" /><br/>
+                        	<input id="uploadfile" type="file" name="uploadFile" placeholder="파일 선택" /><br/>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <button id="" type="button" class="btn_register" onclick="javascript:postText()" >작성</button>
+                            <button id="" type="submit" class="btn_register" >작성</button>
                             <button id="btn_previous" type="button" onclick="javascript:location.href='board.do'">뒤로가기</button>
                     </tr>
                 </tbody>

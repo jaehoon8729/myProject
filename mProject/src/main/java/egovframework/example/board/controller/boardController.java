@@ -2,17 +2,14 @@ package egovframework.example.board.controller;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.util.UUID;
 
-import javax.servlet.http.HttpSession;
-
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +21,7 @@ import egovframework.example.ivory.vo.Search;
 @Controller
 public class boardController {
 	
-	private static final String UPLOAD_PATH = "D:\\studyDownload";
+	private static final String UPLOAD_PATH = "D:\\studyDownload\\";
 	
 	@Autowired
 	private boardService boardservice;
@@ -46,8 +43,7 @@ public class boardController {
         
         //검색 후 페이지
         search.pageInfo(page, range, listCnt);
-        System.out.println(search.getKeyword());
-        System.out.println(search.getSearchType());
+        
         //페이징
         model.addAttribute("pagination", search);
         
@@ -57,47 +53,26 @@ public class boardController {
 		return "board/board";
 	}
 	
-	@RequestMapping(value="/board/boardPost.do", method = RequestMethod.POST)
-	public String boardPost(boardVo vo, @RequestParam("file") MultipartFile loadfile, Model model) throws Exception {
-		System.out.println("test");
-		
-		String tf = vo.getFile_name();
-		System.out.println(vo.getContent()+","+vo.getFile_name());
-		
-		if(loadfile != null) {
-			vo.setFile_name(saveFile(loadfile));
-			System.out.println(vo.getFile_name());
-		}
-		
-		if(vo.getFile_name() != null){ // 파일 저장 성공
-	        System.out.println("파일저장성공-----------------");
-	    } else { // 파일 저장 실패
-	    	System.out.println("파일저장실패-----------------");
-	    }
-		
-	
-		boardservice.insertBoardContent(vo);
-		
+	@RequestMapping(value="/board/boardPost.do")
+	public String boardPost(@ModelAttribute boardVo vo) throws Exception {
+		System.out.println("testetsetstset");
+		String fileName = null;
+        MultipartFile uploadFile = vo.getUploadFile();
+        System.out.println("multi pass");
+        if (!uploadFile.isEmpty()) {
+            String originalFileName = uploadFile.getOriginalFilename();
+            String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
+            UUID uuid = UUID.randomUUID(); // UUID 구하기
+            fileName = uuid + "." + ext;
+            uploadFile.transferTo(new File(UPLOAD_PATH + fileName));
+        }
+        vo.setFileName(fileName);
+        
+        System.out.println(vo.getFileName());
+ 
+        boardservice.insertBoardContent(vo);
+
 		return "redirect:board.do";
-	}
-	
-	private String saveFile(MultipartFile file) {
-		//서버에서 이름안겹치게 uuid로 랜덤텍스트 생성
-		UUID uuid = UUID.randomUUID();
-		System.out.println(uuid);
-		String saveName = uuid.toString() + "_" + file.getOriginalFilename();
-		System.out.println(saveName);
-		//저장할 file 객체를 생성(저장할 폴더이름,저장할파일이름)
-		File saveFile = new File(UPLOAD_PATH,saveName);
-		
-		try {
-			//업로드파일에 savefile이라는 객체를 입힘
-			file.transferTo(saveFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-		return saveName;
 	}
 	
 	@RequestMapping(value="/board/view.do")
@@ -107,14 +82,14 @@ public class boardController {
 		
 		return "board/view";
 	}
-	
+				
 	@RequestMapping(value="/board/detail.do")
 	public String detail() {
 		return "board/detail";
 	}
 	
 	@RequestMapping(value="/board/register.do")
-	public String write(boardVo vo,Model model, HttpSession session) {
+	public String write() {
 		
 		return "board/register";
 	}

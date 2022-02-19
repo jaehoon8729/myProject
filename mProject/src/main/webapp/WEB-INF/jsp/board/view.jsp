@@ -52,7 +52,10 @@
                         <td>
                         	<textarea id="content" name="content" rows="10" cols="100" style="width: 100%;" readonly>${vo.content }</textarea>
                         </td>
- 
+                    </tr>
+                    <tr>
+                        <th>첨부파일</th>
+                        <td><input type="file" name="uploadFile"></td>
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align: right;">

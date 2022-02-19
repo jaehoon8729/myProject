@@ -2,6 +2,8 @@ package egovframework.example.board.vo;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class boardVo {
 	private int board_id;
 	private String user_id;
@@ -10,6 +12,23 @@ public class boardVo {
 	private String file_name;
 	private Date reg_dtm;
 	
+	private String fileName;
+	private MultipartFile uploadFile;
+
+	
+
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
 	public int getBoard_id() {
 		return board_id;
 	}

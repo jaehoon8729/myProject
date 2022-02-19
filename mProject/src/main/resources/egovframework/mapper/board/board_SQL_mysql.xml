@@ -33,16 +33,21 @@
 	
   <!-- 글작성 -->
 	<insert id="insert_board" >
-			INSERT INTO board(
-				user_id
-				, title
-				, content
-			)VALUES(
-				#{user_id}
-				, #{title}
-				, #{content}
-			)
+			<![CDATA[
+        	INSERT INTO board(
+        	user_id
+        	, title
+        	, content
+        	, file_name
+        	)
+        	VALUES(
+        	#{user_id}
+        	, #{title}
+        	, #{content}
+        	, #{file_name})
+        	]]>
 	</insert>
+	<!-- 글수정 -->
 <!--
 	<update id="updatexWncAdm" parameterType="egovframework.com.wnc.WncAdm.service.WncMemberVO">
 			
