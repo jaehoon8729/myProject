@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 <html>
 <head>
     <title>로그인</title>
@@ -25,7 +26,11 @@
             }
         }
     </script>
- 
+   	<script>
+   	function imgRefresh(){
+   	    $("#captchaImg").attr("src", "/captcha/getImg.do?id=" + Math.random());
+   	}
+ 	</script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/common/header.jsp"></jsp:include>
@@ -42,9 +47,14 @@
                 </tr>
                 <tr>
                     <td bgcolor="skyblue">비밀번호</td>
-                    <td><input type="password" name="user_pswd" maxlength="50"></td>
+                    <td><input type="password" name="user_pswd" maxlength="50" autocomplete="off"></td>
                 </tr>
             </table>
+            <div>
+           		<img src="/captcha/getImg.do" id="captchaImg" alt="captcha img">
+				<input type="text" placeholder="보안문자를 입력하세요" name="captcha">
+				<a onclick="imgRefresh()" id="refreshBtn">새로고침</a>
+         	</div>
             <br>
             <input type="submit" value="로그인"/>
             <input type="button" value="회원가입" onclick="location.href='joinForm.do'" />

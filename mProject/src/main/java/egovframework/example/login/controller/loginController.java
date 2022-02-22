@@ -40,8 +40,9 @@ public class loginController {
 	
 	//로그인submit
 	@RequestMapping(value="/login/loginPost.do", method = RequestMethod.POST)
-	public String loginPost(userVo vo, Model model, HttpSession session) throws Exception {
-
+	public String loginPost(userVo vo, Model model, HttpSession session, HttpServletRequest request) throws Exception {
+		System.out.println("correctAnswer:"+ request.getSession().getAttribute("correctAnswer"));
+		
 	    // DB 비밀번호와 로그인 비밀번호가 틀릴경우 loginFail 모델은 내려준다.
 		if (!pwdEncoder.matches(vo.getUser_pswd(), userservice.userLogin(vo).getUser_pswd())) {
 			System.out.println("정보가 다릅니다");
