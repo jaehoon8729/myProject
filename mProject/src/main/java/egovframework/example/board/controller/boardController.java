@@ -55,10 +55,10 @@ public class boardController {
 	
 	@RequestMapping(value="/board/boardPost.do")
 	public String boardPost(@ModelAttribute boardVo vo) throws Exception {
-		System.out.println("testetsetstset");
+		System.out.println(vo.getContent());
 		String fileName = null;
         MultipartFile uploadFile = vo.getUploadFile();
-        System.out.println("multi pass");
+
         if (!uploadFile.isEmpty()) {
             String originalFileName = uploadFile.getOriginalFilename();
             String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
@@ -66,9 +66,7 @@ public class boardController {
             fileName = uuid + "." + ext;
             uploadFile.transferTo(new File(UPLOAD_PATH + fileName));
         }
-        vo.setFileName(fileName);
-        
-        System.out.println(vo.getFileName());
+        vo.setFile_name(fileName);
  
         boardservice.insertBoardContent(vo);
 

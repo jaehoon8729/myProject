@@ -32,9 +32,9 @@
 
 <script type="text/javascript">
 	function postText() {	
-		alert("tset");
 		var checkContentLength = oEditors.getById["content"].getIR();
 		var tagRemove = checkContentLength.replaceAll(/(<([^>]+)>)/ig,"");
+		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD",[]);
 		
 		if('<c:out value="${userVo.user_id}"/>' == ""){		//로그인여부 확인
 			alert("로그인을 해주세요!");
@@ -110,7 +110,12 @@
                         <th>내용</th>
                         <td>
                         	<textarea id="content" name="content" rows="10" cols="100" style="width: 100%;"></textarea>
-                        	<input id="uploadfile" type="file" name="uploadFile" placeholder="파일 선택" /><br/>
+                        </td>
+                    </tr>
+                    <tr>
+                    	<th>첨부파일</th>
+                    	<td>
+	                        <input id="uploadfile" type="file" name="uploadFile" placeholder="파일 선택" /><br/>
                         </td>
                     </tr>
                     <tr>
@@ -135,10 +140,10 @@ window.onload = function() {
 	    htParams : { 
 	    	// 툴바 사용 여부 (true:사용/ false:사용하지 않음) 
 	        bUseToolbar : true, 
-		// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음) 
-		bUseVerticalResizer : false, 
-		// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음) 
-		bUseModeChanger : false 
+			// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음) 
+			bUseVerticalResizer : false, 
+			// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음) 
+			bUseModeChanger : false 
 	    }
 	});
 }

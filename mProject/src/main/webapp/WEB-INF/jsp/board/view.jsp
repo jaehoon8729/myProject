@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,7 +9,7 @@
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
     href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"............................
     crossorigin="anonymous">
  
 <!-- Optional theme -->
@@ -29,7 +30,7 @@
 <body>
 	<jsp:include page="/WEB-INF/jsp/common/header.jsp"></jsp:include>
     <br />
-    <h1 class="text-center">Board Detail</h1>
+    <h1 class="text-center">Board View</h1>
     <br />
     <br />
     <div class="container">
@@ -53,10 +54,16 @@
                         	<textarea id="content" name="content" rows="10" cols="100" style="width: 100%;" readonly>${vo.content }</textarea>
                         </td>
                     </tr>
-                    <tr>
-                        <th>첨부파일</th>
-                        <td><input type="file" name="uploadFile"></td>
-                    </tr>
+                    <c:if test="${vo.file_name ne null}">
+						<tr>
+						    <th>다운로드</th>
+						    <td>
+							    <a href="fileDownload.do?file_name=${vo.file_name}">
+								<input type="text" id="filename" value="${vo.file_name}" name="fileName" class="form-control" readonly="readonly" /></a>
+								<button id="filedelete" type="button" class="btn_previous" style="float: right">파일삭제</button>
+							</td>
+						</tr>
+                    </c:if>
                     <tr>
                         <td colspan="2" style="text-align: right;">
                             <button id="btn_previous" type="button" class="btn_previous" onclick="location.href='http://localhost:8080/board/board.do'">이전</button>
@@ -83,7 +90,13 @@
 		bUseVerticalResizer : false, 
 		// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음) 
 		bUseModeChanger : false 
-	    }
+	    },
+	    fOnAppLoad : function(){
+			//oEditors.getById["content"].exec("PASTE_HTML", ["로딩이 완료된 후에 본문에 삽입되는 text입니다."]);
+			var editor = oEditors.getById["content"];
+			editor.exec("DISABLE_WYSIWYG");
+			editor.exec("DISABLE_ALL_UI");
+		}
 	});
 </script>
 </html>

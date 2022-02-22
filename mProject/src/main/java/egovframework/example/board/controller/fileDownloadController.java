@@ -13,12 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
  
 @Controller
-public class FileDownloadController {
+public class fileDownloadController {
  
-    @RequestMapping(value = "fileDownload.do")
+    @RequestMapping(value = "/board/fileDownload.do")
     public void fileDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
  
-        String filename = request.getParameter("fileName");
+        String filename = request.getParameter("file_name");
         String realFilename = "";
         System.out.println(filename);
  
@@ -67,6 +67,5 @@ public class FileDownloadController {
         } catch (Exception e) {
             e.printStackTrace();
         }
- 
     }
 }

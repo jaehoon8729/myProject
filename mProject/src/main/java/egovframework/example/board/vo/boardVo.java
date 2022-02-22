@@ -12,17 +12,9 @@ public class boardVo {
 	private String file_name;
 	private Date reg_dtm;
 	
-	private String fileName;
 	private MultipartFile uploadFile;
 
 	
-
-	public String getFileName() {
-		return fileName;
-	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
 	public MultipartFile getUploadFile() {
 		return uploadFile;
 	}
