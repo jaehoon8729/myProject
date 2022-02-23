@@ -6,7 +6,22 @@ public class userVo {
 	private String state;
 	private String user_name;
 	
+	private String captcha;
 	
+	
+	
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getCaptcha() {
+		return captcha;
+	}
+	public void setCaptcha(String captcha) {
+		this.captcha = captcha;
+	}
 	public String getUser_id() {
 		return user_id;
 	}
@@ -18,12 +33,6 @@ public class userVo {
 	}
 	public void setUser_pswd(String user_pswd) {
 		this.user_pswd = user_pswd;
-	}
-	public String getAdmin_yn() {
-		return state;
-	}
-	public void setAdmin_yn(String admin_yn) {
-		this.state = admin_yn;
 	}
 	public String getUser_name() {
 		return user_name;

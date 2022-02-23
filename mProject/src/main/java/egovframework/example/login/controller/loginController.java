@@ -43,6 +43,14 @@ public class loginController {
 	public String loginPost(userVo vo, Model model, HttpSession session, HttpServletRequest request) throws Exception {
 		System.out.println("correctAnswer:"+ request.getSession().getAttribute("correctAnswer"));
 		
+		// 캡차
+		if(request.getSession().getAttribute("correctAnswer") != null) {
+			if(!request.getSession().getAttribute("correctAnswer").equals(vo.getCaptcha())) {
+				System.out.println("캡차실패");
+				return "redirect:login.do";
+			}	
+		}
+		
 	    // DB 비밀번호와 로그인 비밀번호가 틀릴경우 loginFail 모델은 내려준다.
 		if (!pwdEncoder.matches(vo.getUser_pswd(), userservice.userLogin(vo).getUser_pswd())) {
 			System.out.println("정보가 다릅니다");

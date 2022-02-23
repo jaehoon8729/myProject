@@ -9,19 +9,15 @@
     
     <script type="text/javascript">
     
-        function checkValue()
-        {
+        function checkValue(){
             var inputForm = eval("document.loginInfo");
-            if(!inputForm.user_id.value)
-            {
+            
+            if(!inputForm.user_id.value){
                 alert("아이디를 입력하세요");    
-                inputForm.id.focus();
                 return false;
             }
-            if(!inputForm.user_pswd.value)
-            {
+            if(!inputForm.user_pswd.value){
                 alert("비밀번호를 입력하세요");    
-                inputForm.password.focus();
                 return false;
             }
         }
@@ -52,8 +48,8 @@
             </table>
             <div>
            		<img src="/captcha/getImg.do" id="captchaImg" alt="captcha img">
-				<input type="text" placeholder="보안문자를 입력하세요" name="captcha">
-				<a onclick="imgRefresh()" id="refreshBtn">새로고침</a>
+				<input id="captcha" type="text" placeholder="보안문자를 입력하세요" name="captcha">
+				<input type="button" onclick="imgRefresh()" id="refreshBtn" value="새로고침"/>
          	</div>
             <br>
             <input type="submit" value="로그인"/>
