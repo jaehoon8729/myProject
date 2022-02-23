@@ -43,8 +43,9 @@ public class loginController {
 	public String loginPost(userVo vo, Model model, HttpSession session, HttpServletRequest request) throws Exception {
 		System.out.println("correctAnswer:"+ request.getSession().getAttribute("correctAnswer"));
 		
-		// 캡차
+		// 캡차가 있는경우
 		if(request.getSession().getAttribute("correctAnswer") != null) {
+			//캡차랑 input탭에 입력값이 틀리면 진행
 			if(!request.getSession().getAttribute("correctAnswer").equals(vo.getCaptcha())) {
 				System.out.println("캡차실패");
 				return "redirect:login.do";

@@ -16,8 +16,10 @@ import jj.play.ns.nl.captcha.Captcha;
 @Controller
 @RequestMapping("/captcha")
 public class CaptchaServlet extends HttpServlet {
- 
-    @Override
+
+	private static final long serialVersionUID = 1L;
+
+	@Override
     @RequestMapping("/getImg.do")
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
  

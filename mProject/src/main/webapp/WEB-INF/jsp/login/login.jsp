@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>로그인</title>
@@ -46,6 +47,7 @@
                     <td><input type="password" name="user_pswd" maxlength="50" autocomplete="off"></td>
                 </tr>
             </table>
+            <c:if test=""></c:if>
             <div>
            		<img src="/captcha/getImg.do" id="captchaImg" alt="captcha img">
 				<input id="captcha" type="text" placeholder="보안문자를 입력하세요" name="captcha">

@@ -14,4 +14,6 @@ public interface boardService {
 	public void insertBoardContent(boardVo vo) throws Exception;
 
 	public int getBoardListCnt(Search search) throws Exception;
+	
+	public void updateBoard(boardVo vo) throws Exception;
 }

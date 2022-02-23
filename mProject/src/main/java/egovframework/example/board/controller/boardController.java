@@ -55,7 +55,7 @@ public class boardController {
 	
 	@RequestMapping(value="/board/boardPost.do")
 	public String boardPost(@ModelAttribute boardVo vo) throws Exception {
-		System.out.println(vo.getContent());
+
 		String fileName = null;
         MultipartFile uploadFile = vo.getUploadFile();
 
@@ -73,6 +73,7 @@ public class boardController {
 		return "redirect:board.do";
 	}
 	
+	//View
 	@RequestMapping(value="/board/view.do")
 	public String view(@ModelAttribute boardVo vo, Model model) throws Exception {
 
@@ -80,10 +81,40 @@ public class boardController {
 		
 		return "board/view";
 	}
-				
+	
+	//수정
 	@RequestMapping(value="/board/detail.do")
-	public String detail() {
+	public String detail(@ModelAttribute boardVo vo, Model model) throws Exception {
+		
+		String fileName = null;
+		MultipartFile uploadFile = vo.getUploadFile();
+		System.out.println(vo.getFile_name());
+		
+		model.addAttribute("vo", boardservice.selectBoardContent(vo));
+		
 		return "board/detail";
+	}
+	
+	//detailPost
+	@RequestMapping(value="/board/detailPost.do")
+	public String detailPost(@ModelAttribute boardVo vo) throws Exception {
+		System.out.println("test");
+		
+		String fileName = null;
+        MultipartFile uploadFile = vo.getUploadFile();
+
+        if (!uploadFile.isEmpty()) {
+            String originalFileName = uploadFile.getOriginalFilename();
+            String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
+            UUID uuid = UUID.randomUUID(); // UUID 구하기
+            fileName = uuid + "." + ext;
+            uploadFile.transferTo(new File(UPLOAD_PATH + fileName));
+        }
+        vo.setFile_name(fileName);
+        
+		boardservice.updateBoard(vo);
+		
+		return "redirect:view.do?board_id="+vo.getBoard_id();
 	}
 	
 	@RequestMapping(value="/board/register.do")

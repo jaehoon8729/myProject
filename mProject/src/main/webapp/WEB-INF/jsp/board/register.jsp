@@ -34,6 +34,7 @@
 	function postText() {	
 		var checkContentLength = oEditors.getById["content"].getIR();
 		var tagRemove = checkContentLength.replaceAll(/(<([^>]+)>)/ig,"");
+		//에디터의 실제 내용을 가져옴
 		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD",[]);
 		
 		if('<c:out value="${userVo.user_id}"/>' == ""){		//로그인여부 확인

@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Board View</title>
 <!-- Latest compiled and minified CSS -->
@@ -23,7 +24,6 @@
     src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
     integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
-<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
     <!-- SmartEditor를 사용하기 위해서 다음 js파일을 추가 (경로 확인) -->
 <script type="text/javascript" src="/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 </head>
@@ -40,13 +40,15 @@
                 <tbody>
                     <tr>
                         <th>작성자</th>
-                        <td><input name="testId" type="text" value="${vo.user_id}"
-                            class="form-control" readonly /></td>
+                        <td>
+                        	<input name="id" type="text" value="${vo.user_id}" class="form-control" readonly />
+                        </td>
                     </tr>
                     <tr>
                         <th>제목</th>
-                        <td><input type="text" value="${vo.title}"
-                            name="testTitle" class="form-control" readonly/></td>
+                        <td>
+                        	<input type="text" value="${vo.title}" name="title" class="form-control" readonly/>
+                        </td>
                     </tr>
                     <tr>
                         <th>내용</th>
@@ -67,8 +69,10 @@
                     <tr>
                         <td colspan="2" style="text-align: right;">
                             <button id="btn_previous" type="button" class="btn_previous" onclick="location.href='http://localhost:8080/board/board.do'">이전</button>
-                            <!--<button id="btn_modify" type="button" class="btn_register">수정</button>
-                            <button id="btn_delete" type="button" class="btn_delete">삭제</button>-->
+                           	<c:if test="${userVo.user_id == vo.user_id}">
+	                            <button id="btn_modify" type="button" class="btn_register" onclick="location.href='/board/detail.do?board_id=${vo.board_id}'">수정</button>
+	                            <button id="btn_delete" type="button" class="btn_delete">삭제</button>
+                            </c:if>
                         </td>
                     </tr>
                 </tbody>

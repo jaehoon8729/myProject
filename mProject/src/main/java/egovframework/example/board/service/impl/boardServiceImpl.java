@@ -34,4 +34,9 @@ public class boardServiceImpl extends EgovAbstractServiceImpl implements boardSe
 	public int getBoardListCnt(Search search) throws Exception {
 		return boardDao.getBoardListCnt(search);
 	}
+	
+	public void updateBoard(boardVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		boardDao.updateBoard(vo);
+	}
 }

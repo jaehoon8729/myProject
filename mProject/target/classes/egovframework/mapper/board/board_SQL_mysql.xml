@@ -48,11 +48,17 @@
         	]]>
 	</insert>
 	<!-- 글수정 -->
-<!--
-	<update id="updatexWncAdm" parameterType="egovframework.com.wnc.WncAdm.service.WncMemberVO">
-			
+	<update id="update_board" parameterType="egovframework.example.board.vo.boardVo">
+			UPDATE 
+				board 
+			SET  
+				title = #{title}
+				, content = #{content}
+				, file_name = #{file_name}
+			WHERE 
+				board_id = #{board_id}
 	</update>
--->
+
 	
 	<!-- 게시글 목록 조회 -->
     <select id="find_board_list" resultType="egovframework.example.board.vo.boardVo">

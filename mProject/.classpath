@@ -38,8 +38,15 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/jaehoonProject/myproject/mProject/WebContent/WEB-INF/lib/simplecaptcha-1.2.1.jar"/>
-	<classpathentry kind="lib" path="D:/jaehoonProject/myproject/mProject/WebContent/WEB-INF/lib/jj-imaging.jar"/>
-	<classpathentry kind="lib" path="D:/jaehoonProject/myproject/mProject/WebContent/WEB-INF/lib/jj-simplecaptcha.jar"/>
+	<classpathentry kind="lib" path="D:/jaehoonProject/myproject/mProject/WebContent/WEB-INF/lib/jj-imaging.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/jaehoonProject/myproject/mProject/WebContent/WEB-INF/lib/jj-simplecaptcha.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

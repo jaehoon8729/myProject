@@ -38,4 +38,8 @@ public class boardDAO extends EgovComAbstractDAO {
     public int getBoardListCnt(Search search) throws Exception{
     	return selectOne("getBoardListCnt", search);
     }
+    
+    public void updateBoard(boardVo vo) throws Exception{
+    	update("update_board", vo);
+    }
 }
