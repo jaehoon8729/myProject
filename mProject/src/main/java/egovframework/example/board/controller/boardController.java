@@ -55,7 +55,7 @@ public class boardController {
 	
 	@RequestMapping(value="/board/boardPost.do")
 	public String boardPost(@ModelAttribute boardVo vo) throws Exception {
-
+		
 		String fileName = null;
         MultipartFile uploadFile = vo.getUploadFile();
 
@@ -84,34 +84,38 @@ public class boardController {
 	
 	//수정
 	@RequestMapping(value="/board/detail.do")
-	public String detail(@ModelAttribute boardVo vo, Model model) throws Exception {
+	public String detail(boardVo vo, Model model) throws Exception {
 		
-		String fileName = null;
-		MultipartFile uploadFile = vo.getUploadFile();
-		System.out.println(vo.getFile_name());
 		
 		model.addAttribute("vo", boardservice.selectBoardContent(vo));
-		
 		return "board/detail";
 	}
 	
 	//detailPost
 	@RequestMapping(value="/board/detailPost.do")
-	public String detailPost(@ModelAttribute boardVo vo) throws Exception {
-		System.out.println("test");
+	public String detailPost(boardVo vo) throws Exception {
+		System.out.println("uploadfile:"+vo.getUploadFile());
+		System.out.println("board_id:"+vo.getBoard_id());
+		System.out.println("content:"+vo.getContent());
+		System.out.println("filename:"+vo.getFile_name());
+		System.out.println("id:"+vo.getUser_id());
+		System.out.println("같은가?"+boardservice.selectBoardContent(vo).getFile_name());
 		
 		String fileName = null;
         MultipartFile uploadFile = vo.getUploadFile();
 
-        if (!uploadFile.isEmpty()) {
-            String originalFileName = uploadFile.getOriginalFilename();
-            String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
-            UUID uuid = UUID.randomUUID(); // UUID 구하기
-            fileName = uuid + "." + ext;
-            uploadFile.transferTo(new File(UPLOAD_PATH + fileName));
+        if(!vo.getFile_name().equals(boardservice.selectBoardContent(vo).getFile_name())) {
+        	if (uploadFile != null) {
+            	System.out.println("3번경우");
+                String originalFileName = uploadFile.getOriginalFilename();
+                String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
+                UUID uuid = UUID.randomUUID(); // UUID 구하기
+                fileName = uuid + "." + ext;
+                uploadFile.transferTo(new File(UPLOAD_PATH + fileName));
+            }
+            vo.setFile_name(fileName);	
         }
-        vo.setFile_name(fileName);
-        
+        	
 		boardservice.updateBoard(vo);
 		
 		return "redirect:view.do?board_id="+vo.getBoard_id();

@@ -27,6 +27,11 @@
     <!-- SmartEditor를 사용하기 위해서 다음 js파일을 추가 (경로 확인) -->
 <script type="text/javascript" src="/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script>
+	var filename = '<c:out value="${vo.file_name}"/>'; 
+	
+	var boardSubject = $("#title").val();
+	var boardContent = $("#content").val();
+	
 	function updatePost() {
 		var checkContentLength = oEditors.getById["content"].getIR();
 		var tagRemove = checkContentLength.replaceAll(/(<([^>]+)>)/ig,"");
@@ -41,24 +46,84 @@
 			alert("최대 40000 byte까지 입력 가능합니다.");	//DB엔 text형으로 컬럼을 만들어 65535 문자까지 가능
 			return false;
 		}
+		
+		if (boardSubject == ""){            
+		    alert("제목을 입력해주세요.");
+		    $("#board_subject").focus();
+		    return;
+		}
+		
+		if (tagRemove == ""){            
+		    alert("내용을 입력해주세요.");
+		    $("#board_content").focus();
+		    return;
+		}
+		
+		var yn = confirm("게시글을 수정하시겠습니까?");        
+		if(yn){
+		        
+		    var filesChk = $("input[name='files[0]']").val();
+		    if(filesChk == ""){
+		        $("input[name='files[0]']").remove();
+		    }
+		    
+		    $("#boardForm").ajaxForm({
+		    
+		        url        : "detailPost.do",
+		        enctype    : "multipart/form-data",
+		        cache   : false,
+		        async   : true,
+		        type    : "POST",                         
+		        success : function(obj) {
+		            updateBoardCallback(obj);                
+		        },           
+		        error     : function(xhr, status, error) {}
+		        
+		    }).submit();
+		}
+		
 	}
+	
+	/** 게시판 - 수정 콜백 함수 */
+    function updateBoardCallback(obj){
+    
+        if(obj != null){        
+            
+            var result = obj.result;
+            
+            if(result == "SUCCESS"){                
+                alert("게시글 수정을 성공하였습니다.");                
+                goBoardList();                 
+            } else {                
+                alert("게시글 수정을 실패하였습니다.");    
+                return;
+            }
+        }
+    }
+	
+	function deleteFile() {
+		console.log("test");
+		filename = "";
+		loadDownth();
+	}
+	
 </script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/jsp/common/header.jsp"></jsp:include>
     <br />
-    <h1 class="text-center">Board View</h1>
+    <h1 class="text-center">Board detail</h1>
     <br />
     <br />
-    <div class="container">
-        <form action="detailPost.do" id="viewForm" method="post" encType="multiplart/form-data" onsubmit="return updatePost()">
+    <div class="container"> 	
+        <form action="detailPost.do" id="boardForm" method="post" encType="multipart/form-data" onsubmit="return false">
         	<input type="hidden" id="board_id" name="board_id" value="${vo.board_id}">
             <table class="table table-bordered">
                 <tbody>
                     <tr>
                         <th>작성자</th>
                         <td>
-                        	<input name="id" type="text" value="${vo.user_id}" class="form-control" readonly />
+                        	<input name="user_id" type="text" value="${vo.user_id}" class="form-control" readonly />
                         </td>
                     </tr>
                     <tr>
@@ -73,30 +138,17 @@
                         	<textarea id="content" name="content" rows="10" cols="100" style="width: 100%;">${vo.content }</textarea>
                         </td>
                     </tr>
-                    <c:if test="${vo.file_name ne null}">
 						<tr>
-						    <th>다운로드</th>
-						    <td>
-							    <a href="fileDownload.do?file_name=${vo.file_name}">
-								<input type="text" id="uploadFile" value="${vo.file_name}" name="uploadFile" class="form-control"/></a>
-								<button id="filedelete" type="button" class="btn_previous" style="float: right">파일삭제</button>
+						    <th id="thOption"></th>
+						    <td id="tdOption">
 							</td>
 						</tr>
-                    </c:if>
-                    <c:if test="${vo.file_name eq null}">
-	                    <tr>
-	                    	<th>첨부파일</th>
-	                    	<td>
-		                        <input id="uploadfile" type="file" name="uploadFile" placeholder="파일 선택" /><br/>
-	                        </td>
-                        </tr>
-                    </c:if>
                     <tr>
                         <td colspan="2" style="text-align: right;">
                             <button id="btn_previous" type="button" class="btn_previous" onclick="location.href='http://localhost:8080/board/board.do'">이전</button>
                            	<c:if test="${userVo.user_id == vo.user_id}">
-	                            <button id="btn_modify" type="submit" class="btn_register">수정</button>
-	                            <button id="btn_delete" type="button" class="btn_delete">삭제</button>
+	                            <button type="button" class="btn_register" onclick="updatePost()">수정</button>
+	                            <button type="button" class="btn_delete">삭제</button>
                             </c:if>
                         </td>
                     </tr>
@@ -121,5 +173,23 @@
 		bUseModeChanger : false 
 	    }
 	});
+</script>
+<script>
+function loadDownth() {
+	//파일이 없으면 업로드 출력 있으면 다운로드출력
+	if(filename.length > 0){
+		document.getElementById("thOption").innerText="다운로드";
+		document.getElementById("tdOption").innerHTML=
+		`<a href="fileDownload.do?file_name=${vo.file_name}">
+		<input type="text" id="uploadFile" value="${vo.file_name}" name="file_name" class="form-control"/>
+		</a>
+		<button id="filedelete" type="button" class="btn_previous" onclick="deleteFile()" style="float: right">파일삭제</button>`;
+	}else if(filename.length <= 0){
+		document.getElementById("thOption").innerText="업로드";
+		document.getElementById("tdOption").innerHTML=
+		`<input id="uploadfile" type="file" name="uploadFile" placeholder="파일 선택"  onclick="" /><br/>`;
+	}
+}
+loadDownth();
 </script>
 </html>

@@ -62,7 +62,6 @@
 						    <td>
 							    <a href="fileDownload.do?file_name=${vo.file_name}">
 								<input type="text" id="filename" value="${vo.file_name}" name="fileName" class="form-control" readonly="readonly" /></a>
-								<button id="filedelete" type="button" class="btn_previous" style="float: right">파일삭제</button>
 							</td>
 						</tr>
                     </c:if>
@@ -78,6 +77,12 @@
                 </tbody>
             </table>
         </form>
+        <!-- 댓글  -->
+        <div id="reply">
+        	<ol class="replyList">
+        		<c:forEach>
+        	</ol>
+        </div>
     </div>
 </body>
 <script id="smartEditor" type="text/javascript"> 
