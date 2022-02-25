@@ -153,11 +153,12 @@ public class boardController {
 	
 	//댓글작성
 	@PostMapping("/board/commentPost.do")
-	public int comWrite(comVo vo, Model model) throws Exception {
+	public String comWrite(comVo vo, Model model) throws Exception {
 		System.out.println("cid:"+vo.getBoard_id());
 		System.out.println("ccontent:"+vo.getCom_content());
 		System.out.println("cuser:"+vo.getUser_id());
 
-		return boardservice.insertCommend(vo);
+		boardservice.insertCommend(vo);
+		return "redirect:view.do?board_id="+vo.getBoard_id();
 	}
 }

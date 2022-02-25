@@ -21,7 +21,6 @@
         	)
         	VALUES(
         	#{board_id}
-        	, #{title}
         	, #{com_content}
         	, #{user_id})
         	]]>

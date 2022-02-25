@@ -24,27 +24,6 @@
     src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
     integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
-    
-<script type="text/javascript">
-	var commentString = $('#writeCommentForm').serialize()
-	var test = ${vo.board_id};
-	function commentPost() {
-		$.ajax({
-			type : 'POST',
-			url : '/board/commentPost.do',
-			data : commentString,
-			dataType: 'string',
-			success : function(Stirng){
-				alert("ttest");
-				location.href = "/board/view.do?board_id="+test;
-			},
-			error: function (error){
-		        alert("에러");
-		    }
-		});
-	}
-</script>	
-
 
     <!-- SmartEditor를 사용하기 위해서 다음 js파일을 추가 (경로 확인) -->
 <script type="text/javascript" src="/js/service/HuskyEZCreator.js" charset="utf-8"></script>
@@ -104,53 +83,46 @@
 	        <table class="table table-bordered">
 			    <!-- 댓글 목록 -->
                 <tbody>
-                <c:forEach var="comment" items="${cvo}">
-					<tr>
-                        <th>${comment.user_id}<br>${comment.reg_dtm}</th>
-                        <td>
-                        	<input name="id" type="text" value="${comment.com_content}" class="form-control" readonly />
-                        </td>
-                        <td>
-                        	<!-- 댓글 작성자만 수정, 삭제 가능하도록 -->    
-		                    <c:if test="${comment.user_id == userVo.user_id}">
-		                        <button onclick="">[수정]</a><br>    
-		                        <button onclick="">[삭제]</a>
-		                    </c:if>
-                        </td>
-                    </tr>
-				</c:forEach>
-                    
+	                <c:forEach var="comment" items="${cvo}">
+						<tr>
+	                        <th>${comment.user_id}<br>${comment.reg_dtm}</th>
+	                        <td>
+	                        	<input name="id" type="text" value="${comment.com_content}" class="form-control" readonly />
+	                        </td>
+	                        <td>
+	                        	<!-- 댓글 작성자만 수정, 삭제 가능하도록 -->    
+			                    <c:if test="${comment.user_id == userVo.user_id}">
+			                        <button onclick="">[수정]</button><br>    
+			                        <button onclick="">[삭제]</button>
+			                    </c:if>
+	                        </td>
+	                    </tr>
+					</c:forEach>
 				</tbody>
-	            
-	            <!-- 로그인 했을 경우만 댓글 작성가능 -->
-	            <c:if test="${userVo.user_id != null}">
-	            <tr bgcolor="#F5F5F5">
-	            <form id="writeCommentForm">
-	                <input type="hidden" name="user_id" value="${userVo.user_id}">
-	                <input type="hidden" name="board_id" value="${vo.board_id}">
-	                <!-- 아이디-->
-	                <td width="150">
-	                    <div>
-	                        ${userVo.user_id}
-	                    </div>
-	                </td>
-	                <!-- 본문 작성-->
-	                <td width="550">
-	                    <div>
-	                        <textarea id="com_content" name="com_content" rows="4" cols="70" ></textarea>
-	                    </div>
-	                </td>
-	                <!-- 댓글 등록 버튼 -->
-	                <td width="100">
-	                    <div id="btn" style="text-align:center;">
-	                        <p><button onclick="commentPost()">[댓글등록]</a></p>    
-	                    </div>
-	                </td>
-	            </form>
-	            </tr>
-	            </c:if>
-	    
-	        </table>
+			</table>
+            <!-- 로그인 했을 경우만 댓글 작성가능 -->
+            <c:if test="${userVo.user_id != null}">
+            	<form name="writeCommentForm" method="post" action="commentPost.do" >
+            		<input type="hidden" name="user_id" value="${userVo.user_id}"/>
+                	<input type="hidden" name="board_id" value="${vo.board_id}"/>
+	            	<table class="table table-bordered">
+		            	<tr bgcolor="#F5F5F5">
+			                <!-- 아이디-->
+			                <td width="150">
+		                        ${userVo.user_id}
+			                </td>
+			                <!-- 본문 작성-->
+			                <td width="550">
+		                        <textarea id="com_content" name="com_content" rows="4" cols="70" ></textarea>
+			                </td>
+			                <!-- 댓글 등록 버튼 -->
+			                <td width="100">
+		                        <button type="submit">[댓글작성]</button>   
+			                </td>
+		            	</tr>
+	            	</table>
+            	</form>
+            </c:if>
 	    </div>
 		<!-- 댓글작성 -->
 
