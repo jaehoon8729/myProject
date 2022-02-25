@@ -4,7 +4,8 @@
 <html>
 <head>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+<script src="/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Board View</title>
 <!-- Latest compiled and minified CSS -->
@@ -61,52 +62,31 @@
 		
 		var yn = confirm("게시글을 수정하시겠습니까?");        
 		if(yn){
-		        
-		    var filesChk = $("input[name='files[0]']").val();
-		    if(filesChk == ""){
-		        $("input[name='files[0]']").remove();
-		    }
-		    
-		    $("#boardForm").ajaxForm({
-		    
-		        url        : "detailPost.do",
-		        enctype    : "multipart/form-data",
-		        cache   : false,
-		        async   : true,
-		        type    : "POST",                         
-		        success : function(obj) {
-		            updateBoardCallback(obj);                
-		        },           
-		        error     : function(xhr, status, error) {}
-		        
-		    }).submit();
+		    var queryString = $("form[name=boardForm]").serialize() ;
+
+	        $.ajax({
+	            type : 'post',
+	            url : '/board/detailPost.do',
+	            encType : 'multipart/form-data',
+	            data : queryString,
+	            success : function(json){
+	                    
+                    if(result.success == true){
+                        alert("게시글 수정을 성공하였습니다.");
+                        location.href = "/board/board.do";
+                    } else {                
+                        alert("게시글 수정을 실패하였습니다.");
+                        return;
+                    }
+	            }
+	        });
 		}
-		
 	}
 	
 	/** 게시판 - 수정 콜백 함수 */
     function updateBoardCallback(obj){
-    
-        if(obj != null){        
-            
-            var result = obj.result;
-            
-            if(result == "SUCCESS"){                
-                alert("게시글 수정을 성공하였습니다.");                
-                goBoardList();                 
-            } else {                
-                alert("게시글 수정을 실패하였습니다.");    
-                return;
-            }
-        }
-    }
-	
-	function deleteFile() {
-		console.log("test");
-		filename = "";
-		loadDownth();
-	}
-	
+    	
+    }	
 </script>
 </head>
 <body>
@@ -116,7 +96,7 @@
     <br />
     <br />
     <div class="container"> 	
-        <form action="detailPost.do" id="boardForm" method="post" encType="multipart/form-data" onsubmit="return false">
+        <form id="boardForm" name="boardForm" method="post" encType="multipart/form-data" onsubmit="return false">
         	<input type="hidden" id="board_id" name="board_id" value="${vo.board_id}">
             <table class="table table-bordered">
                 <tbody>
@@ -179,11 +159,7 @@ function loadDownth() {
 	//파일이 없으면 업로드 출력 있으면 다운로드출력
 	if(filename.length > 0){
 		document.getElementById("thOption").innerText="다운로드";
-		document.getElementById("tdOption").innerHTML=
-		`<a href="fileDownload.do?file_name=${vo.file_name}">
-		<input type="text" id="uploadFile" value="${vo.file_name}" name="file_name" class="form-control"/>
-		</a>
-		<button id="filedelete" type="button" class="btn_previous" onclick="deleteFile()" style="float: right">파일삭제</button>`;
+		document.getElementById("tdOption").innerHTML='<a href="fileDownload.do?file_name=${vo.file_name}"><input type="text" id="uploadFile" value="${vo.file_name}" name="file_name" class="form-control"/></a><button id="filedelete" type="button" class="btn_previous" onclick="deleteFile()" style="float: right">파일삭제</button>';
 	}else if(filename.length <= 0){
 		document.getElementById("thOption").innerText="업로드";
 		document.getElementById("tdOption").innerHTML=

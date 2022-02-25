@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import egovframework.example.board.service.boardService;
 import egovframework.example.board.vo.boardVo;
+import egovframework.example.board.vo.comVo;
 import egovframework.example.ivory.vo.Search;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
@@ -35,8 +36,16 @@ public class boardServiceImpl extends EgovAbstractServiceImpl implements boardSe
 		return boardDao.getBoardListCnt(search);
 	}
 	
-	public void updateBoard(boardVo vo) throws Exception {
+	public int updateBoard(boardVo vo) throws Exception {
 		// TODO Auto-generated method stub
-		boardDao.updateBoard(vo);
+		return boardDao.updateBoard(vo);
+	}
+	
+	public int insertCommend(comVo vo) throws Exception {
+		return boardDao.insertCommnet(vo);
+	}
+	
+	public List<comVo> selectCommentList(comVo vo) throws Exception{
+		return boardDao.selectCommentList(vo);
 	}
 }

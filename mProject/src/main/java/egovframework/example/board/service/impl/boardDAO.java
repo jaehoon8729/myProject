@@ -5,21 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import egovframework.example.board.vo.boardVo;
+import egovframework.example.board.vo.comVo;
 import egovframework.example.cmmn.service.impl.EgovComAbstractDAO;
 import egovframework.example.ivory.vo.Search;
 
-/**
- * @Class Name : WncAdmDAO.java
- * @Description : WncAdm DAO Class
- * @Modification Information
- *
- * @author wnc
- * @since 2021-05-01
- * @version 1.0
- * @see
- *  
- *  Copyright (C)  All rights reserved.
- */
 
 @Repository("boardDAO")
 public class boardDAO extends EgovComAbstractDAO {
@@ -39,7 +28,15 @@ public class boardDAO extends EgovComAbstractDAO {
     	return selectOne("getBoardListCnt", search);
     }
     
-    public void updateBoard(boardVo vo) throws Exception{
-    	update("update_board", vo);
+    public int updateBoard(boardVo vo) throws Exception{
+    	return update("update_board", vo);
+    }
+    
+    public int insertCommnet(comVo vo) throws Exception{
+    	return insert("insert_comment", vo);
+    }
+    
+    public List<comVo> selectCommentList(comVo vo) throws Exception{
+    	return selectList("find_comment_list",vo);
     }
 }

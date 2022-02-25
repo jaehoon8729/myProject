@@ -3,6 +3,7 @@ package egovframework.example.board.service;
 import java.util.List;
 
 import egovframework.example.board.vo.boardVo;
+import egovframework.example.board.vo.comVo;
 import egovframework.example.ivory.vo.Search;
 
 public interface boardService {
@@ -15,5 +16,9 @@ public interface boardService {
 
 	public int getBoardListCnt(Search search) throws Exception;
 	
-	public void updateBoard(boardVo vo) throws Exception;
+	public int updateBoard(boardVo vo) throws Exception;
+	
+	public int insertCommend(comVo vo) throws Exception;
+	
+	public List<comVo> selectCommentList(comVo vo) throws Exception;
 }

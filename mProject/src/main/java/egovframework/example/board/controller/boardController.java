@@ -2,6 +2,8 @@ package egovframework.example.board.controller;
 
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.io.FilenameUtils;
@@ -9,12 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.example.board.service.boardService;
 import egovframework.example.board.vo.boardVo;
+import egovframework.example.board.vo.comVo;
 import egovframework.example.ivory.vo.Search;
 
 
@@ -55,7 +61,7 @@ public class boardController {
 	
 	@RequestMapping(value="/board/boardPost.do")
 	public String boardPost(@ModelAttribute boardVo vo) throws Exception {
-		
+
 		String fileName = null;
         MultipartFile uploadFile = vo.getUploadFile();
 
@@ -76,8 +82,13 @@ public class boardController {
 	//View
 	@RequestMapping(value="/board/view.do")
 	public String view(@ModelAttribute boardVo vo, Model model) throws Exception {
-
+		comVo cvo = new comVo();
+		cvo.setBoard_id(vo.getBoard_id());
+		System.out.println("boardid in cvo:"+cvo.getBoard_id());
+		//게시글내용
 		model.addAttribute("vo",boardservice.selectBoardContent(vo));
+		//댓글내용
+		model.addAttribute("cvo", boardservice.selectCommentList(cvo));
 		
 		return "board/view";
 	}
@@ -93,7 +104,11 @@ public class boardController {
 	
 	//detailPost
 	@RequestMapping(value="/board/detailPost.do")
-	public String detailPost(boardVo vo) throws Exception {
+	@ResponseBody
+	public Map detailPost(boardVo vo) throws Exception {
+		
+		Map result = new HashMap<String,Object>();
+
 		System.out.println("uploadfile:"+vo.getUploadFile());
 		System.out.println("board_id:"+vo.getBoard_id());
 		System.out.println("content:"+vo.getContent());
@@ -103,27 +118,46 @@ public class boardController {
 		
 		String fileName = null;
         MultipartFile uploadFile = vo.getUploadFile();
-
-        if(!vo.getFile_name().equals(boardservice.selectBoardContent(vo).getFile_name())) {
-        	if (uploadFile != null) {
-            	System.out.println("3번경우");
-                String originalFileName = uploadFile.getOriginalFilename();
-                String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
-                UUID uuid = UUID.randomUUID(); // UUID 구하기
-                fileName = uuid + "." + ext;
-                uploadFile.transferTo(new File(UPLOAD_PATH + fileName));
+        System.out.println("eeeeeeee");
+        if(vo.getFile_name() != null) {
+        	if(!vo.getFile_name().equals(boardservice.selectBoardContent(vo).getFile_name())) {
+            	System.out.println("vvvvvvvvvv");
+            	if (uploadFile != null) {
+                	System.out.println("3번경우");
+                    String originalFileName = uploadFile.getOriginalFilename();
+                    String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
+                    UUID uuid = UUID.randomUUID(); // UUID 구하기
+                    fileName = uuid + "." + ext;
+                    uploadFile.transferTo(new File(UPLOAD_PATH + fileName));
+                }
+                vo.setFile_name(fileName);
             }
-            vo.setFile_name(fileName);	
         }
-        	
-		boardservice.updateBoard(vo);
-		
-		return "redirect:view.do?board_id="+vo.getBoard_id();
+        
+        System.out.println("ㅁㅁㅁㅁㅁㅁ");
+		if(boardservice.updateBoard(vo) == 1) {
+			result.put("success", true);
+		}else {
+			result.put("success", false);
+		}
+        
+		return result;
 	}
 	
+	//글작성페이지이동
 	@RequestMapping(value="/board/register.do")
 	public String write() {
 		
 		return "board/register";
+	}
+	
+	//댓글작성
+	@PostMapping("/board/commentPost.do")
+	public int comWrite(comVo vo, Model model) throws Exception {
+		System.out.println("cid:"+vo.getBoard_id());
+		System.out.println("ccontent:"+vo.getCom_content());
+		System.out.println("cuser:"+vo.getUser_id());
+
+		return boardservice.insertCommend(vo);
 	}
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com">
+	
+	<resultMap id="com" type="egovframework.example.board.vo.comVo">
+		<result property="board_id" column="board_id"/>
+		<result property="comment_id" column="comment_id"/>
+		<result property="com_content" column="com_content"/>
+		<result property="user_id" column="user_id"/>
+		<result property="reg_dtm" column="reg_dtm"/>
+	</resultMap>
+	
+  <!-- 글작성 -->
+	<insert id="insert_comment" >
+			<![CDATA[
+        	INSERT INTO com(
+        	board_id
+        	, com_content
+        	, user_id
+        	)
+        	VALUES(
+        	#{board_id}
+        	, #{title}
+        	, #{com_content}
+        	, #{user_id})
+        	]]>
+	</insert>
+	<!-- 글수정 
+	<update id="update_board" parameterType="egovframework.example.board.vo.boardVo">
+	</update>
+	-->
+	
+	<!-- 댓글 목록 조회 -->
+    <select id="find_comment_list" resultType="egovframework.example.board.vo.comVo">
+        SELECT board_id
+				, comment_id
+				, com_content
+				, user_id
+				, reg_dtm 
+		FROM com
+		WHERE
+			board_id = #{board_id}
+    </select>
+</mapper>
