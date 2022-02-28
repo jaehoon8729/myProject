@@ -23,4 +23,8 @@ public class userServiceImpl extends EgovAbstractServiceImpl implements userServ
 	public void insertMember(userVo vo) throws Exception {
 		userDao.insertMember(vo);
 	}
+	
+	public String selectOverlap(userVo vo) throws Exception{
+		return userDao.selectOverlap(vo);
+	}
 }

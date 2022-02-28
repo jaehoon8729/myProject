@@ -18,5 +18,8 @@ public class userDAO extends EgovComAbstractDAO {
     public void insertMember(userVo vo) throws Exception{
     	insert("insertMember",vo);
     }
-  
+
+    public String selectOverlap(userVo vo) throws Exception{
+    	return selectOne("idOverlap",vo);
+    }
 }

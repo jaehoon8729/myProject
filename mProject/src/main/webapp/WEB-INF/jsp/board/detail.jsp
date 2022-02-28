@@ -39,7 +39,7 @@
 		//에디터의 실제 내용을 가져옴
 		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD",[]);
 		
-		if('<c:out value="${userVo.user_id}"/>' == ""){		//로그인여부 확인
+		if('<c:out value="${sessionUserVo.user_id}"/>' == ""){		//로그인여부 확인
 			alert("로그인을 해주세요!");
 			location.href="/login/login.do";
 			return false;
@@ -126,7 +126,7 @@
                     <tr>
                         <td colspan="2" style="text-align: right;">
                             <button id="btn_previous" type="button" class="btn_previous" onclick="location.href='http://localhost:8080/board/board.do'">이전</button>
-                           	<c:if test="${userVo.user_id == vo.user_id}">
+                           	<c:if test="${sessionUserVo.user_id == vo.user_id}">
 	                            <button type="button" class="btn_register" onclick="updatePost()">수정</button>
 	                            <button type="button" class="btn_delete">삭제</button>
                             </c:if>

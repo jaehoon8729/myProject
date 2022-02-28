@@ -10,7 +10,7 @@
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
     href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"............................
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">
  
 <!-- Optional theme -->
@@ -27,6 +27,7 @@
 
     <!-- SmartEditor를 사용하기 위해서 다음 js파일을 추가 (경로 확인) -->
 <script type="text/javascript" src="/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+
 </head>
 <body>
 	<jsp:include page="/WEB-INF/jsp/common/header.jsp"></jsp:include>
@@ -69,7 +70,7 @@
                     <tr>
                         <td colspan="2" style="text-align: right;">
                             <button id="btn_previous" type="button" class="btn_previous" onclick="location.href='http://localhost:8080/board/board.do'">이전</button>
-                           	<c:if test="${userVo.user_id == vo.user_id}">
+                           	<c:if test="${sessionUserVo.user_id == vo.user_id}">
 	                            <button id="btn_modify" type="button" class="btn_register" onclick="location.href='/board/detail.do?board_id=${vo.board_id}'">수정</button>
 	                            <button id="btn_delete" type="button" class="btn_delete">삭제</button>
                             </c:if>
@@ -91,7 +92,7 @@
 	                        </td>
 	                        <td>
 	                        	<!-- 댓글 작성자만 수정, 삭제 가능하도록 -->    
-			                    <c:if test="${comment.user_id == userVo.user_id}">
+			                    <c:if test="${comment.user_id == sessionUserVo.user_id}">
 			                        <button onclick="">[수정]</button><br>    
 			                        <button onclick="">[삭제]</button>
 			                    </c:if>
@@ -101,8 +102,8 @@
 				</tbody>
 			</table>
             <!-- 로그인 했을 경우만 댓글 작성가능 -->
-            <c:if test="${userVo.user_id != null}">
-            	<form name="writeCommentForm" method="post" action="commentPost.do" >
+            <c:if test="${sessionUserVo.user_id != null}">
+            	<form name="writeCommentForm" method="post" action="commentPost.do" onsubmit="return commentPost()">
             		<input type="hidden" name="user_id" value="${userVo.user_id}"/>
                 	<input type="hidden" name="board_id" value="${vo.board_id}"/>
 	            	<table class="table table-bordered">
@@ -151,5 +152,15 @@
 			editor.exec("DISABLE_ALL_UI");
 		}
 	});
+	
+	//댓글길이check
+	function commentPost() {
+		var commentLength = $('#com_content').val();
+
+		if(commentLength.length > 1000){
+			alert("댓글 길이가 너무 깁니다.");
+			return false;
+		}
+	}
 </script>
 </html>

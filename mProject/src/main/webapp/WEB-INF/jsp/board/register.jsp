@@ -37,7 +37,7 @@
 		//에디터의 실제 내용을 가져옴
 		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD",[]);
 		
-		if('<c:out value="${userVo.user_id}"/>' == ""){		//로그인여부 확인
+		if('<c:out value="${sessionUserVo.user_id}"/>' == ""){		//로그인여부 확인
 			alert("로그인을 해주세요!");
 			location.href="/login/login.do";
 			return false;
@@ -100,7 +100,7 @@
 <br/>
 <div class="container">
         <form name="form" method="post" enctype="multipart/form-data" action="boardPost.do" onsubmit="return postText();">
-        	<input type="hidden" name="user_id" value="<c:out value="${userVo.user_id}"/>">
+        	<input type="hidden" name="user_id" value="<c:out value="${sessionUserVo.user_id}"/>">
             <table class="table table-bordered">
                 <tbody>
                     <tr>

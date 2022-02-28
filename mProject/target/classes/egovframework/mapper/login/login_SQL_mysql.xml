@@ -39,5 +39,15 @@
 			user_id = #{user_id} 
 
 	 </select>
+	 
+	 <!-- 아이디중복확인 -->
+	 <select id="idOverlap" resultType="String" parameterType="egovframework.example.login.vo.userVo">
+	 	SELECT
+	 		user_id
+	 	FROM
+	 		user
+	 	WHERE
+	 		user_id = #{user_id}
+	 </select>
 
 </mapper>

@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import egovframework.example.login.service.userService;
 import egovframework.example.login.vo.userVo;
@@ -58,11 +61,9 @@ public class loginController {
 			return "redirect:login.do";
 		}else {
 			vo = userservice.userLogin(vo);
-			session.setAttribute("userVo", vo);
+			session.setAttribute("sessionUserVo", vo);
 			return "redirect:/main.do";
 		}
-
-		
 	}
 	
 	//로그아웃
@@ -84,12 +85,27 @@ public class loginController {
 	}
 	
 	//회원가입Post
-	@RequestMapping(value="/login/joinFormPost.do", method = RequestMethod.POST)
-	public String joinPost(userVo vo, Model model) throws Exception {
+	@PostMapping(value="/login/joinFormPost.do")
+	public String joinPost(userVo vo) throws Exception {
 		String pwd = vo.getUser_pswd();
 		vo.setUser_pswd(pwdEncoder.encode(pwd));
 		
 		userservice.insertMember(vo);
-		return "login/joinForm";
+		return "login/login";
+	}
+	
+	//중복확인
+	@PostMapping(value="/login/joinFormOverlap.do")
+	@ResponseBody
+	public String overlap(userVo vo) throws Exception {
+		System.out.println("voID"+vo.getUser_id());
+		
+		if(vo.getUser_id().equals(userservice.selectOverlap(vo))) {
+			System.out.println("true");
+			return "1";
+		}else {
+			System.out.println("false");
+			return "0";
+		}
 	}
 }
