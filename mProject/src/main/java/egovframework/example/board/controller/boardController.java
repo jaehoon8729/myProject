@@ -2,6 +2,7 @@ package egovframework.example.board.controller;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -103,44 +104,53 @@ public class boardController {
 	}
 	
 	//detailPost
-	@RequestMapping(value="/board/detailPost.do")
+	@RequestMapping(value="/board/detailPost.do",method = RequestMethod.POST)
 	@ResponseBody
-	public Map detailPost(boardVo vo) throws Exception {
+	public HashMap<String,Object> detailPost(boardVo vo) throws Exception {
 		
-		Map result = new HashMap<String,Object>();
+		HashMap<String, Object> result = new HashMap<String,Object>();
+		try {
 
-		System.out.println("uploadfile:"+vo.getUploadFile());
-		System.out.println("board_id:"+vo.getBoard_id());
-		System.out.println("content:"+vo.getContent());
-		System.out.println("filename:"+vo.getFile_name());
-		System.out.println("id:"+vo.getUser_id());
-		System.out.println("같은가?"+boardservice.selectBoardContent(vo).getFile_name());
-		
-		String fileName = null;
-        MultipartFile uploadFile = vo.getUploadFile();
-        System.out.println("eeeeeeee");
-        if(vo.getFile_name() != null) {
-        	if(!vo.getFile_name().equals(boardservice.selectBoardContent(vo).getFile_name())) {
-            	System.out.println("vvvvvvvvvv");
-            	if (uploadFile != null) {
-                	System.out.println("3번경우");
-                    String originalFileName = uploadFile.getOriginalFilename();
-                    String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
-                    UUID uuid = UUID.randomUUID(); // UUID 구하기
-                    fileName = uuid + "." + ext;
-                    uploadFile.transferTo(new File(UPLOAD_PATH + fileName));
-                }
-                vo.setFile_name(fileName);
-            }
-        }
-        
-        System.out.println("ㅁㅁㅁㅁㅁㅁ");
-		if(boardservice.updateBoard(vo) == 1) {
-			result.put("success", true);
-		}else {
-			result.put("success", false);
+			System.out.println("uploadfile:"+vo.getUploadFile());
+			System.out.println("board_id:"+vo.getBoard_id());
+			System.out.println("content:"+vo.getContent());
+			System.out.println("filename:"+vo.getFile_name());
+			System.out.println("id:"+vo.getUser_id());
+			System.out.println("같은가?"+boardservice.selectBoardContent(vo).getFile_name());
+			
+			String fileName = null;
+	        MultipartFile uploadFile = vo.getUploadFile();
+	        System.out.println("eeeeeeee");
+	        if(vo.getFile_name() != null) {
+	        	if(!vo.getFile_name().equals(boardservice.selectBoardContent(vo).getFile_name())) {
+	            	System.out.println("vvvvvvvvvv");
+	            	if (uploadFile != null) {
+	                	System.out.println("3번경우");
+	                    String originalFileName = uploadFile.getOriginalFilename();
+	                    String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
+	                    UUID uuid = UUID.randomUUID(); // UUID 구하기
+	                    fileName = uuid + "." + ext;
+	                    uploadFile.transferTo(new File(UPLOAD_PATH + fileName));
+	                }
+	                vo.setFile_name(fileName);
+	            }
+	        }
+	        
+	        System.out.println("ㅁㅁㅁrtetryweryweryeryㅁㅁㅁ");
+			if(boardservice.updateBoard(vo) == 1) {
+				System.out.println("111111");
+				result.put("success", 1);
+			}else {
+				System.out.println("222222");
+				result.put("success", 0);
+			}
+	        
+			
+			
 		}
-        
+		catch(Exception ex) {
+			System.out.println("111111");
+		}
 		return result;
 	}
 	

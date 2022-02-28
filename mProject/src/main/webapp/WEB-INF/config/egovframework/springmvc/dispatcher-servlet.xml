@@ -14,8 +14,23 @@
     </context:component-scan>
 
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+     <property name="messageConverters">
+				<list>
+					<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+					<bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter" >
+						<property name = "supportedMediaTypes">
+							<list>
+								<value>*/*;charset=UTF-8</value>					        
+							</list>
+						</property>	
+					</bean>
+				</list>
+			</property>
         <property name="webBindingInitializer">
+        
             <bean class="egovframework.example.cmmn.web.EgovBindingInitializer"/>
+           
+            
         </property>
     </bean>
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
@@ -68,4 +83,6 @@
 	<!-- /For Pagination Tag -->
 
     <mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator"/>
+    
+   
 </beans>

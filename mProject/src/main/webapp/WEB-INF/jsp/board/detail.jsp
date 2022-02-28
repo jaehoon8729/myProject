@@ -11,7 +11,7 @@
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
     href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"............................
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">
  
 <!-- Optional theme -->
@@ -50,35 +50,90 @@
 		
 		if (boardSubject == ""){            
 		    alert("제목을 입력해주세요.");
-		    $("#board_subject").focus();
+		    $("#title").focus();
 		    return;
 		}
 		
 		if (tagRemove == ""){            
 		    alert("내용을 입력해주세요.");
-		    $("#board_content").focus();
+		    $("#content").focus();
 		    return;
 		}
 		
 		var yn = confirm("게시글을 수정하시겠습니까?");        
 		if(yn){
-		    var queryString = $("form[name=boardForm]").serialize() ;
-
+		    var formData = new FormData();
+	        //Form data
+	        const serializedValues = $("#boardForm").serializeArray();
+	        for (var i = 0; i < serializedValues.length; i++){
+	            var type = $("#"+serializedValues[i]['name']).attr('type');
+	            if (type === "number") {
+	                if (serializedValues[i]['value'] === "") {
+	                    formData.append(serializedValues[i]['name'], 0);
+	                }
+	                else{
+	                    formData.append(serializedValues[i]['name'], serializedValues[i]['value']);
+	                }
+	            }
+	            else{
+	                formData.append(serializedValues[i]['name'], serializedValues[i]['value']);
+	            }
+	        }
+	        var files = $("#uploadFile")[0].files; //선택한 파일리스트를 가져온다.
+	        for (var index = 0; index < files.length; index++) {
+	             formData.append("uploadFile", files[index]);
+	        }
+	        
+			//alert(queryString);
 	        $.ajax({
-	            type : 'post',
-	            url : '/board/detailPost.do',
-	            encType : 'multipart/form-data',
-	            data : queryString,
-	            success : function(json){
-	                    
-                    if(result.success == true){
+	        	url: '/board/detailPost.do',
+	            async: true ,
+	            type: 'post',
+	            data: formData,
+	            datatype: 'json',
+	            processData: false,
+	            contentType: false,
+	            cache: false,
+	            timeout: 600000,
+	            success: function (json){
+	                console.log(json);    
+                    if(json == 1){
                         alert("게시글 수정을 성공하였습니다.");
                         location.href = "/board/board.do";
-                    } else {                
+                    } else {
                         alert("게시글 수정을 실패하였습니다.");
                         return;
                     }
+	            },
+	            error: function (request, status, error) {
+	            	alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+	                console.log("request",request);
+	                console.log("status",status);
+	                console.log("error",error);
 	            }
+	            /*
+	            
+	            url : '/board/detailPost.do',
+	            type : 'post',
+	            encType : 'multipart/form-data',
+	            data : queryString,
+	            dataType : 'json',
+	            success : function(json){
+	                console.log(json);    
+                    if(json == 1){
+                        alert("게시글 수정을 성공하였습니다.");
+                        location.href = "/board/board.do";
+                    } else {
+                        alert("게시글 수정을 실패하였습니다.");
+                        return;
+                    }
+	            },
+	            error:function(jqXHR, textStatus, errorThrown){
+	            	console.log("aaa",jqXHR)
+					alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+		            //self.close();
+				}
+	            */
 	        });
 		}
 	}
