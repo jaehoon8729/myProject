@@ -130,7 +130,7 @@
     </div>
 </body>
 
-<script id="smartEditor" type="text/javascript"> 
+<script type="text/javascript"> 
 	var oEditors = [];
 window.onload = function() {
 	nhn.husky.EZCreator.createInIFrame({

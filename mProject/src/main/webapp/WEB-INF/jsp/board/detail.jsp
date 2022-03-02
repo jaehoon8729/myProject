@@ -30,10 +30,9 @@
 <script>
 	var filename = '<c:out value="${vo.file_name}"/>'; 
 	
-	var boardSubject = $("#title").val();
-	var boardContent = $("#content").val();
-	
 	function updatePost() {
+		var boardSubject = $("#title").val();
+		var boardContent = $("#content").val();
 		var checkContentLength = oEditors.getById["content"].getIR();
 		var tagRemove = checkContentLength.replaceAll(/(<([^>]+)>)/ig,"");
 		//에디터의 실제 내용을 가져옴
@@ -62,27 +61,36 @@
 		
 		var yn = confirm("게시글을 수정하시겠습니까?");        
 		if(yn){
-		    var formData = new FormData();
+			var checkContentLength = oEditors.getById["content"].getIR();
+			var tagRemove = checkContentLength.replaceAll(/(<([^>]+)>)/ig,"");
+			//에디터의 실제 내용을 가져옴
+			oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD",[]);
+
+			
+		    var formData = new FormData(document.boardForm);
+		    
+		    
 	        //Form data
-	        const serializedValues = $("#boardForm").serializeArray();
-	        for (var i = 0; i < serializedValues.length; i++){
-	            var type = $("#"+serializedValues[i]['name']).attr('type');
-	            if (type === "number") {
-	                if (serializedValues[i]['value'] === "") {
-	                    formData.append(serializedValues[i]['name'], 0);
-	                }
-	                else{
-	                    formData.append(serializedValues[i]['name'], serializedValues[i]['value']);
-	                }
-	            }
-	            else{
-	                formData.append(serializedValues[i]['name'], serializedValues[i]['value']);
-	            }
-	        }
-	        var files = $("#uploadFile")[0].files; //선택한 파일리스트를 가져온다.
-	        for (var index = 0; index < files.length; index++) {
-	             formData.append("uploadFile", files[index]);
-	        }
+// 	        const serializedValues = $("#boardForm").serializeArray();
+// 	        for (var i = 0; i < serializedValues.length; i++){
+// 	            var type = $("#"+serializedValues[i]['name']).attr('type');
+// 	            if (type === "number") {
+// 	                if (serializedValues[i]['value'] === "") {
+// 	                    formData.append(serializedValues[i]['name'], 0);
+// 	                }
+// 	                else{
+// 	                    formData.append(serializedValues[i]['name'], serializedValues[i]['value']);
+// 	                }
+// 	            }
+// 	            else{
+// 	                formData.append(serializedValues[i]['name'], serializedValues[i]['value']);
+// 	            }
+// 	        }
+// 	        var files = $("#uploadFile")[0].files; //선택한 파일리스트를 가져온다.
+// 	        console.log(files);
+// 	        for (var index = 0; index < files.length; index++) {
+// 	             formData.append("uploadFile", files[index]);
+// 	        }
 	        
 			//alert(queryString);
 	        $.ajax({
@@ -97,7 +105,7 @@
 	            timeout: 600000,
 	            success: function (json){
 	                console.log(json);    
-                    if(json == 1){
+                    if(json === "1"){
                         alert("게시글 수정을 성공하였습니다.");
                         location.href = "/board/board.do";
                     } else {
@@ -106,7 +114,6 @@
                     }
 	            },
 	            error: function (request, status, error) {
-	            	alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
 	                console.log("request",request);
 	                console.log("status",status);
 	                console.log("error",error);
@@ -138,10 +145,6 @@
 		}
 	}
 	
-	/** 게시판 - 수정 콜백 함수 */
-    function updateBoardCallback(obj){
-    	
-    }	
 </script>
 </head>
 <body>
@@ -183,7 +186,7 @@
                             <button id="btn_previous" type="button" class="btn_previous" onclick="location.href='http://localhost:8080/board/board.do'">이전</button>
                            	<c:if test="${sessionUserVo.user_id == vo.user_id}">
 	                            <button type="button" class="btn_register" onclick="updatePost()">수정</button>
-	                            <button type="button" class="btn_delete">삭제</button>
+	                            <button id="delete_btn" type="button" class="btn_delete" onclick="deleteBoard()">삭제</button>
                             </c:if>
                         </td>
                     </tr>
@@ -201,7 +204,7 @@
 	    fCreator: "createSEditor2",
 	    htParams : { 
 	    	// 툴바 사용 여부 (true:사용/ false:사용하지 않음) 
-	        bUseToolbar : false, 
+	        bUseToolbar : true, 
 		// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음) 
 		bUseVerticalResizer : false, 
 		// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음) 
@@ -210,17 +213,40 @@
 	});
 </script>
 <script>
-function loadDownth() {
-	//파일이 없으면 업로드 출력 있으면 다운로드출력
-	if(filename.length > 0){
-		document.getElementById("thOption").innerText="다운로드";
-		document.getElementById("tdOption").innerHTML='<a href="fileDownload.do?file_name=${vo.file_name}"><input type="text" id="uploadFile" value="${vo.file_name}" name="file_name" class="form-control"/></a><button id="filedelete" type="button" class="btn_previous" onclick="deleteFile()" style="float: right">파일삭제</button>';
-	}else if(filename.length <= 0){
-		document.getElementById("thOption").innerText="업로드";
-		document.getElementById("tdOption").innerHTML=
-		`<input id="uploadfile" type="file" name="uploadFile" placeholder="파일 선택"  onclick="" /><br/>`;
+	function loadDownth() {
+		//파일이 없으면 업로드 출력 있으면 다운로드출력
+		if(filename.length > 0){
+			document.getElementById("thOption").innerText="다운로드";
+			document.getElementById("tdOption").innerHTML='<a href="fileDownload.do?file_name=${vo.file_name}"><input type="hidden" id="boardFileCheck" name="boardFileCheck" value="old"/><input type="text" id="uploadFile" value="${vo.file_name}" class="form-control"/></a><button id="filedelete" type="button" class="btn_previous" onclick="deleteFile()" style="float: right">파일삭제</button>';
+		}else if(filename.length <= 0){
+			document.getElementById("thOption").innerText="첨부파일";
+			document.getElementById("tdOption").innerHTML='<input type="hidden" id="boardFileCheck" name="boardFileCheck" value="new"/><input id="uploadFile" type="file" name="uploadFile" placeholder="파일 선택" /><br/>';
+		}
 	}
-}
-loadDownth();
+	
+	function deleteFile() {
+		$("#uploadFile").val("");
+		filename = "";
+		loadDownth();
+	}
+	
+	function deleteBoard(){
+		var form = document.createElement('form');
+		form.type = 'hidden';
+		form.name = 'form';
+		form.method = 'post';
+		form.action = '/board/delete.do';
+		
+		var input = document.createElement("input");
+		input.type = 'hidden';
+		input.name = 'board_id';
+		input.value = document.getElementById("board_id").value;
+		form.append(input);
+		
+		document.body.appendChild(form);
+		form.submit();
+		document.body.removeChild(form);
+	}
+	loadDownth();
 </script>
 </html>

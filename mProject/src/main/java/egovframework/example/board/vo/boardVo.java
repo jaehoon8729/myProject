@@ -14,7 +14,14 @@ public class boardVo {
 	
 	private MultipartFile uploadFile;
 
+	private String boardFileCheck;
 	
+	public String getBoardFileCheck() {
+		return boardFileCheck;
+	}
+	public void setBoardFileCheck(String boardFileCheck) {
+		this.boardFileCheck = boardFileCheck;
+	}
 	public MultipartFile getUploadFile() {
 		return uploadFile;
 	}

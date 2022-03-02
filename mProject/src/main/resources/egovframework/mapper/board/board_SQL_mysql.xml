@@ -111,4 +111,12 @@
             </if>
         </where>
     </select>
+    
+    <!-- 게시판 삭제 -->
+    <delete id="deleteBoard" parameterType="egovframework.example.board.vo.boardVo">
+        DELETE FROM
+        	board 
+        WHERE
+        	board_id = #{board_id}
+    </delete>
 </mapper>

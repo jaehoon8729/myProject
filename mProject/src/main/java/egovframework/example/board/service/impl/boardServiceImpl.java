@@ -48,4 +48,12 @@ public class boardServiceImpl extends EgovAbstractServiceImpl implements boardSe
 	public List<comVo> selectCommentList(comVo vo) throws Exception{
 		return boardDao.selectCommentList(vo);
 	}
+	
+	public int deleteBoard(boardVo vo) throws Exception{
+		return boardDao.deleteBoard(vo);
+	}
+	
+	public int deleteComment(comVo vo) {
+		return boardDao.deleteComment(vo);
+	}
 }

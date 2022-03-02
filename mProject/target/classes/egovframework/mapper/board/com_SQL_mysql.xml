@@ -32,6 +32,7 @@
 	
 	<!-- 댓글 목록 조회 -->
     <select id="find_comment_list" resultType="egovframework.example.board.vo.comVo">
+    	<![CDATA[
         SELECT board_id
 				, comment_id
 				, com_content
@@ -40,5 +41,16 @@
 		FROM com
 		WHERE
 			board_id = #{board_id}
+		]]>
     </select>
+    
+    <!-- 댓글 삭제 -->
+    <delete id="deleteComment" parameterType="egovframework.example.board.vo.boardVo">
+    	<![CDATA[
+    	DELETE FROM
+        	com 
+        WHERE
+        	comment_id = #{comment_id}
+        	]]>
+    </delete>
 </mapper>

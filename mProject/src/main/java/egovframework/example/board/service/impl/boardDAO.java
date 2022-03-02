@@ -39,4 +39,12 @@ public class boardDAO extends EgovComAbstractDAO {
     public List<comVo> selectCommentList(comVo vo) throws Exception{
     	return selectList("find_comment_list",vo);
     }
+    
+    public int deleteBoard(boardVo vo) throws Exception{
+    	return delete("deleteBoard",vo);
+    }
+    
+    public int deleteComment(comVo vo) {
+    	return delete("deleteComment",vo);
+    }
 }

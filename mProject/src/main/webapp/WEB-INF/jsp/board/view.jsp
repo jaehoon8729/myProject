@@ -72,7 +72,6 @@
                             <button id="btn_previous" type="button" class="btn_previous" onclick="location.href='http://localhost:8080/board/board.do'">이전</button>
                            	<c:if test="${sessionUserVo.user_id == vo.user_id}">
 	                            <button id="btn_modify" type="button" class="btn_register" onclick="location.href='/board/detail.do?board_id=${vo.board_id}'">수정</button>
-	                            <button id="btn_delete" type="button" class="btn_delete">삭제</button>
                             </c:if>
                         </td>
                     </tr>
@@ -85,16 +84,17 @@
 			    <!-- 댓글 목록 -->
                 <tbody>
 	                <c:forEach var="comment" items="${cvo}">
+	                	<input type="hidden" id="comment_id${comment.comment_id}" name="comment_id" value="${comment.comment_id}"/>
 						<tr>
 	                        <th>${comment.user_id}<br>${comment.reg_dtm}</th>
 	                        <td>
-	                        	<input name="id" type="text" value="${comment.com_content}" class="form-control" readonly />
+	                        	<input name="id" type="text" value="${comment.com_content},${comment.comment_id}" class="form-control" readonly />
 	                        </td>
 	                        <td>
 	                        	<!-- 댓글 작성자만 수정, 삭제 가능하도록 -->    
 			                    <c:if test="${comment.user_id == sessionUserVo.user_id}">
 			                        <button onclick="">[수정]</button><br>    
-			                        <button onclick="">[삭제]</button>
+			                        <button id="deleteComment" onclick="deleteComment(${comment.comment_id})">[삭제]</button>
 			                    </c:if>
 	                        </td>
 	                    </tr>
@@ -104,8 +104,8 @@
             <!-- 로그인 했을 경우만 댓글 작성가능 -->
             <c:if test="${sessionUserVo.user_id != null}">
             	<form name="writeCommentForm" method="post" action="commentPost.do" onsubmit="return commentPost()">
-            		<input type="hidden" name="user_id" value="${userVo.user_id}"/>
-                	<input type="hidden" name="board_id" value="${vo.board_id}"/>
+            		<input type="hidden" id="user_id" name="user_id" value="${sessionUserVo.user_id}"/>
+                	<input type="hidden" id="board_id" name="board_id" value="${vo.board_id}"/>
 	            	<table class="table table-bordered">
 		            	<tr bgcolor="#F5F5F5">
 			                <!-- 아이디-->
@@ -130,7 +130,7 @@
 		
     </div>
 </body>
-<script id="smartEditor" type="text/javascript"> 
+<script type="text/javascript"> 
 	var oEditors = [];
 	nhn.husky.EZCreator.createInIFrame({
 	    oAppRef: oEditors,
@@ -161,6 +161,30 @@
 			alert("댓글 길이가 너무 깁니다.");
 			return false;
 		}
+	}
+	
+	function deleteComment(a) {
+		var form = document.createElement('form');
+		form.type = 'hidden';
+		form.name = 'form';
+		form.method = 'post';
+		form.action = '/board/deleteComment.do';
+		
+		var input = document.createElement("input");
+		input.type = 'hidden';
+		input.name = 'comment_id';
+		input.value = document.getElementById("comment_id"+a).value;
+		form.append(input);
+		
+		var input = document.createElement("input");
+		input.type = 'hidden';
+		input.name = 'board_id';
+		input.value = document.getElementById("board_id").value;
+		form.append(input);
+		
+		document.body.appendChild(form);
+		form.submit();
+		document.body.removeChild(form);
 	}
 </script>
 </html>

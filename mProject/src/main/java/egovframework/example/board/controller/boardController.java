@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,6 +61,7 @@ public class boardController {
 		return "board/board";
 	}
 	
+	//글작성
 	@RequestMapping(value="/board/boardPost.do")
 	public String boardPost(@ModelAttribute boardVo vo) throws Exception {
 
@@ -94,7 +96,7 @@ public class boardController {
 		return "board/view";
 	}
 	
-	//수정
+	//수정페이지
 	@RequestMapping(value="/board/detail.do")
 	public String detail(boardVo vo, Model model) throws Exception {
 		
@@ -106,52 +108,31 @@ public class boardController {
 	//detailPost
 	@RequestMapping(value="/board/detailPost.do",method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String,Object> detailPost(boardVo vo) throws Exception {
+	public String detailPost(@ModelAttribute boardVo vo) throws Exception {
 		
-		HashMap<String, Object> result = new HashMap<String,Object>();
-		try {
-
-			System.out.println("uploadfile:"+vo.getUploadFile());
-			System.out.println("board_id:"+vo.getBoard_id());
-			System.out.println("content:"+vo.getContent());
-			System.out.println("filename:"+vo.getFile_name());
-			System.out.println("id:"+vo.getUser_id());
-			System.out.println("같은가?"+boardservice.selectBoardContent(vo).getFile_name());
-			
+		try {			
 			String fileName = null;
 	        MultipartFile uploadFile = vo.getUploadFile();
-	        System.out.println("eeeeeeee");
-	        if(vo.getFile_name() != null) {
-	        	if(!vo.getFile_name().equals(boardservice.selectBoardContent(vo).getFile_name())) {
-	            	System.out.println("vvvvvvvvvv");
-	            	if (uploadFile != null) {
-	                	System.out.println("3번경우");
-	                    String originalFileName = uploadFile.getOriginalFilename();
-	                    String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
-	                    UUID uuid = UUID.randomUUID(); // UUID 구하기
-	                    fileName = uuid + "." + ext;
-	                    uploadFile.transferTo(new File(UPLOAD_PATH + fileName));
-	                }
-	                vo.setFile_name(fileName);
-	            }
+	        
+	        if(vo.getBoardFileCheck().equals("new")) {
+            	if (!uploadFile.isEmpty()) {
+                    String originalFileName = uploadFile.getOriginalFilename();
+                    String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
+                    UUID uuid = UUID.randomUUID(); // UUID 구하기
+                    fileName = uuid + "." + ext;
+                    uploadFile.transferTo(new File(UPLOAD_PATH + fileName));
+                }
+                vo.setFile_name(fileName);
+	        } else if(vo.getBoardFileCheck().equals("old")) {
+	        	vo.setFile_name(boardservice.selectBoardContent(vo).getFile_name());
 	        }
-	        
-	        System.out.println("ㅁㅁㅁrtetryweryweryeryㅁㅁㅁ");
-			if(boardservice.updateBoard(vo) == 1) {
-				System.out.println("111111");
-				result.put("success", 1);
-			}else {
-				System.out.println("222222");
-				result.put("success", 0);
-			}
-	        
-			
-			
+			System.out.println("filename:"+vo.getFile_name());
 		}
 		catch(Exception ex) {
-			System.out.println("111111");
+			return "0";
 		}
-		return result;
+		boardservice.updateBoard(vo);
+		return "1";
 	}
 	
 	//글작성페이지이동
@@ -170,5 +151,24 @@ public class boardController {
 
 		boardservice.insertCommend(vo);
 		return "redirect:view.do?board_id="+vo.getBoard_id();
+	}
+	//댓글삭제
+	@PostMapping("/board/deleteComment.do")
+	public String deleteComment(comVo vo, Model model) throws Exception {
+		System.out.println("bid:"+vo.getBoard_id());
+		System.out.println("ccontent:"+vo.getCom_content());
+		System.out.println("cuser:"+vo.getUser_id());
+		System.out.println("cid"+vo.getComment_id());
+		boardservice.deleteComment(vo);
+		return "redirect:view.do?board_id="+vo.getBoard_id();
+	}
+	
+	//게시글삭제
+	@PostMapping("/board/delete.do")
+	public String deleteBoard(boardVo vo) throws Exception{
+		System.out.println("삭제중:"+vo.getBoard_id());
+		int a = boardservice.deleteBoard(vo);
+		System.out.println("result:"+a);
+		return "redirect:board.do";
 	}
 }
