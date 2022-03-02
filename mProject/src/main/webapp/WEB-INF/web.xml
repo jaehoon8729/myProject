@@ -39,7 +39,7 @@
 	<!-- 캡차 -->
 	<servlet>
 	    <servlet-name>CaptchaServlet</servlet-name>
-	    <servlet-class>packageName1.packageName2.packageName3.CaptchaServlet</servlet-class>
+	    <servlet-class>egovframework.example.login.controller.CaptchaServlet</servlet-class>
 	    <load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
