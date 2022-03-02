@@ -163,6 +163,18 @@ public class boardController {
 		return "redirect:view.do?board_id="+vo.getBoard_id();
 	}
 	
+	//댓글수정
+		@PostMapping("/board/updateComment.do")
+		public String updateComment(comVo vo) throws Exception {
+			System.out.println("userid:"+vo.getUser_id());
+			System.out.println("boardid:"+vo.getBoard_id());
+			System.out.println("content:"+vo.getCom_content());
+			System.out.println("comid:"+vo.getComment_id());
+			
+			boardservice.updateComment(vo);
+			return "redirect:view.do?board_id="+vo.getBoard_id();
+		}
+		
 	//게시글삭제
 	@PostMapping("/board/delete.do")
 	public String deleteBoard(boardVo vo) throws Exception{

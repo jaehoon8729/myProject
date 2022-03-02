@@ -56,4 +56,8 @@ public class boardServiceImpl extends EgovAbstractServiceImpl implements boardSe
 	public int deleteComment(comVo vo) {
 		return boardDao.deleteComment(vo);
 	}
+	
+	public int updateComment(comVo vo) {
+		return boardDao.updateComment(vo);
+	}
 }

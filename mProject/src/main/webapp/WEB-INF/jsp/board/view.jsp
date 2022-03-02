@@ -88,12 +88,12 @@
 						<tr>
 	                        <th>${comment.user_id}<br>${comment.reg_dtm}</th>
 	                        <td>
-	                        	<input name="id" type="text" value="${comment.com_content},${comment.comment_id}" class="form-control" readonly />
+	                        	<input id="id${comment.comment_id}" name="id" type="text" value="${comment.com_content}" class="form-control" readonly />
 	                        </td>
 	                        <td>
 	                        	<!-- 댓글 작성자만 수정, 삭제 가능하도록 -->    
 			                    <c:if test="${comment.user_id == sessionUserVo.user_id}">
-			                        <button onclick="">[수정]</button><br>    
+			                        <button id="updateComment" onclick="updateComment(${comment.comment_id})">[수정]</button><br>   
 			                        <button id="deleteComment" onclick="deleteComment(${comment.comment_id})">[삭제]</button>
 			                    </c:if>
 	                        </td>
@@ -162,7 +162,7 @@
 			return false;
 		}
 	}
-	
+	//댓글 삭제
 	function deleteComment(a) {
 		var form = document.createElement('form');
 		form.type = 'hidden';
@@ -180,6 +180,47 @@
 		input.type = 'hidden';
 		input.name = 'board_id';
 		input.value = document.getElementById("board_id").value;
+		form.append(input);
+		
+		document.body.appendChild(form);
+		form.submit();
+		document.body.removeChild(form);
+	}
+	
+	function updateComment(a) {
+		if($('#id'+a).is('[readonly]')){
+			$('#id'+a).attr('readonly', false);
+			return false;
+		}
+		
+		var form = document.createElement('form');
+		form.type = 'hidden';
+		form.name = 'form';
+		form.method = 'post';
+		form.action = '/board/updateComment.do';
+		
+		var input = document.createElement("input");
+		input.type = 'hidden';
+		input.name = 'com_content';
+		input.value = document.getElementById("id"+a).value;
+		form.append(input);
+		
+		var input = document.createElement("input");
+		input.type = 'hidden';
+		input.name = 'board_id';
+		input.value = document.getElementById("board_id").value;
+		form.append(input);
+		
+		var input = document.createElement("input");
+		input.type = 'hidden';
+		input.name = 'user_id';
+		input.value = document.getElementById("user_id").value;
+		form.append(input);
+		
+		var input = document.createElement("input");
+		input.type = 'hidden';
+		input.name = 'comment_id';
+		input.value = document.getElementById("comment_id"+a).value;
 		form.append(input);
 		
 		document.body.appendChild(form);

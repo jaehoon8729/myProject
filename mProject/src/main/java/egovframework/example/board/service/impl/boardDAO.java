@@ -47,4 +47,8 @@ public class boardDAO extends EgovComAbstractDAO {
     public int deleteComment(comVo vo) {
     	return delete("deleteComment",vo);
     }
+    
+    public int updateComment(comVo vo) {
+    	return update("updateComment",vo);
+    }
 }

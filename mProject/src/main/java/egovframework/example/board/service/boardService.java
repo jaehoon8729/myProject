@@ -25,4 +25,6 @@ public interface boardService {
 	public int deleteComment(comVo vo) throws Exception;
 	
 	public int deleteBoard(boardVo vo) throws Exception;
+	
+	public int updateComment(comVo vo) throws Exception;
 }

@@ -65,12 +65,12 @@ a{
                     ,'${search.searchType}', '${search.keyword}')">이전</a></li>
                 </c:if>
  
-                <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="testId">
-                    <li class="page-item <c:out value="${pagination.page == testId ? 'active' : ''}"/> ">
+                <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="pageId">
+                    <li class="page-item <c:out value="${pagination.page == pageId ? 'active' : ''}"/> ">
                     <a class="page-link" href="#"
-                        onClick="fn_pagination('${testId}', '${pagination.range}', '${pagination.rangeSize}', '${pagination.listSize}'
+                        onClick="fn_pagination('${pageId}', '${pagination.range}', '${pagination.rangeSize}', '${pagination.listSize}'
                      ,'${search.searchType}', '${search.keyword}')">
-                            ${testId} </a></li>
+                            ${pageId} </a></li>
                 </c:forEach>
  
                 <c:if test="${pagination.next}">
