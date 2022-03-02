@@ -99,7 +99,7 @@ public class loginController {
 	@ResponseBody
 	public String overlap(userVo vo) throws Exception {
 		System.out.println("voID"+vo.getUser_id());
-		
+
 		if(vo.getUser_id().equals(userservice.selectOverlap(vo))) {
 			System.out.println("true");
 			return "1";
@@ -107,5 +107,6 @@ public class loginController {
 			System.out.println("false");
 			return "0";
 		}
+
 	}
 }

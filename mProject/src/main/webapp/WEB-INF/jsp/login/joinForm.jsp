@@ -67,10 +67,11 @@
 			data: post,
 			dataType:"text",
 			success:function(data){
-				idCheck = data;
-				if(idCheck == "1"){
-					alert("아이디가 이미있습니다.")
-				}else if(idCheck == "0"){
+				idCheck = $.trim(data);
+				
+				if(idCheck == '"1"'){	//값에 ""이 붙어서 나옴
+					alert("아이디가 이미있습니다.");
+				}else if(idCheck == '"0"'){		//값에 ""이 붙어서 나옴
 					var idl = $('#user_id').val();
 					
 					if(idl.length < 2 || idl.length > 20){
