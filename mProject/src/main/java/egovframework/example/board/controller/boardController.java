@@ -97,7 +97,7 @@ public class boardController {
 	@RequestMapping(value="/board/detail.do")
 	public String detail(boardVo vo, Model model) throws Exception {
 		
-		
+
 		model.addAttribute("vo", boardservice.selectBoardContent(vo));
 		return "board/detail";
 	}

@@ -9,7 +9,7 @@
 <!-- SmartEditor를 사용하기 위해서 다음 js파일을 추가 (경로 확인) -->
 <script type="text/javascript" src="/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script>
-	var filename = '<c:out value="${vo.file_name}"/>'; 
+	var filename = '<c:out value="${vo.vo.file_name}"/>'; 
 	
 	function updatePost() {
 		var boardSubject = $("#title").val();
@@ -136,25 +136,26 @@
     <br />
     <div class="container"> 	
         <form id="boardForm" name="boardForm" method="post" encType="multipart/form-data" onsubmit="return false">
-        	<input type="hidden" id="board_id" name="board_id" value="${vo.board_id}">
+        	<input type="hidden" id="board_id" name="board_id" value="${vo.vo.board_id}">
+        	<input type="hidden" id="session_id" name="user_id" value="${sessionUserVo.user_id}"/>
             <table class="table table-bordered">
                 <tbody>
                     <tr>
                         <th>작성자</th>
                         <td>
-                        	<input name="user_id" type="text" value="${vo.user_id}" class="form-control" readonly />
+                        	<input name="user_id" type="text" value="${vo.vo.user_id}" class="form-control" readonly />
                         </td>
                     </tr>
                     <tr>
                         <th>제목</th>
                         <td>
-                        	<input id="title" name="title" type="text" value="${vo.title}" name="title" class="form-control"/>
+                        	<input id="title" name="title" type="text" value="${vo.vo.title}" name="title" class="form-control"/>
                         </td>
                     </tr>
                     <tr>
                         <th>내용</th>
                         <td>
-                        	<textarea id="content" name="content" rows="10" cols="100" style="width: 100%;">${vo.content }</textarea>
+                        	<textarea id="content" name="content" rows="10" cols="100" style="width: 100%;">${vo.vo.content }</textarea>
                         </td>
                     </tr>
 						<tr>
@@ -165,7 +166,7 @@
                     <tr>
                         <td colspan="2" style="text-align: right;">
                             <button id="btn_previous" type="button" class="btn_previous" onclick="location.href='http://localhost:8080/board/board.do'">이전</button>
-                           	<c:if test="${sessionUserVo.user_id == vo.user_id}">
+                           	<c:if test="${sessionUserVo.user_id == vo.vo.user_id}">
 	                            <button type="button" class="btn_register" onclick="updatePost()">수정</button>
 	                            <button id="delete_btn" type="button" class="btn_delete" onclick="deleteBoard()">삭제</button>
                             </c:if>
@@ -198,7 +199,7 @@
 		//파일이 없으면 업로드 출력 있으면 다운로드출력
 		if(filename.length > 0){
 			document.getElementById("thOption").innerText="다운로드";
-			document.getElementById("tdOption").innerHTML='<a href="fileDownload.do?file_name=${vo.file_name}"><input type="hidden" id="boardFileCheck" name="boardFileCheck" value="old"/><input type="text" id="uploadFile" value="${vo.file_name}" class="form-control"/></a><button id="filedelete" type="button" class="btn_previous" onclick="deleteFile()" style="float: right">파일삭제</button>';
+			document.getElementById("tdOption").innerHTML='<a href="fileDownload.do?file_name=${vo.vo.file_name}"><input type="hidden" id="boardFileCheck" name="boardFileCheck" value="old"/><input type="text" id="uploadFile" value="${vo.vo.file_name}" class="form-control"/></a><button id="filedelete" type="button" class="btn_previous" onclick="deleteFile()" style="float: right">파일삭제</button>';
 		}else if(filename.length <= 0){
 			document.getElementById("thOption").innerText="첨부파일";
 			document.getElementById("tdOption").innerHTML='<input type="hidden" id="boardFileCheck" name="boardFileCheck" value="new"/><input id="uploadFile" type="file" name="uploadFile" placeholder="파일 선택" /><br/>';
@@ -222,6 +223,12 @@
 		input.type = 'hidden';
 		input.name = 'board_id';
 		input.value = document.getElementById("board_id").value;
+		form.append(input);
+		
+		var input = document.createElement("input");
+		input.type = 'hidden';
+		input.name = 'user_id';
+		input.value = document.getElementById("session_id").value;
 		form.append(input);
 		
 		document.body.appendChild(form);

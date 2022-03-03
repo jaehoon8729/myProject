@@ -3,3 +3,11 @@
 	height: auto;
 	padding:5px 5px 5px 5px;
 }
+.boardth{
+	width: 100px; 
+	height: auto; 
+	text-align: center;
+}
+.commentth{
+	width: 200px;
+}

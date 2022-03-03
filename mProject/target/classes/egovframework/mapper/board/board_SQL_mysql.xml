@@ -31,6 +31,13 @@
 		<result property="next" column="next"/>
 	</resultMap>
 	
+	<resultMap id="user" type="egovframework.example.login.vo.userVo">
+		<result property="user_id" column="user_id"/>
+		<result property="user_pswd" column="user_pswd"/>
+		<result property="state" column="state"/>
+		<result property="user_name" column="user_name"/>
+	</resultMap>
+	
   <!-- 글작성 -->
 	<insert id="insert_board" >
 			<![CDATA[
@@ -70,6 +77,7 @@
 				, reg_dtm 
 		FROM board
         <where>
+        	AND state = "N"
             <if test="searchType=='title' and keyword != null and keyword !=''">
                 AND title like CONCAT('%',#{keyword},'%')
             </if>
@@ -112,11 +120,14 @@
         </where>
     </select>
     
-    <!-- 게시판 삭제 -->
-    <delete id="deleteBoard" parameterType="egovframework.example.board.vo.boardVo">
-        DELETE FROM
-        	board 
-        WHERE
-        	board_id = #{board_id}
-    </delete>
+    <!-- 게시글 삭제 -->
+    <update id="deleteBoard" parameterType="egovframework.example.board.vo.boardVo">
+    	UPDATE 
+			board 
+		SET  
+			state = 'D'
+		WHERE 
+			board_id = #{board_id}
+			AND user_id = #{user_id}
+    </update>
 </mapper>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,7 +23,7 @@
             <table class="table table-bordered">
                 <tbody>
                     <tr>
-                        <th style="width: 70px; height: auto">작성자</th>
+                        <th class="boardth">작성자</th>
                         <td>
                         	<div class="boardborder">
                         		${vo.vo.user_id}
@@ -30,7 +31,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>제목</th>
+                        <th class="boardth">제목</th>
                         <td>
                         	<div class="boardborder">
                         		${vo.vo.title}
@@ -38,7 +39,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>내용</th>
+                        <th class="boardth">내용</th>
                         <td>
                         	<div class="boardborder">
                         		${vo.vo.content }
@@ -47,7 +48,7 @@
                     </tr>
                     <c:if test="${vo.vo.file_name ne null}">
 						<tr>
-						    <th>다운로드</th>
+						    <th class="boardth">다운로드</th>
 						    <td>
 							    <a href="fileDownload.do?file_name=${vo.vo.file_name}">
 								<input type="text" id="filename" value="${vo.vo.file_name}" name="fileName" class="form-control" readonly="readonly" /></a>
@@ -73,7 +74,7 @@
 	                <c:forEach var="comment" items="${vo.cvo}">
 	                	<input type="hidden" id="comment_id${comment.comment_id}" name="comment_id" value="${comment.comment_id}"/>
 						<tr>
-	                        <th>${comment.user_id}<br>${comment.reg_dtm}</th>
+	                        <th class="commentth">${comment.user_id}<br><fmt:formatDate value="${comment.reg_dtm}" pattern="yyyy-MM-dd HH:mm"/></th>
 	                        <td>
 	                        	<input id="id${comment.comment_id}" name="id" type="text" value="${comment.com_content}" class="form-control" readonly />
 	                        </td>

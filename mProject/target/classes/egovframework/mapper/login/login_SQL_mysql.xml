@@ -3,7 +3,7 @@
 
 <mapper namespace="user">
 	
-	<resultMap id="board" type="egovframework.example.login.vo.userVo">
+	<resultMap id="user" type="egovframework.example.login.vo.userVo">
 		<result property="user_id" column="user_id"/>
 		<result property="user_pswd" column="user_pswd"/>
 		<result property="state" column="state"/>
