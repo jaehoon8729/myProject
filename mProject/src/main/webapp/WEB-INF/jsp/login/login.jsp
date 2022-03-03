@@ -1,33 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+	<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="/js/user.js"></script>
     <title>로그인</title>
-    
     <!-- css 파일 분리 -->
     <link href='/css/join_style.css' rel='stylesheet' style='text/css'/>
-    
-    <script type="text/javascript">
-    
-        function checkValue(){
-            var inputForm = eval("document.loginInfo");
-            
-            if(!inputForm.user_id.value){
-                alert("아이디를 입력하세요");    
-                return false;
-            }
-            if(!inputForm.user_pswd.value){
-                alert("비밀번호를 입력하세요");    
-                return false;
-            }
-        }
-    </script>
-   	<script>
-   	function imgRefresh(){
-   	    $("#captchaImg").attr("src", "/captcha/getImg.do?id=" + Math.random());
-   	}
- 	</script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/common/header.jsp"></jsp:include>

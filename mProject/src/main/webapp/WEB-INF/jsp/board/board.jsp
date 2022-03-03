@@ -1,22 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Board List</title>
-<!-- Bootstrap CSS -->
-<link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-    crossorigin="anonymous">
 <style type="text/css">
-a{
- text-decoration: auto;
-}
+	a{
+	 text-decoration: auto;
+	}
 </style>
 </head>
 <body>
@@ -27,7 +20,7 @@ a{
     <br/>
     
     <div class="container">
-        <table class="table table-hover table-striped text-center" style="border:1px solid;">
+        <table class="table table-hover table-striped text-center" style="border:0.1px solid;">
             <colgroup>
                 <col width="10%" />
                 <col width="50%" />
@@ -57,8 +50,7 @@ a{
         <hr/>
         <!-- pagination start -->
         <div id="paginationBox" class="pagination1">
-            <ul class="pagination" style="justify-content: center;">
- 
+            <ul class="pagination justify-content-center">
                 <c:if test="${pagination.prev}">
                     <li class="page-item"><a class="page-link" href="#"
                         onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${pagination.listSize}'
@@ -81,33 +73,26 @@ a{
             </ul>
         </div>
         <!-- pagination end -->
-        <a class="btn btn-outline-info" style="float:right" href="register.do">글쓰기</a>
-         <!-- search start -->
+        <div>
+        	<a class="btn btn-outline-info" style="float:right" href="register.do">글쓰기</a>
+        </div>
+        
+        <!-- search start -->
         <div class="form-group row">
- 
             <div class="w100" style="padding-right: 10px">
-                <select class="form-control form-control-sm" name="searchType" id="searchType">
+                <select class="form-select" name="searchType" id="searchType">
                     <option value="title">제목</option>
                     <option value="content">내용</option>
                 </select>
             </div>
- 
             <div class="w300" style="padding-right: 10px">
                 <input type="text" class="form-control form-control-sm" name="keyword" id="keyword">
-            </div>
- 
-            <div>
                 <button class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch">검색</button>
             </div>
- 
         </div>
         <!-- search end -->
     </div>
     <br>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 </body>
     <script type="text/javascript">
     //이전 버튼 이벤트

@@ -5,31 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Board Write</title>
-<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 <!-- SmartEditor를 사용하기 위해서 다음 js파일을 추가 (경로 확인) -->
 <script type="text/javascript" src="/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-    crossorigin="anonymous">
- 
-<!-- Optional theme -->
-<link rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-    crossorigin="anonymous">
- 
-<!-- Latest compiled and minified JavaScript -->
-<script
-    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
-
-
-
-
 <script type="text/javascript">
 	function postText() {	
 		var checkContentLength = oEditors.getById["content"].getIR();
@@ -44,48 +21,7 @@
 		}else if(tagRemove.length >= 40000){		//글자수가 40000byte제한
 			alert("최대 40000 byte까지 입력 가능합니다.");	//DB엔 text형으로 컬럼을 만들어 65535 문자까지 가능
 			return false;
-		}/*
-		else{										//조건만족시 Post
-			var form = document.createElement('form');
-			form.type = 'hidden';
-			form.name = 'form';
-			form.method = 'post';
-			form.enctype = 'multipart/form-data';
-			form.action = 'boardPost.do';
-			
-			//세션로그인정보
-			var input = document.createElement("input");
-			input.type = 'hidden';
-			input.name = 'user_id';
-			input.value = '<c:out value="${userVo.user_id}"/>';
-			form.append(input);
-			
-			//제목
-			var input = document.createElement("input");
-			input.type = 'hidden';
-			input.name = 'title';
-			input.value = document.getElementById("title").value;
-			form.append(input);
-			
-			//내용
-			var input = document.createElement("input");
-			input.type = 'hidden';
-			input.name = 'content';
-			input.value = oEditors.getById["content"].getIR();
-			form.append(input);
-			
-			//파일
-			var file = document.getElementById("uploadfile").files[0];
-			var input = document.createElement("input");
-			input.type = 'hidden';
-			input.name = 'uploadFile';
-			input.value = file;
-			form.append(input);
-			
-			document.body.appendChild(form);
-			form.submit();
-			document.body.removeChild(form);
-		}*/
+		}
 	}
 </script> 
 
