@@ -42,7 +42,6 @@ public class boardController {
 	            ,@RequestParam(required=false)String keyword
 	            ,@ModelAttribute("search")Search search) throws Exception {
 		
-		model.addAttribute("search", search);
         search.setSearchType(searchType);
         search.setKeyword(keyword);
 
@@ -85,14 +84,12 @@ public class boardController {
 	//View
 	@RequestMapping(value="/board/view.do")
 	public String view(@ModelAttribute boardVo vo, Model model) throws Exception {
-		comVo cvo = new comVo();
-		cvo.setBoard_id(vo.getBoard_id());
-		System.out.println("boardid in cvo:"+cvo.getBoard_id());
-		//게시글내용
-		model.addAttribute("vo",boardservice.selectBoardContent(vo));
-		//댓글내용
-		model.addAttribute("cvo", boardservice.selectCommentList(cvo));
-		
+		try {
+			//게시글+댓글 내용
+			model.addAttribute("vo",boardservice.selectBoardContent(vo));
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
 		return "board/view";
 	}
 	
@@ -124,7 +121,7 @@ public class boardController {
                 }
                 vo.setFile_name(fileName);
 	        } else if(vo.getBoardFileCheck().equals("old")) {
-	        	vo.setFile_name(boardservice.selectBoardContent(vo).getFile_name());
+	        	vo.setFile_name(((boardVo) boardservice.selectBoardContent(vo)).getFile_name());
 	        }
 			System.out.println("filename:"+vo.getFile_name());
 		}

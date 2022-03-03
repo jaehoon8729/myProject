@@ -1,0 +1,5 @@
+.boardborder{
+	border: 1px solid black;
+	height: auto;
+	padding:5px 5px 5px 5px;
+}

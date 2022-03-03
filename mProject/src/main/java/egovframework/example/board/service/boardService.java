@@ -1,6 +1,7 @@
 package egovframework.example.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import egovframework.example.board.vo.boardVo;
 import egovframework.example.board.vo.comVo;
@@ -10,7 +11,7 @@ public interface boardService {
 
 	public List<boardVo> selectBoardList(Search search) throws Exception;
 	
-	public boardVo selectBoardContent(boardVo vo) throws Exception;
+	public Map<String, Object> selectBoardContent(boardVo vo) throws Exception;
 
 	public void insertBoardContent(boardVo vo) throws Exception;
 

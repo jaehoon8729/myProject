@@ -1,6 +1,8 @@
 package egovframework.example.board.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +25,11 @@ public class boardServiceImpl extends EgovAbstractServiceImpl implements boardSe
     	return boardDao.selectBoardList(search);
     }
 
-	public boardVo selectBoardContent(boardVo vo) throws Exception {
-		
-		return boardDao.selectContent(vo);
+	public Map<String, Object> selectBoardContent(boardVo vo) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("vo", boardDao.selectContent(vo));
+		map.put("cvo", boardDao.selectCommentList(vo));
+		return map;
 	}
 	
 	public void insertBoardContent(boardVo vo) throws Exception {
@@ -37,7 +41,6 @@ public class boardServiceImpl extends EgovAbstractServiceImpl implements boardSe
 	}
 	
 	public int updateBoard(boardVo vo) throws Exception {
-		// TODO Auto-generated method stub
 		return boardDao.updateBoard(vo);
 	}
 	

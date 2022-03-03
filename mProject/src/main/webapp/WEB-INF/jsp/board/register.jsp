@@ -4,11 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="/js/jquery-3.1.1.min.js" type="text/javascript"></script>
 <title>Board Write</title>
 <!-- SmartEditor를 사용하기 위해서 다음 js파일을 추가 (경로 확인) -->
 <script type="text/javascript" src="/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
-	function postText() {	
+	function postText() {
+		var checkTitleLength = $('#title').val();
 		var checkContentLength = oEditors.getById["content"].getIR();
 		var tagRemove = checkContentLength.replaceAll(/(<([^>]+)>)/ig,"");
 		//에디터의 실제 내용을 가져옴
@@ -18,13 +20,15 @@
 			alert("로그인을 해주세요!");
 			location.href="/login/login.do";
 			return false;
+		}else if(checkTitleLength.length > 100){
+			alert("제목은 최대 100자까지 입력 가능합니다.");
+			return false;
 		}else if(tagRemove.length >= 40000){		//글자수가 40000byte제한
-			alert("최대 40000 byte까지 입력 가능합니다.");	//DB엔 text형으로 컬럼을 만들어 65535 문자까지 가능
+			alert("내용은 최대 40000 byte까지 입력 가능합니다.");	//DB엔 text형으로 컬럼을 만들어 65535 문자까지 가능
 			return false;
 		}
 	}
 </script> 
-
 
 </head>
 <body>
@@ -46,7 +50,7 @@
                     <tr>
                         <th>내용</th>
                         <td>
-                        	<textarea id="content" name="content" rows="10" cols="100" style="width: 100%;"></textarea>
+                        	<textarea id="content" name="content" rows="" cols="100" style="width: 100%;"></textarea>
                         </td>
                     </tr>
                     <tr>

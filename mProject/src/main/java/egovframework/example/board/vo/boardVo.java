@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class boardVo {
+public class boardVo extends comVo{
 	private int board_id;
 	private String user_id;
 	private String title;
@@ -15,6 +15,7 @@ public class boardVo {
 	private MultipartFile uploadFile;
 
 	private String boardFileCheck;
+	
 	
 	public String getBoardFileCheck() {
 		return boardFileCheck;

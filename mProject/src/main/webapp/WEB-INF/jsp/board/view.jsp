@@ -6,6 +6,7 @@
 <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 <!-- SmartEditor를 사용하기 위해서 다음 js파일을 추가 (경로 확인) -->
 <script type="text/javascript" src="/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<link rel="stylesheet" href="/css/boardstyle">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Board View</title>
 </head>
@@ -21,37 +22,43 @@
             <table class="table table-bordered">
                 <tbody>
                     <tr>
-                        <th>작성자</th>
+                        <th style="width: 70px; height: auto">작성자</th>
                         <td>
-                        	<input name="id" type="text" value="${vo.user_id}" class="form-control" readonly />
+                        	<div class="boardborder">
+                        		${vo.vo.user_id}
+                        	</div>
                         </td>
                     </tr>
                     <tr>
                         <th>제목</th>
                         <td>
-                        	<input type="text" name="title" value="${vo.title}" class="form-control" readonly/>
+                        	<div class="boardborder">
+                        		${vo.vo.title}
+                        	</div>
                         </td>
                     </tr>
                     <tr>
                         <th>내용</th>
                         <td>
-                        	<textarea id="content" name="content" rows="10" cols="100" style="width: 100%;" readonly>${vo.content }</textarea>
+                        	<div class="boardborder">
+                        		${vo.vo.content }
+                        	</div>
                         </td>
                     </tr>
-                    <c:if test="${vo.file_name ne null}">
+                    <c:if test="${vo.vo.file_name ne null}">
 						<tr>
 						    <th>다운로드</th>
 						    <td>
-							    <a href="fileDownload.do?file_name=${vo.file_name}">
-								<input type="text" id="filename" value="${vo.file_name}" name="fileName" class="form-control" readonly="readonly" /></a>
+							    <a href="fileDownload.do?file_name=${vo.vo.file_name}">
+								<input type="text" id="filename" value="${vo.vo.file_name}" name="fileName" class="form-control" readonly="readonly" /></a>
 							</td>
 						</tr>
                     </c:if>
                     <tr>
                         <td colspan="2" style="text-align: right;">
-                            <button id="btn_previous" type="button" class="btn_previous" onclick="location.href='http://localhost:8080/board/board.do'">이전</button>
-                           	<c:if test="${sessionUserVo.user_id == vo.user_id}">
-	                            <button id="btn_modify" type="button" class="btn_register" onclick="location.href='/board/detail.do?board_id=${vo.board_id}'">수정</button>
+                            <button id="btn_previous" type="button" class="btn_previous" onclick="history.back();">이전</button>
+                           	<c:if test="${sessionUserVo.user_id == vo.vo.user_id}">
+	                            <button id="btn_modify" type="button" class="btn_register" onclick="location.href='/board/detail.do?board_id=${vo.vo.board_id}'">수정</button>
                             </c:if>
                         </td>
                     </tr>
@@ -63,7 +70,7 @@
 	        <table class="table table-bordered">
 			    <!-- 댓글 목록 -->
                 <tbody>
-	                <c:forEach var="comment" items="${cvo}">
+	                <c:forEach var="comment" items="${vo.cvo}">
 	                	<input type="hidden" id="comment_id${comment.comment_id}" name="comment_id" value="${comment.comment_id}"/>
 						<tr>
 	                        <th>${comment.user_id}<br>${comment.reg_dtm}</th>
@@ -85,12 +92,12 @@
             <c:if test="${sessionUserVo.user_id != null}">
             	<form name="writeCommentForm" method="post" action="commentPost.do" onsubmit="return commentPost()">
             		<input type="hidden" id="user_id" name="user_id" value="${sessionUserVo.user_id}"/>
-                	<input type="hidden" id="board_id" name="board_id" value="${vo.board_id}"/>
+                	<input type="hidden" id="board_id" name="board_id" value="${vo.vo.board_id}"/>
 	            	<table class="table table-bordered">
 		            	<tr bgcolor="#F5F5F5">
 			                <!-- 아이디-->
 			                <td width="150">
-		                        ${userVo.user_id}
+		                        ${vo.userVo.user_id}
 			                </td>
 			                <!-- 본문 작성-->
 			                <td width="550">
