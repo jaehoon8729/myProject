@@ -26,8 +26,14 @@
 		}else if(tagRemove.length >= 40000){		//글자수가 40000byte제한
 			alert("내용은 최대 40000 byte까지 입력 가능합니다.");	//DB엔 text형으로 컬럼을 만들어 65535 문자까지 가능
 			return false;
+		}else{
+			var fileValue = $("#uploadfile").val().split("\\");
+			var fileName = fileValue[fileValue.length-1]; // 파일명
+			
+			$("#form").append('<input type="hidden" name="default_file_name" value="'+fileName+'">');
 		}
 	}
+	
 </script> 
 
 </head>
@@ -39,7 +45,7 @@
 <br/>
 <br/>
 <div class="container">
-        <form name="form" method="post" enctype="multipart/form-data" action="boardPost.do" onsubmit="return postText();">
+        <form id="form" name="form" method="post" enctype="multipart/form-data" action="boardPost.do" onsubmit="return postText();">
         	<input type="hidden" name="user_id" value="<c:out value="${sessionUserVo.user_id}"/>">
             <table class="table table-bordered">
                 <tbody>

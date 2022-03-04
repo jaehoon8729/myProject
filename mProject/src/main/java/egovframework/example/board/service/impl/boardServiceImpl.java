@@ -28,11 +28,14 @@ public class boardServiceImpl extends EgovAbstractServiceImpl implements boardSe
 	private boardDAO boardDao;
 	
 	public List<boardVo> selectBoardList(Search search) throws Exception {
+		
+		
     	return boardDao.selectBoardList(search);
     }
 
 	public Map<String, Object> selectBoardContent(boardVo vo) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("servicedfn:"+boardDao.selectContent(vo).getDefault_file_name());
 		map.put("vo", boardDao.selectContent(vo));
 		map.put("cvo", boardDao.selectCommentList(vo));
 		return map;
@@ -64,8 +67,10 @@ public class boardServiceImpl extends EgovAbstractServiceImpl implements boardSe
 		try {			
 			String fileName = null;
 	        MultipartFile uploadFile = vo.getUploadFile();
-	        
+
+	        //파일이 변한경우 (삭제or수정)
 	        if(vo.getBoardFileCheck().equals("new")) {
+	        	//파일이 수정된경우
             	if (!uploadFile.isEmpty()) {
                     String originalFileName = uploadFile.getOriginalFilename();
                     String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
@@ -73,6 +78,7 @@ public class boardServiceImpl extends EgovAbstractServiceImpl implements boardSe
                     fileName = uuid + "." + ext;
                     uploadFile.transferTo(new File(UPLOAD_PATH + fileName));
                 }
+            	vo.setDefault_file_name(uploadFile.getOriginalFilename());
                 vo.setFile_name(fileName);
 	        } else if(vo.getBoardFileCheck().equals("old")) {
 	        	//파일이 변하지않은경우 DB에 있는 파일이름을 그대로 다시 넣어줌
@@ -80,6 +86,7 @@ public class boardServiceImpl extends EgovAbstractServiceImpl implements boardSe
 	        	vo.setFile_name(vo1.getFile_name());	
 	        }
 			System.out.println("filename:"+vo.getFile_name());
+			System.out.println("dfilenameinservice"+vo.getDefault_file_name());
 		}
 		catch(Exception ex) {
 			System.out.println(ex);

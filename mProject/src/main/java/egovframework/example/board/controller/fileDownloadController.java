@@ -19,9 +19,10 @@ public class fileDownloadController {
     public void fileDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
  
         String filename = request.getParameter("file_name");
+        String defaultFileName = request.getParameter("default_file_name");
         String realFilename = "";
         System.out.println(filename);
- 
+        System.out.println(defaultFileName);
         try {
  
             String browser = request.getHeader("User-Agent");
@@ -49,7 +50,7 @@ public class fileDownloadController {
         // 파일명 지정
         response.setContentType("application/octer-stream");
         response.setHeader("Content-Transfer-Encoding", "binary");
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + defaultFileName + "\"");
  
         try {
             OutputStream os = response.getOutputStream();

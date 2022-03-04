@@ -50,8 +50,8 @@
 						<tr>
 						    <th class="boardth">다운로드</th>
 						    <td>
-							    <a href="fileDownload.do?file_name=${vo.vo.file_name}">
-								<input type="text" id="filename" value="${vo.vo.file_name}" name="fileName" class="form-control" readonly="readonly" /></a>
+							    <a href="fileDownload.do?file_name=${vo.vo.file_name}&default_file_name=${vo.vo.default_file_name}">
+								<input type="text" id="filename" value="${vo.vo.default_file_name}" name="fileName" class="form-control" readonly="readonly" /></a>
 							</td>
 						</tr>
                     </c:if>
@@ -115,29 +115,7 @@
 	    </div>
     </div>
 </body>
-<script type="text/javascript"> 
-	var oEditors = [];
-	nhn.husky.EZCreator.createInIFrame({
-	    oAppRef: oEditors,
-	    elPlaceHolder: "content",  //textarea ID 입력
-	    sSkinURI: "/SmartEditor2Skin.html",  //martEditor2Skin.html 경로 입력
-	    fCreator: "createSEditor2",
-	    htParams : { 
-	    	// 툴바 사용 여부 (true:사용/ false:사용하지 않음) 
-	        bUseToolbar : false, 
-		// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음) 
-		bUseVerticalResizer : false, 
-		// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음) 
-		bUseModeChanger : false 
-	    },
-	    fOnAppLoad : function(){
-			//oEditors.getById["content"].exec("PASTE_HTML", ["로딩이 완료된 후에 본문에 삽입되는 text입니다."]);
-			var editor = oEditors.getById["content"];
-			editor.exec("DISABLE_WYSIWYG");
-			editor.exec("DISABLE_ALL_UI");
-		}
-	});
-	
+<script type="text/javascript"> 	
 	//댓글길이check
 	function commentPost() {
 		var commentLength = $('#com_content').val();

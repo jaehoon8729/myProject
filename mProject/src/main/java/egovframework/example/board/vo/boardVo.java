@@ -10,6 +10,7 @@ public class boardVo extends comVo{
 	private String title;
 	private String content;
 	private String file_name;
+	private String default_file_name;
 	private Date reg_dtm;
 	
 	private MultipartFile uploadFile;
@@ -17,6 +18,12 @@ public class boardVo extends comVo{
 	private String boardFileCheck;
 	
 	
+	public String getDefault_file_name() {
+		return default_file_name;
+	}
+	public void setDefault_file_name(String default_file_name) {
+		this.default_file_name = default_file_name;
+	}
 	public String getBoardFileCheck() {
 		return boardFileCheck;
 	}

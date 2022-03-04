@@ -123,7 +123,7 @@ public class pagination {
         this.listCnt = listCnt;
         
         //전체 페이지 개수
-        this.pageCnt = (int)Math.ceil(listCnt/listSize);
+        this.pageCnt = (int)Math.ceil(listCnt/listSize)+1;
         
         //시작페이지
         this.startPage = (range - 1) * rangeSize + 1;

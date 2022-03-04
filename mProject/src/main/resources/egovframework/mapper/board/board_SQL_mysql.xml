@@ -9,6 +9,7 @@
 		<result property="title" column="title"/>
 		<result property="content" column="content"/>
 		<result property="file_name" column="file_name"/>
+		<result property="default_file_name" column="default_file_name"/>
 		<result property="reg_dtm" column="reg_dtm"/>
 	</resultMap>
 	
@@ -46,12 +47,14 @@
         	, title
         	, content
         	, file_name
+        	, default_file_name
         	)
         	VALUES(
         	#{user_id}
         	, #{title}
         	, #{content}
-        	, #{file_name})
+        	, #{file_name}
+        	, #{default_file_name})
         	]]>
 	</insert>
 	<!-- 글수정 -->
@@ -62,6 +65,7 @@
 				title = #{title}
 				, content = #{content}
 				, file_name = #{file_name}
+				, default_file_name = #{default_file_name}
 			WHERE 
 				board_id = #{board_id}
 	</update>
@@ -74,6 +78,7 @@
 				, title
 				, content
 				, file_name
+				, default_file_name
 				, reg_dtm 
 		FROM board
         <where>
@@ -97,6 +102,7 @@
 				, title
 				, content
 				, file_name
+				, default_file_name
 				, reg_dtm
 			FROM
 				board

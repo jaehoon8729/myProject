@@ -46,7 +46,11 @@
 			var tagRemove = checkContentLength.replaceAll(/(<([^>]+)>)/ig,"");
 			//에디터의 실제 내용을 가져옴
 			oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD",[]);
-
+			//실제파일명
+			var fileValue = $("#uploadFile").val().split("\\");
+			var fileName = fileValue[fileValue.length-1]; // 파일명
+			
+			$("#boardForm").append('<input type="hidden" name="default_file_name" value="'+fileName+'">');
 			
 		    var formData = new FormData(document.boardForm);
 		    
@@ -199,7 +203,7 @@
 		//파일이 없으면 업로드 출력 있으면 다운로드출력
 		if(filename.length > 0){
 			document.getElementById("thOption").innerText="다운로드";
-			document.getElementById("tdOption").innerHTML='<a href="fileDownload.do?file_name=${vo.vo.file_name}"><input type="hidden" id="boardFileCheck" name="boardFileCheck" value="old"/><input type="text" id="uploadFile" value="${vo.vo.file_name}" class="form-control"/></a><button id="filedelete" type="button" class="btn_previous" onclick="deleteFile()" style="float: right">파일삭제</button>';
+			document.getElementById("tdOption").innerHTML='<a href="fileDownload.do?file_name=${vo.vo.file_name}&default_file_name=${vo.vo.default_file_name}"><input type="hidden" id="boardFileCheck" name="boardFileCheck" value="old"/><input type="text" id="uploadFile" value="${vo.vo.default_file_name}" class="form-control"/></a><button id="filedelete" type="button" class="btn_previous" onclick="deleteFile()" style="float: right">파일삭제</button>';
 		}else if(filename.length <= 0){
 			document.getElementById("thOption").innerText="첨부파일";
 			document.getElementById("tdOption").innerHTML='<input type="hidden" id="boardFileCheck" name="boardFileCheck" value="new"/><input id="uploadFile" type="file" name="uploadFile" placeholder="파일 선택" /><br/>';
