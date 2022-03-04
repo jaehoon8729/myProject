@@ -21,8 +21,8 @@ public class boardDAO extends EgovComAbstractDAO {
     	return selectOne("find_content",vo);
     }
     
-    public void insertContent(boardVo vo) throws Exception{
-    	insert("insert_board",vo);
+    public int insertContent(boardVo vo) throws Exception{
+    	return insert("insert_board",vo);
     }
     public int getBoardListCnt(Search search) throws Exception{
     	return selectOne("getBoardListCnt", search);

@@ -13,7 +13,7 @@ public interface boardService {
 	
 	public Map<String, Object> selectBoardContent(boardVo vo) throws Exception;
 
-	public void insertBoardContent(boardVo vo) throws Exception;
+	public int insertBoardContent(boardVo vo) throws Exception;
 
 	public int getBoardListCnt(Search search) throws Exception;
 	

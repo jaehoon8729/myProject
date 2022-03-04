@@ -39,7 +39,7 @@
 	</resultMap>
 	
   <!-- 글작성 -->
-	<insert id="insert_board" >
+	<insert id="insert_board">
 			<![CDATA[
         	INSERT INTO board(
         	user_id

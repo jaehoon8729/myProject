@@ -28,9 +28,7 @@ import egovframework.example.ivory.vo.Search;
 
 @Controller
 public class boardController {
-	
 	private static final String UPLOAD_PATH = "D:\\studyDownload\\";
-	
 	@Autowired
 	private boardService boardservice;
 	
@@ -63,21 +61,12 @@ public class boardController {
 	//글작성
 	@RequestMapping(value="/board/boardPost.do")
 	public String boardPost(@ModelAttribute boardVo vo) throws Exception {
-
-		String fileName = null;
-        MultipartFile uploadFile = vo.getUploadFile();
-
-        if (!uploadFile.isEmpty()) {
-            String originalFileName = uploadFile.getOriginalFilename();
-            String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
-            UUID uuid = UUID.randomUUID(); // UUID 구하기
-            fileName = uuid + "." + ext;
-            uploadFile.transferTo(new File(UPLOAD_PATH + fileName));
-        }
-        vo.setFile_name(fileName);
- 
-        boardservice.insertBoardContent(vo);
-
+		try {
+			int a = boardservice.insertBoardContent(vo);
+			System.out.println("boardPostResult:"+a);
+		}catch(Exception ex) {
+			System.out.println(ex);
+		}
 		return "redirect:board.do";
 	}
 	
@@ -107,27 +96,6 @@ public class boardController {
 	@ResponseBody
 	public String detailPost(@ModelAttribute boardVo vo) throws Exception {
 		
-		try {			
-			String fileName = null;
-	        MultipartFile uploadFile = vo.getUploadFile();
-	        
-	        if(vo.getBoardFileCheck().equals("new")) {
-            	if (!uploadFile.isEmpty()) {
-                    String originalFileName = uploadFile.getOriginalFilename();
-                    String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
-                    UUID uuid = UUID.randomUUID(); // UUID 구하기
-                    fileName = uuid + "." + ext;
-                    uploadFile.transferTo(new File(UPLOAD_PATH + fileName));
-                }
-                vo.setFile_name(fileName);
-	        } else if(vo.getBoardFileCheck().equals("old")) {
-	        	vo.setFile_name(((boardVo) boardservice.selectBoardContent(vo)).getFile_name());
-	        }
-			System.out.println("filename:"+vo.getFile_name());
-		}
-		catch(Exception ex) {
-			return "0";
-		}
 		boardservice.updateBoard(vo);
 		return "1";
 	}
