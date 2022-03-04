@@ -21,7 +21,7 @@
 		
 		if('<c:out value="${sessionUserVo.user_id}"/>' == ""){		//로그인여부 확인
 			alert("로그인을 해주세요!");
-			location.href="/login/login.do";
+			location.href="/login/login";
 			return false;
 		}else if(tagRemove.length >= 40000){		//글자수가 40000byte제한
 			alert("최대 40000 byte까지 입력 가능합니다.");	//DB엔 text형으로 컬럼을 만들어 65535 문자까지 가능
@@ -79,7 +79,7 @@
 	        
 			//alert(queryString);
 	        $.ajax({
-	        	url: '/board/detailPost.do',
+	        	url: '/board/detailPost',
 	            async: true ,
 	            type: 'post',
 	            data: formData,
@@ -92,7 +92,7 @@
 	                console.log(json);    
                     if(json === "1"){
                         alert("게시글 수정을 성공하였습니다.");
-                        location.href = "/board/board.do";
+                        location.href = "/board/board";
                     } else {
                         alert("게시글 수정을 실패하였습니다.");
                         return;
@@ -105,7 +105,7 @@
 	            }
 	            /*
 	            
-	            url : '/board/detailPost.do',
+	            url : '/board/detailPost',
 	            type : 'post',
 	            encType : 'multipart/form-data',
 	            data : queryString,
@@ -114,7 +114,7 @@
 	                console.log(json);    
                     if(json == 1){
                         alert("게시글 수정을 성공하였습니다.");
-                        location.href = "/board/board.do";
+                        location.href = "/board/board";
                     } else {
                         alert("게시글 수정을 실패하였습니다.");
                         return;
@@ -169,7 +169,7 @@
 						</tr>
                     <tr>
                         <td colspan="2" style="text-align: right;">
-                            <button id="btn_previous" type="button" class="btn_previous" onclick="location.href='http://localhost:8080/board/board.do'">이전</button>
+                            <button id="btn_previous" type="button" class="btn_previous" onclick="location.href='http://localhost:8080/board/board'">이전</button>
                            	<c:if test="${sessionUserVo.user_id == vo.vo.user_id}">
 	                            <button type="button" class="btn_register" onclick="updatePost()">수정</button>
 	                            <button id="delete_btn" type="button" class="btn_delete" onclick="deleteBoard()">삭제</button>
@@ -203,7 +203,7 @@
 		//파일이 없으면 업로드 출력 있으면 다운로드출력
 		if(filename.length > 0){
 			document.getElementById("thOption").innerText="다운로드";
-			document.getElementById("tdOption").innerHTML='<a href="fileDownload.do?file_name=${vo.vo.file_name}&default_file_name=${vo.vo.default_file_name}"><input type="hidden" id="boardFileCheck" name="boardFileCheck" value="old"/><input type="text" id="uploadFile" value="${vo.vo.default_file_name}" class="form-control"/></a><button id="filedelete" type="button" class="btn_previous" onclick="deleteFile()" style="float: right">파일삭제</button>';
+			document.getElementById("tdOption").innerHTML='<a href="fileDownload?file_name=${vo.vo.file_name}&default_file_name=${vo.vo.default_file_name}"><input type="hidden" id="boardFileCheck" name="boardFileCheck" value="old"/><input type="text" id="uploadFile" value="${vo.vo.default_file_name}" class="form-control"/></a><button id="filedelete" type="button" class="btn_previous" onclick="deleteFile()" style="float: right">파일삭제</button>';
 		}else if(filename.length <= 0){
 			document.getElementById("thOption").innerText="첨부파일";
 			document.getElementById("tdOption").innerHTML='<input type="hidden" id="boardFileCheck" name="boardFileCheck" value="new"/><input id="uploadFile" type="file" name="uploadFile" placeholder="파일 선택" /><br/>';
@@ -221,7 +221,7 @@
 		form.type = 'hidden';
 		form.name = 'form';
 		form.method = 'post';
-		form.action = '/board/delete.do';
+		form.action = '/board/delete';
 		
 		var input = document.createElement("input");
 		input.type = 'hidden';

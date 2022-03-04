@@ -18,7 +18,7 @@
     <br />
     <br />
     <div class="container">
-        <form action="updateTest.do" id="viewForm" method="post"
+        <form action="updateTest" id="viewForm" method="post"
             encType="multiplart/form-data">
             <table class="table table-bordered">
                 <tbody>
@@ -50,7 +50,7 @@
 						<tr>
 						    <th class="boardth">다운로드</th>
 						    <td>
-							    <a href="fileDownload.do?file_name=${vo.vo.file_name}&default_file_name=${vo.vo.default_file_name}">
+							    <a href="fileDownload?file_name=${vo.vo.file_name}&default_file_name=${vo.vo.default_file_name}">
 								<input type="text" id="filename" value="${vo.vo.default_file_name}" name="fileName" class="form-control" readonly="readonly" /></a>
 							</td>
 						</tr>
@@ -59,7 +59,7 @@
                         <td colspan="2" style="text-align: right;">
                             <button id="btn_previous" type="button" class="btn_previous" onclick="history.back();">이전</button>
                            	<c:if test="${sessionUserVo.user_id == vo.vo.user_id}">
-	                            <button id="btn_modify" type="button" class="btn_register" onclick="location.href='/board/detail.do?board_id=${vo.vo.board_id}'">수정</button>
+	                            <button id="btn_modify" type="button" class="btn_register" onclick="location.href='/board/detail?board_id=${vo.vo.board_id}'">수정</button>
                             </c:if>
                         </td>
                     </tr>
@@ -91,7 +91,7 @@
 			</table>
             <!-- 로그인 했을 경우만 댓글 작성가능 -->
             <c:if test="${sessionUserVo.user_id != null}">
-            	<form name="writeCommentForm" method="post" action="commentPost.do" onsubmit="return commentPost()">
+            	<form name="writeCommentForm" method="post" action="commentPost" onsubmit="return commentPost()">
             		<input type="hidden" id="user_id" name="user_id" value="${sessionUserVo.user_id}"/>
                 	<input type="hidden" id="board_id" name="board_id" value="${vo.vo.board_id}"/>
 	            	<table class="table table-bordered">
@@ -131,7 +131,7 @@
 		form.type = 'hidden';
 		form.name = 'form';
 		form.method = 'post';
-		form.action = '/board/deleteComment.do';
+		form.action = '/board/deleteComment';
 		
 		var input = document.createElement("input");
 		input.type = 'hidden';
@@ -161,7 +161,7 @@
 		form.type = 'hidden';
 		form.name = 'form';
 		form.method = 'post';
-		form.action = '/board/updateComment.do';
+		form.action = '/board/updateComment';
 		
 		var input = document.createElement("input");
 		input.type = 'hidden';

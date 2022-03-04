@@ -18,7 +18,7 @@
 		
 		if('<c:out value="${sessionUserVo.user_id}"/>' == ""){		//로그인여부 확인
 			alert("로그인을 해주세요!");
-			location.href="/login/login.do";
+			location.href="/login/login";
 			return false;
 		}else if(checkTitleLength.length > 100){
 			alert("제목은 최대 100자까지 입력 가능합니다.");
@@ -45,7 +45,7 @@
 <br/>
 <br/>
 <div class="container">
-        <form id="form" name="form" method="post" enctype="multipart/form-data" action="boardPost.do" onsubmit="return postText();">
+        <form id="form" name="form" method="post" enctype="multipart/form-data" action="boardPost" onsubmit="return postText();">
         	<input type="hidden" name="user_id" value="<c:out value="${sessionUserVo.user_id}"/>">
             <table class="table table-bordered">
                 <tbody>
@@ -68,7 +68,7 @@
                     <tr>
                         <td colspan="2">
                             <button id="" type="submit" class="btn_register" >작성</button>
-                            <button id="btn_previous" type="button" onclick="javascript:location.href='board.do'">뒤로가기</button>
+                            <button id="btn_previous" type="button" onclick="javascript:location.href='board'">뒤로가기</button>
                     </tr>
                 </tbody>
             </table>

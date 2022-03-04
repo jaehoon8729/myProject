@@ -41,7 +41,7 @@
             <c:forEach items="${boardList }" var="result">
                 <tr>
                     <td>${result.board_id}</td>
-                    <td><a href="/board/view.do?board_id=${result.board_id}">${result.title}</a></td>
+                    <td><a href="/board/view?board_id=${result.board_id}">${result.title}</a></td>
                     <td>${result.user_id}</td>
                     <td><fmt:formatDate value="${result.reg_dtm}" pattern="yyyy-MM-dd HH:mm"/></td>
                 </tr>
@@ -75,7 +75,7 @@
         </div>
         <!-- pagination end -->
         <div>
-        	<a class="btn btn-outline-info" style="float:right" href="register.do">글쓰기</a>
+        	<a class="btn btn-outline-info" style="float:right" href="register">글쓰기</a>
         </div>
         
         <!-- search start -->
@@ -97,14 +97,14 @@
 </body>
     <script type="text/javascript">
     //이전 버튼 이벤트
-    //5개의 인자값을 가지고 이동 testList.do
+    //5개의 인자값을 가지고 이동 testList
     //무조건 이전페이지 범위의 가장 앞 페이지로 이동
     function fn_prev(page, range, rangeSize, listSize, searchType, keyword) {
             
         var page = ((range - 2) * rangeSize) + 1;
         var range = range - 1;
             
-        var url = "/board/board.do";
+        var url = "/board/board";
         url += "?page=" + page;
         url += "&range=" + range;
         url += "&listSize=" + listSize;
@@ -117,7 +117,7 @@
     //페이지 번호 클릭
     function fn_pagination(page, range, rangeSize, listSize, searchType, keyword) {
  
-        var url = "/board/board.do";
+        var url = "/board/board";
             url += "?page=" + page;
             url += "&range=" + range;
             url += "&listSize=" + listSize;
@@ -132,7 +132,7 @@
     function fn_next(page, range, rangeSize, listSize, searchType, keyword) {
         var page = parseInt((range * rangeSize)) + 1;
         var range = parseInt(range) + 1;            
-        var url = "/board/board.do";
+        var url = "/board/board";
             url += "?page=" + page;
             url += "&range=" + range;
             url += "&listSize=" + listSize;
@@ -144,7 +144,7 @@
     // 검색
     $(document).on('click', '#btnSearch', function(e){
         e.preventDefault();
-        var url = "/board/board.do";
+        var url = "/board/board";
         url += "?searchType=" + $('#searchType').val();
         url += "&keyword=" + $('#keyword').val();
         location.href = url;

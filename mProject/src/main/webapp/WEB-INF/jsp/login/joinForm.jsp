@@ -13,7 +13,7 @@
         <br><br><br><br><font size="6" color="gray">회원가입</font></b>
             <br><br><br><br>
         
-        <form method="post" action="/login/joinFormPost.do" onsubmit="return joinCheck()" >
+        <form method="post" action="/login/joinFormPost" onsubmit="return joinCheck()" >
             <table>
                 <tr>
                     <td id="title">아이디</td>

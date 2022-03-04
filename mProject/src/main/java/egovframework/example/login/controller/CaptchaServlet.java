@@ -20,7 +20,7 @@ public class CaptchaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-    @RequestMapping("/getImg.do")
+    @RequestMapping("/getImg")
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
  
         try {

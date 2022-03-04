@@ -22,7 +22,7 @@ public class boardController {
 	@Autowired
 	private boardService boardservice;
 	
-	@RequestMapping(value="/board/board.do")
+	@RequestMapping(value="/board/board")
 	public String board(Model model
 			 ,@RequestParam(required=false,defaultValue="1")int page
 	            ,@RequestParam(required=false,defaultValue="1")int range
@@ -49,7 +49,7 @@ public class boardController {
 	}
 	
 	//글작성
-	@RequestMapping(value="/board/boardPost.do")
+	@RequestMapping(value="/board/boardPost")
 	public String boardPost(@ModelAttribute boardVo vo) throws Exception {
 		try {
 			int a = boardservice.insertBoardContent(vo);
@@ -59,11 +59,11 @@ public class boardController {
 		}catch(Exception ex) {
 			System.out.println(ex);
 		}
-		return "redirect:board.do";
+		return "redirect:board";
 	}
 	
 	//View
-	@RequestMapping(value="/board/view.do")
+	@RequestMapping(value="/board/view")
 	public String view(@ModelAttribute boardVo vo, Model model) throws Exception {
 		try {
 			boardVo vo1 = (boardVo) boardservice.selectBoardContent(vo).get("vo");
@@ -78,7 +78,7 @@ public class boardController {
 	}
 	
 	//수정페이지
-	@RequestMapping(value="/board/detail.do")
+	@RequestMapping(value="/board/detail")
 	public String detail(boardVo vo, Model model) throws Exception {
 		
 
@@ -87,7 +87,7 @@ public class boardController {
 	}
 	
 	//detailPost
-	@RequestMapping(value="/board/detailPost.do",method = RequestMethod.POST)
+	@RequestMapping(value="/board/detailPost",method = RequestMethod.POST)
 	@ResponseBody
 	public String detailPost(@ModelAttribute boardVo vo) throws Exception {
 		
@@ -96,35 +96,35 @@ public class boardController {
 	}
 	
 	//글작성페이지이동
-	@RequestMapping(value="/board/register.do")
+	@RequestMapping(value="/board/register")
 	public String write() {
 		
 		return "board/register";
 	}
 	
 	//댓글작성
-	@PostMapping("/board/commentPost.do")
+	@PostMapping("/board/commentPost")
 	public String comWrite(comVo vo, Model model) throws Exception {
 		System.out.println("cid:"+vo.getBoard_id());
 		System.out.println("ccontent:"+vo.getCom_content());
 		System.out.println("cuser:"+vo.getUser_id());
 
 		boardservice.insertCommend(vo);
-		return "redirect:view.do?board_id="+vo.getBoard_id();
+		return "redirect:view?board_id="+vo.getBoard_id();
 	}
 	//댓글삭제
-	@PostMapping("/board/deleteComment.do")
+	@PostMapping("/board/deleteComment")
 	public String deleteComment(comVo vo, Model model) throws Exception {
 		System.out.println("bid:"+vo.getBoard_id());
 		System.out.println("ccontent:"+vo.getCom_content());
 		System.out.println("cuser:"+vo.getUser_id());
 		System.out.println("cid"+vo.getComment_id());
 		boardservice.deleteComment(vo);
-		return "redirect:view.do?board_id="+vo.getBoard_id();
+		return "redirect:view?board_id="+vo.getBoard_id();
 	}
 	
 	//댓글수정
-		@PostMapping("/board/updateComment.do")
+		@PostMapping("/board/updateComment")
 		public String updateComment(comVo vo) throws Exception {
 			System.out.println("userid:"+vo.getUser_id());
 			System.out.println("boardid:"+vo.getBoard_id());
@@ -132,15 +132,15 @@ public class boardController {
 			System.out.println("comid:"+vo.getComment_id());
 			
 			boardservice.updateComment(vo);
-			return "redirect:view.do?board_id="+vo.getBoard_id();
+			return "redirect:view?board_id="+vo.getBoard_id();
 		}
 		
 	//게시글삭제
-	@PostMapping("/board/delete.do")
+	@PostMapping("/board/delete")
 	public String deleteBoard(boardVo vo) throws Exception{
 		System.out.println("삭제중:"+vo.getBoard_id());
 		int a = boardservice.deleteBoard(vo);
 		System.out.println("result:"+a);
-		return "redirect:board.do";
+		return "redirect:board";
 	}
 }

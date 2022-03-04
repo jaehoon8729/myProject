@@ -13,14 +13,14 @@ a{
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
-	<a href="http://localhost:8080/board/board.do">게시판</a>
+	<a href="http://localhost:8080/board/board">게시판</a>
 	<c:if test="${sessionUserVo.user_id == null}">
-		<a href="http://localhost:8080/login/login.do">로그인</a>
+		<a href="http://localhost:8080/login/login">로그인</a>
 	</c:if>
 	<c:if test="${sessionUserVo.user_id != null}">
 		${sessionUserVo.user_name }님어서오세요
-		<a href="http://localhost:8080/login/logout.do">로그아웃</a>
+		<a href="http://localhost:8080/login/logout">로그아웃</a>
 	</c:if>
-	<a href="http://localhost:8080/login/joinForm.do">회원가입</a>
+	<a href="http://localhost:8080/login/joinForm">회원가입</a>
 </body>
 </html>
