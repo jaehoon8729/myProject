@@ -41,7 +41,7 @@
             <c:forEach items="${boardList }" var="result">
                 <tr>
                     <td>${result.board_id}</td>
-                    <td><a href="/board/view?board_id=${result.board_id}">${result.title}</a></td>
+                    <td><a class="link-dark" href="/board/view?board_id=${result.board_id}">${result.title}</a></td>
                     <td>${result.user_id}</td>
                     <td><fmt:formatDate value="${result.reg_dtm}" pattern="yyyy-MM-dd HH:mm"/></td>
                 </tr>
@@ -59,7 +59,7 @@
                 </c:if>
  
                 <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="pageId">
-                    <li class="page-item <c:out value="${pagination.page == pageId ? 'active' : ''}"/> ">
+                    <li class="page-item <c:out value="${pagination.page == pageId ? 'active' : ''}"/>">
                     <a class="page-link" href="#"
                         onClick="fn_pagination('${pageId}', '${pagination.range}', '${pagination.rangeSize}', '${pagination.listSize}'
                      ,'${search.searchType}', '${search.keyword}')">

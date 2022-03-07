@@ -66,6 +66,7 @@
 		<url-pattern>*.jpg</url-pattern>
 		<url-pattern>*.gif</url-pattern>
 		<url-pattern>*.png</url-pattern>
+		<url-pattern>*.map</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>

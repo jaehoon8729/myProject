@@ -44,15 +44,15 @@
                         	</div>
                         </td>
                     </tr>
-                    <c:if test="${vo.vo.file_name ne null}">
-						<tr>
-						    <th class="boardth">다운로드</th>
-						    <td>
-							    <a href="fileDownload?file_name=${vo.vo.file_name}&default_file_name=${vo.vo.default_file_name}">
-								<input type="text" id="filename" value="${vo.vo.default_file_name}" name="fileName" class="form-control" readonly="readonly" /></a>
-							</td>
-						</tr>
-                    </c:if>
+					<tr>
+					    <th class="boardth">다운로드</th>
+					    <td>
+						    <c:if test="${vo.vo.file_name ne null}">
+								    <a href="fileDownload?file_name=${vo.vo.file_name}&default_file_name=${vo.vo.default_file_name}">
+									<input type="text" id="filename" value="${vo.vo.default_file_name}" name="fileName" class="form-control" readonly="readonly" /></a>
+							</c:if>
+						</td>
+					</tr>
                     <tr>
                         <td colspan="2" style="text-align: right;">
                             <button id="btn_previous" type="button" class="btn_previous" onclick="history.back();">이전</button>
