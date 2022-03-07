@@ -13,20 +13,13 @@
 			<param-value>utf-8</param-value>
 		</init-param>
 	</filter>
-	<filter-mapping>
-		<filter-name>encodingFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
+
     
 	<filter>
 		<filter-name>HTMLTagFilter</filter-name>
 		<filter-class>egovframework.rte.ptl.mvc.filter.HTMLTagFilter</filter-class>
 	</filter>
-	<filter-mapping>
-		<filter-name>HTMLTagFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
-    
+
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath*:egovframework/spring/context-*.xml</param-value>
@@ -57,7 +50,16 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-    
+
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.js</url-pattern>
+		<url-pattern>*.css</url-pattern>
+		<url-pattern>*.jpg</url-pattern>
+		<url-pattern>*.gif</url-pattern>
+		<url-pattern>*.png</url-pattern>
+	</servlet-mapping>
+	
 	<servlet-mapping>
 		<servlet-name>action</servlet-name>
 		<url-pattern>/</url-pattern>
