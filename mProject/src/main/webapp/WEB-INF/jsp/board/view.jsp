@@ -5,7 +5,9 @@
 <html>
 <head>
 <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
-<link rel="stylesheet" href="/css/boardstyle.css">
+<!-- SmartEditor를 사용하기 위해서 다음 js파일을 추가 (경로 확인) -->
+<script type="text/javascript" src="/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<link rel="stylesheet" href="/css/boardstyle">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Board View</title>
 </head>
