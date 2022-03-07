@@ -37,6 +37,9 @@ a{
         <c:if test="${sessionUserVo.user_id != null}">
 			<h7 class="nav-link" >${sessionUserVo.user_name }님</h7>
 			<a class="nav-link" href="http://localhost:8080/login/logout">로그아웃</a>
+			<li class="nav-item">
+          		<a class="nav-link" href="login/memberCheck">내정보</a>
+        	</li>
 		</c:if>
       </ul>
     </div>

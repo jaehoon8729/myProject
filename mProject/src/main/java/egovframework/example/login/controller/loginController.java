@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,9 +42,10 @@ public class loginController {
 		return "login/login";
 	}
 	
-	//로그인submit
+	//로그인submit return-> 0(캡차실패),1(성공),2(로그인정보틀림)
 	@RequestMapping(value="/login/loginPost", method = RequestMethod.POST)
-	public String loginPost(userVo vo, Model model, HttpSession session, HttpServletRequest request) throws Exception {
+	@ResponseBody
+	public int loginPost(userVo vo, Model model, HttpSession session, HttpServletRequest request) throws Exception {
 		System.out.println("correctAnswer:"+ request.getSession().getAttribute("correctAnswer"));
 		
 		// 캡차가 있는경우
@@ -51,18 +53,16 @@ public class loginController {
 			//캡차랑 input탭에 입력값이 틀리면 진행
 			if(!request.getSession().getAttribute("correctAnswer").equals(vo.getCaptcha())) {
 				System.out.println("캡차실패");
-				return "redirect:login";
+				return 0;
 			}	
 		}
 		
-	    // DB 비밀번호와 로그인 비밀번호가 틀릴경우 loginFail 모델은 내려준다.
-		if (!pwdEncoder.matches(vo.getUser_pswd(), userservice.userLogin(vo).getUser_pswd())) {
-			System.out.println("정보가 다릅니다");
-			return "redirect:login";
-		}else {
-			vo = userservice.userLogin(vo);
+		vo = userservice.userLogin(vo);
+		if(vo.getUser_name() != null) {
 			session.setAttribute("sessionUserVo", vo);
-			return "redirect:/main";
+			return 1;
+		}else {
+			return 2;
 		}
 	}
 	
@@ -107,6 +107,18 @@ public class loginController {
 			System.out.println("false");
 			return "0";
 		}
-
+	}
+	
+	//회원정보페이지
+	@GetMapping(value="/login/memberCheck")
+	public String pwCheck() throws Exception{
+		return "login/memberCheck";
+	}
+	
+	//회원정보페이지
+	@PostMapping(value="/login/myPage")
+	public String myPage(userVo vo) throws Exception{
+		
+		return "login/myPage";
 	}
 }

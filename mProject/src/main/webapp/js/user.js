@@ -1,15 +1,44 @@
 
 function checkValue(){
-    var inputForm = eval("document.loginInfo");
+	var userid = $('#user_id').val();
+	var userpw = $('#user_pswd').val();
     
-    if(!inputForm.user_id.value){
+    if(!userid){
         alert("아이디를 입력하세요");    
         return false;
     }
-    if(!inputForm.user_pswd.value){
+    if(!userpw){
         alert("비밀번호를 입력하세요");    
         return false;
     }
+    
+    var form = new FormData(document.getElementById('loginForm'));
+
+    $.ajax({
+    	url: '/login/loginPost',
+        async: true ,
+        type: 'post',
+        data: form,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (result){
+            if(result == 1){
+            	location.href="/main";
+            }else if(result == 0){
+            	alert("캡차가 다릅니다.");
+            	return false;
+            }else if(result == 2){
+            	alert("로그인 정보가 다릅니다.");
+            	return false;
+            }
+        },
+        error: function (request, status, error) {
+            console.log("request",request);
+            console.log("status",status);
+            console.log("error",error);
+        }
+	});
 }
 function imgRefresh(){
     $("#captchaImg").attr("src", "/captcha/getImg.do?id=" + Math.random());

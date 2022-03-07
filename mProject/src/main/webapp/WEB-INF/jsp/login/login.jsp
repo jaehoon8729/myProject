@@ -11,7 +11,7 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/common/header.jsp"></jsp:include>
     <div id="wrap">
-        <form name="loginInfo" method="post" action="/login/loginPost" onsubmit="return checkValue()">
+        <form id="loginForm" name="loginForm" method="post">
         
             <br><br><br><br><font size="6" color="gray">로그인</font></b>
             <br><br><br><br>
@@ -19,11 +19,11 @@
             <table>
                 <tr>
                     <td bgcolor="skyblue">아이디</td>
-                    <td><input type="text" name="user_id" maxlength="50"></td>
+                    <td><input id="user_id" type="text" name="user_id" maxlength="50"></td>
                 </tr>
                 <tr>
                     <td bgcolor="skyblue">비밀번호</td>
-                    <td><input type="password" name="user_pswd" maxlength="50" autocomplete="off"></td>
+                    <td><input id="user_pswd" type="password" name="user_pswd" maxlength="50" autocomplete="off"></td>
                 </tr>
             </table>
             <c:if test=""></c:if>
@@ -33,7 +33,7 @@
 				<input type="button" onclick="imgRefresh()" id="refreshBtn" value="새로고침"/>
          	</div>
             <br>
-            <input type="submit" value="로그인"/>
+            <input type="button" onclick="checkValue()" value="로그인"/>
             <input type="button" value="회원가입" onclick="location.href='joinForm'" />
         </form>
     </div>    

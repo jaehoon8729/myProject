@@ -8,4 +8,6 @@ public interface userService {
 	public void insertMember(userVo vo) throws Exception;
 	
 	public String selectOverlap(userVo vo) throws Exception;
+	
+	public userVo selectUserInfo(userVo vo) throws Exception;
 }
