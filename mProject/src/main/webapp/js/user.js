@@ -1,3 +1,8 @@
+$('#loginForm').keypress(function(e){
+	if(e.keyCode === 13){
+		checkValue();
+	}
+});
 
 function checkValue(){
 	var userid = $('#user_id').val();

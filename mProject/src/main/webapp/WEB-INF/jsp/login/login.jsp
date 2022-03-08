@@ -3,7 +3,6 @@
 <html>
 <head>
 	<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
-	<script type="text/javascript" src="/js/user.js"></script>
     <title>로그인</title>
     <!-- css 파일 분리 -->
     <link href='/css/join_style.css' rel='stylesheet' style='text/css'/>
@@ -38,4 +37,5 @@
         </form>
     </div>    
 </body>
+	<script type="text/javascript" src="/js/user.js"></script>
 </html>
