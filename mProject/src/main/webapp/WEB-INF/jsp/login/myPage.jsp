@@ -18,7 +18,7 @@
                 <tr>
                     <td id="title">아이디</td>
                     <td>
-                        
+                        ${vo.user_id }
                     </td>
                 </tr>
                         
@@ -32,7 +32,7 @@
                 <tr>
                     <td id="title">이름</td>
                     <td>
-                        <input type="text" name="user_name" maxlength="50">
+                        <input type="text" name="user_name" maxlength="50" value="${vo.user_name }">
                     </td>
                 </tr>
 

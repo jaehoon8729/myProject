@@ -42,9 +42,6 @@ public class userServiceImpl extends EgovAbstractServiceImpl implements userServ
 	}
 
 	public userVo selectUserInfo(userVo vo) throws Exception {
-		if(!pwdEncoder.matches(vo.getUser_pswd(), userDao.userLogin(vo).getUser_pswd())) {
-			
-		}
 		return userDao.userLogin(vo);
 	}
 	

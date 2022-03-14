@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,7 +55,8 @@ public class loginController {
 			if(!request.getSession().getAttribute("correctAnswer").equals(vo.getCaptcha())) {
 				System.out.println("캡차실패");
 				return 0;
-			}	
+			}
+			session.removeAttribute("correctAnswer");
 		}
 		
 		vo = userservice.userLogin(vo);
@@ -112,13 +114,13 @@ public class loginController {
 	//회원정보페이지
 	@GetMapping(value="/login/memberCheck")
 	public String pwCheck() throws Exception{
-		return "login/memberCheck";
+		return "/login/memberCheck";
 	}
 	
 	//회원정보페이지
 	@PostMapping(value="/login/myPage")
-	public String myPage(userVo vo) throws Exception{
-		
+	public String myPage(userVo vo, Model model, HttpSession session) throws Exception{
+
 		return "login/myPage";
 	}
 }

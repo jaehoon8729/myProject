@@ -3,7 +3,6 @@
 <html>
 <head>
 	<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="/js/utils.js"></script>
     <title>비밀번호 확인</title>
     <link href='/css/join_style.css' rel='stylesheet' style='text/css'/>
 </head>
@@ -14,7 +13,8 @@
         <br><br><br><br><font size="6" color="gray">비밀번호 확인</font></b>
             <br><br><br><br>
         
-        <form method="post" action="" >
+        <form id="loginForm" method="post">
+        	<input type="hidden" id="sessionInfo" name="user_id" value='${sessionUserVo.user_id}'/>
             <table>
                 <tr>
                     <td id="title">비밀번호</td>
@@ -24,11 +24,12 @@
                 </tr>
 				<tr>
 					<td colspan="2">
-						<input type="button" value="수정하기" /> 
+						<input type="button" value="확인" onclick="pwCheck()"/> 
 					</td>
 				</tr>
             </table>
         </form>
     </div>
 </body>
+    <script type="text/javascript" src="/js/utils.js"></script>
 </html>
