@@ -8,34 +8,7 @@
 <title>Board Write</title>
 <!-- SmartEditor를 사용하기 위해서 다음 js파일을 추가 (경로 확인) -->
 <script type="text/javascript" src="/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-<script type="text/javascript">
-	function postText() {
-		var checkTitleLength = $('#title').val();
-		var checkContentLength = oEditors.getById["content"].getIR();
-		var tagRemove = checkContentLength.replaceAll(/(<([^>]+)>)/ig,"");
-		//에디터의 실제 내용을 가져옴
-		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD",[]);
-		
-		if('<c:out value="${sessionUserVo.user_id}"/>' == ""){		//로그인여부 확인
-			alert("로그인을 해주세요!");
-			location.href="/login/login";
-			return false;
-		}else if(checkTitleLength.length > 100){
-			alert("제목은 최대 100자까지 입력 가능합니다.");
-			return false;
-		}else if(tagRemove.length >= 40000){		//글자수가 40000byte제한
-			alert("내용은 최대 40000 byte까지 입력 가능합니다.");	//DB엔 text형으로 컬럼을 만들어 65535 문자까지 가능
-			return false;
-		}else{
-			var fileValue = $("#uploadfile").val().split("\\");
-			var fileName = fileValue[fileValue.length-1]; // 파일명
-			
-			$("#form").append('<input type="hidden" name="default_file_name" value="'+fileName+'">');
-		}
-	}
-	
-</script> 
-
+<script type="text/javascript" src="/js/service/SE2BasicCreator.js" charset="utf-8"></script>
 </head>
 <body>
 
@@ -77,12 +50,12 @@
 </body>
 
 <script type="text/javascript"> 
-	var oEditors = [];
+var oEditors = [];
 window.onload = function() {
 	nhn.husky.EZCreator.createInIFrame({
 	    oAppRef: oEditors,
 	    elPlaceHolder: "content",  //textarea ID 입력
-	    sSkinURI: "/SmartEditor2Skin.html",  //martEditor2Skin.html 경로 입력
+	    sSkinURI: "/SmartEditor2Skin.html",  //SmartEditor2Skin.html 경로 입력
 	    fCreator: "createSEditor2",
 	    htParams : { 
 	    	// 툴바 사용 여부 (true:사용/ false:사용하지 않음) 
@@ -94,6 +67,32 @@ window.onload = function() {
 	    }
 	});
 }
+
+function postText() {
+	var checkTitleLength = $('#title').val();
+	var checkContentLength = oEditors.getById["content"].getIR();
+	var tagRemove = checkContentLength.replaceAll(/(<([^>]+)>)/ig,"");
+	//에디터의 실제 내용을 가져옴
+	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD",[]);
+	
+	if('<c:out value="${sessionUserVo.user_id}"/>' == ""){		//로그인여부 확인
+		alert("로그인을 해주세요!");
+		location.href="/login/login";
+		return false;
+	}else if(checkTitleLength.length > 100){
+		alert("제목은 최대 100자까지 입력 가능합니다.");
+		return false;
+	}else if(tagRemove.length >= 40000){		//글자수가 40000byte제한
+		alert("내용은 최대 40000 byte까지 입력 가능합니다.");	//DB엔 text형으로 컬럼을 만들어 65535 문자까지 가능
+		return false;
+	}else{
+		var fileValue = $("#uploadfile").val().split("\\");
+		var fileName = fileValue[fileValue.length-1]; // 파일명
+		
+		$("#form").append('<input type="hidden" name="default_file_name" value="'+fileName+'">');
+	}
+}
+
 
 </script>
 

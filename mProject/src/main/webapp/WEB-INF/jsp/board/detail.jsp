@@ -169,7 +169,7 @@
 						</tr>
                     <tr>
                         <td colspan="2" style="text-align: right;">
-                            <button id="btn_previous" type="button" class="btn_previous" onclick="location.href='http://localhost:8080/board/board'">이전</button>
+                            <button id="btn_previous" type="button" class="btn_previous" onclick="location.href='/board/board'">이전</button>
                            	<c:if test="${sessionUserVo.user_id == vo.vo.user_id}">
 	                            <button type="button" class="btn_register" onclick="updatePost()">수정</button>
 	                            <button id="delete_btn" type="button" class="btn_delete" onclick="deleteBoard()">삭제</button>
