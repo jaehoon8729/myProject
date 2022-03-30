@@ -13,7 +13,7 @@
 	<!-- insert user -->
 	<insert id="insertMember">
 		INSERT INTO 
-		USER(
+		user(
 			user_id
 			, user_pswd
 			, state
