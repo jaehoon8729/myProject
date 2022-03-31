@@ -207,7 +207,7 @@
 		}else if(filename.length <= 0){
 			document.getElementById("thOption").innerText="첨부파일";
 			document.getElementById("tdOption").innerHTML='<input type="hidden" id="boardFileCheck" name="boardFileCheck" value="new"/><input id="uploadFile" type="file" name="uploadFile" placeholder="파일 선택" /><br/>';
-			document.getElementById("tdOption").innerHTML='<button id="filedelete" type="button" class="btn_previous" onclick="deleteFileCancel()" style="float: right">삭제취소</button>'
+			document.getElementById("tdOption").innerHTML+='<button id="filedelete" type="button" class="btn_previous" onclick="deleteFileCancel()" style="float: right">삭제취소</button>';
 		}
 	}
 	
